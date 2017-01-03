@@ -48,3 +48,6 @@ Temporary Items
 
 # C++ objects
 .o
+
+# C help files
+.c
