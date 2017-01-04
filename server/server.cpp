@@ -2,16 +2,25 @@
 
 void* threadGameManager(void* t_data) {
   struct thread_sending_data *th_data = (struct thread_sending_data*)t_data;
-  char buffer[BUF_SIZE];
+  char* buffer = (char*)malloc(BUF_SIZE*sizeof(char));
+  int receiverID;
   GameManager* gameManager = (*th_data).gameManager;
+  vector<int>* clientsDescriptors = (*th_data).clientsDescriptors;
+  int messageLength;
 
   while (1) {
+    // pthread_mutex_lock(&(*th_data).sendMessageMutex);
+    // mutex pobierający z kolejki oczekujących
     gameManager->update();
-    pthread_mutex_lock(&(*th_data).sendMessageMutex);
-    // get message from gameManager
-    // send message
-    // delete message (?)
-    pthread_mutex_unlock(&(*th_data).recvMessageMutex);
+    // ten sam mutex (w ogóle jeden i ten sam)
+    receiverID = gameManager->getReceiverID();
+    buffer = gameManager->getMessage();
+    if (buffer != NULL) {
+        messageLength = write((*clientsDescriptors)[receiverID], buffer, strlen(buffer));
+        if (messageLength < 0)
+          printf("Error while writing to socket. Client id: %d, message: %s\n", receiverID, buffer);
+    }
+    // pthread_mutex_unlock(&(*th_data).recvMessageMutex);
   }
 
   printf("Game manager thread terminated.\n");
@@ -23,6 +32,7 @@ void* threadReceivingBehavior(void* t_data) {
   char buffer[BUF_SIZE];
   GameManager* gameManager = (*th_data).gameManager;
   int messageLength = 1;
+  printf("New client with descriptor %d.\n", (*th_data).descriptor);
 
   while (messageLength > 0) {
     bzero(buffer, BUF_SIZE);
@@ -30,10 +40,11 @@ void* threadReceivingBehavior(void* t_data) {
     if (messageLength < 0)
       printf("Error while reading from socket %d.\n", (*th_data).descriptor);
     else {
-      pthread_mutex_lock(&(*th_data).recvMessageMutex);
-      // create message
-      // put message to gameManager
-      pthread_mutex_unlock(&(*th_data).sendMessageMutex);
+      // pthread_mutex_lock(&(*th_data).recvMessageMutex);
+      // mutex uaktualniający kolejkę oczekujących
+      gameManager->addMessage(buffer, (*th_data).id);
+      // ten sam mutex (w ogóle jeden i ten sam)
+      // pthread_mutex_unlock(&(*th_data).sendMessageMutex);
     }
   }
 
@@ -43,6 +54,8 @@ void* threadReceivingBehavior(void* t_data) {
 
 Server::Server() {
   srand(time(NULL));
+  numberOfClients = 0;
+  clientsDescriptors = new vector<int>();
   printf("Server created.\n");
 }
 
@@ -106,7 +119,7 @@ void Server::createGameManagerThread() {
   (*threadData).gameManager = this->gameManager;
   (*threadData).recvMessageMutex = this->recvMessageMutex;
   (*threadData).sendMessageMutex = this->sendMessageMutex;
-  (*threadData).message = this->message;
+  (*threadData).clientsDescriptors = this->clientsDescriptors;
 
   createResult = pthread_create(&thread, NULL, threadGameManager, (void*)threadData);
   if (createResult) {
@@ -139,11 +152,17 @@ void Server::createReceivingThread(int playerDescriptor) {
 
   threadData = (struct thread_receive_data*)malloc(sizeof(struct thread_receive_data));
   (*threadData).descriptor = playerDescriptor;
+  (*threadData).gameManager = this->gameManager;
+  (*threadData).recvMessageMutex = this->recvMessageMutex;
+  (*threadData).sendMessageMutex = this->sendMessageMutex;
+  (*threadData).id = numberOfClients;
 
   createResult = pthread_create(&thread, NULL, threadReceivingBehavior, (void*)threadData);
   if (createResult) {
     printf("Error while creating receiving thread. Error code: %d\n", createResult);
     exit(-1);
+  } else {
+    numberOfClients++;
+    clientsDescriptors->push_back(playerDescriptor);
   }
-
 }

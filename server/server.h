@@ -23,6 +23,7 @@
 #define SERVER_PORT 1234
 #define QUEUE_SIZE 64
 
+using std::vector;
 
 struct thread_receive_data {
   int descriptor;
@@ -33,10 +34,10 @@ struct thread_receive_data {
 };
 
 struct thread_sending_data {
-  char* message;
   pthread_mutex_t recvMessageMutex;
   pthread_mutex_t sendMessageMutex;
   GameManager* gameManager;
+  vector<int>* clientsDescriptors;
 };
 
 void* threadGameManager(void*);
@@ -47,11 +48,13 @@ private:
   int socketDescriptor;
   struct sockaddr_in serverAddress;
 
-  char message[BUF_SIZE];
   pthread_mutex_t recvMessageMutex = PTHREAD_MUTEX_INITIALIZER;
   pthread_mutex_t sendMessageMutex = PTHREAD_MUTEX_INITIALIZER;
 
   GameManager* gameManager;
+
+  int numberOfClients;
+  vector<int>* clientsDescriptors;
 
 public:
   Server();
