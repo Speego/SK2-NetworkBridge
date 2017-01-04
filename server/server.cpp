@@ -1,8 +1,43 @@
 #include "server.h"
 
 void* threadGameManager(void* t_data) {
+  struct thread_sending_data *th_data = (struct thread_sending_data*)t_data;
+  char buffer[BUF_SIZE];
+  GameManager* gameManager = (*th_data).gameManager;
+
+  while (1) {
+    gameManager->update();
+    pthread_mutex_lock(&(*th_data).sendMessageMutex);
+    // get message from gameManager
+    // send message
+    // delete message (?)
+    pthread_mutex_unlock(&(*th_data).recvMessageMutex);
+  }
 
   printf("Game manager thread terminated.\n");
+  pthread_exit(NULL);
+}
+
+void* threadReceivingBehavior(void* t_data) {
+  struct thread_receive_data *th_data = (struct thread_receive_data*)t_data;
+  char buffer[BUF_SIZE];
+  GameManager* gameManager = (*th_data).gameManager;
+  int messageLength = 1;
+
+  while (messageLength > 0) {
+    bzero(buffer, BUF_SIZE);
+    messageLength = read((*th_data).descriptor, buffer, BUF_SIZE-1);
+    if (messageLength < 0)
+      printf("Error while reading from socket %d.\n", (*th_data).descriptor);
+    else {
+      pthread_mutex_lock(&(*th_data).recvMessageMutex);
+      // create message
+      // put message to gameManager
+      pthread_mutex_unlock(&(*th_data).sendMessageMutex);
+    }
+  }
+
+  printf("Player thread terminated.\n");
   pthread_exit(NULL);
 }
 
@@ -63,8 +98,17 @@ void Server::startListening(char* fileName) {
 void Server::createGameManagerThread() {
   int createResult;
   pthread_t thread;
+  struct thread_sending_data* threadData;
 
-  createResult = pthread_create(&thread, NULL, threadGameManager, (void*)NULL);
+  gameManager = new GameManager();
+
+  threadData = (struct thread_sending_data*)malloc(sizeof(struct thread_sending_data));
+  (*threadData).gameManager = this->gameManager;
+  (*threadData).recvMessageMutex = this->recvMessageMutex;
+  (*threadData).sendMessageMutex = this->sendMessageMutex;
+  (*threadData).message = this->message;
+
+  createResult = pthread_create(&thread, NULL, threadGameManager, (void*)threadData);
   if (createResult) {
     printf("Error while creating game manager thread. Error code: %d\n", createResult);
 		exit(-1);
@@ -74,6 +118,7 @@ void Server::createGameManagerThread() {
 
 void Server::waitForPlayers(char* fileName) {
   int playerDescriptor =  acceptConnection(fileName);
+  createReceivingThread(playerDescriptor);
 }
 
 int Server::acceptConnection(char* fileName) {
@@ -85,4 +130,20 @@ int Server::acceptConnection(char* fileName) {
     printf("New player with descriptor %d.", connectionSocketDescriptor);
 
   return connectionSocketDescriptor;
+}
+
+void Server::createReceivingThread(int playerDescriptor) {
+  int createResult;
+  pthread_t thread;
+  struct thread_receive_data* threadData;
+
+  threadData = (struct thread_receive_data*)malloc(sizeof(struct thread_receive_data));
+  (*threadData).descriptor = playerDescriptor;
+
+  createResult = pthread_create(&thread, NULL, threadReceivingBehavior, (void*)threadData);
+  if (createResult) {
+    printf("Error while creating receiving thread. Error code: %d\n", createResult);
+    exit(-1);
+  }
+
 }

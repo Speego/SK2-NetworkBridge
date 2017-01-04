@@ -2,7 +2,6 @@
 #define SERVER_H
 
 #include "gameManager.h"
-#include "message.h"
 
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -24,12 +23,34 @@
 #define SERVER_PORT 1234
 #define QUEUE_SIZE 64
 
+
+struct thread_receive_data {
+  int descriptor;
+  int id;
+  pthread_mutex_t recvMessageMutex;
+  pthread_mutex_t sendMessageMutex;
+  GameManager* gameManager;
+};
+
+struct thread_sending_data {
+  char* message;
+  pthread_mutex_t recvMessageMutex;
+  pthread_mutex_t sendMessageMutex;
+  GameManager* gameManager;
+};
+
 void* threadGameManager(void*);
+void* threadReceivingBehavior(void*);
 
 class Server {
 private:
   int socketDescriptor;
   struct sockaddr_in serverAddress;
+
+  char message[BUF_SIZE];
+  pthread_mutex_t recvMessageMutex = PTHREAD_MUTEX_INITIALIZER;
+  pthread_mutex_t sendMessageMutex = PTHREAD_MUTEX_INITIALIZER;
+
   GameManager* gameManager;
 
 public:
@@ -44,6 +65,7 @@ private:
   void bindIPandPort(char*);
   void startListening(char*);
   void createGameManagerThread();
+  void createReceivingThread(int);
 
   int acceptConnection(char*);
 };

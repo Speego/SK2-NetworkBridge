@@ -6,7 +6,10 @@
 #include "message.h"
 
 class GameManager {
+public:
   GameManager();
+
+  void update();
 };
 
 #endif // GAMEMANAGER_H
