@@ -2,12 +2,11 @@
 
 int main(int argc, char* argv[])
 {
-    // srand(time(NULL));
-    Server *s = new Server();
+    Server* s = new Server();
 
     s->setServer(argv[0]);
     while (1) {
-        // s->manageGames();
+        s->waitForPlayers(argv[0]);
     }
 
     delete s;
