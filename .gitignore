@@ -51,3 +51,6 @@ Temporary Items
 
 # C help files
 .c
+
+# JAVA binaries
+.class

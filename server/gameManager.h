@@ -33,6 +33,9 @@ public:
   int getReceiverID();
   char* getMessage();
   void addMessage(char*, int);
+
+private:
+  void interpretMessage(Message*);
 };
 
 #endif // GAMEMANAGER_H

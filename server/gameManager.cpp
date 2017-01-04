@@ -11,7 +11,18 @@ GameManager::~GameManager() {
 }
 
 void GameManager::update() {
+  Message *msg;
 
+  while (!messagesNew->empty()) {
+    msg = messagesNew->front();
+    interpretMessage(msg);
+    messagesNew->pop();
+    delete msg;
+  }
+}
+
+void GameManager::interpretMessage(Message* msg) {
+  printf("gameManager.cpp: Interpreted message is: %s.\n", msg->getMessage());
 }
 
 int GameManager::getReceiverID() {
@@ -41,5 +52,5 @@ char* GameManager::getMessage() {
 
 void GameManager::addMessage(char* newMessage, int sender) {
   messagesNew->push(new Message(newMessage, sender, -1));
-  printf("Received message from client with ID %d: %s.\n", sender, newMessage);
+  printf("gameManager.cpp: Received message from client with ID %d: %s.\n", sender, newMessage);
 }

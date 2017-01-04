@@ -20,7 +20,7 @@
 #include <vector>
 
 #define BUF_SIZE 1024
-#define SERVER_PORT 1234
+#define SERVER_PORT 1235
 #define QUEUE_SIZE 64
 
 using std::vector;
@@ -28,14 +28,12 @@ using std::vector;
 struct thread_receive_data {
   int descriptor;
   int id;
-  pthread_mutex_t recvMessageMutex;
-  pthread_mutex_t sendMessageMutex;
+  pthread_mutex_t messagesMutex;
   GameManager* gameManager;
 };
 
 struct thread_sending_data {
-  pthread_mutex_t recvMessageMutex;
-  pthread_mutex_t sendMessageMutex;
+  pthread_mutex_t messagesMutex;
   GameManager* gameManager;
   vector<int>* clientsDescriptors;
 };
@@ -48,8 +46,7 @@ private:
   int socketDescriptor;
   struct sockaddr_in serverAddress;
 
-  pthread_mutex_t recvMessageMutex = PTHREAD_MUTEX_INITIALIZER;
-  pthread_mutex_t sendMessageMutex = PTHREAD_MUTEX_INITIALIZER;
+  pthread_mutex_t messagesMutex = PTHREAD_MUTEX_INITIALIZER;
 
   GameManager* gameManager;
 
