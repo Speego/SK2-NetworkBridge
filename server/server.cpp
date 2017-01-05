@@ -17,9 +17,10 @@ void* threadGameManager(void* t_data) {
     receiverID = gameManager->getReceiverID();
     buffer = gameManager->getMessage();
     if (buffer != NULL) {
-        messageLength = write((*clientsDescriptors)[receiverID], buffer, strlen(buffer));
-        if (messageLength < 0)
-          printf("server.cpp: Error while writing to socket. Client id: %d, message: %s\n", receiverID, buffer);
+      printf("server.cpp: Message sent to player with ID %d: %s\n", receiverID, buffer);
+      messageLength = write((*clientsDescriptors)[receiverID], buffer, strlen(buffer));
+      if (messageLength < 0)
+        printf("server.cpp: Error while writing to socket. Client id: %d, message: %s\n", receiverID, buffer);
     }
   }
 

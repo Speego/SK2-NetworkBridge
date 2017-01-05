@@ -30,7 +30,7 @@ void GameManager::update() {
 }
 
 void GameManager::interpretMessage(Message* msg) {
-  printf("gameManager.cpp: Interpreted message is: %s.\n", msg->getMessage());
+  printf("gameManager.cpp: Interpreted message is: %s\n", msg->getMessage());
   try {
     MessageType msgType = msg->getMessageType();
     if ((int)msgType >= (int)messageTypesNames.size())
@@ -51,7 +51,9 @@ void GameManager::chooseTask(Message* msg, MessageType msgType) {
       break;
     case MessageType::NICKNAME:
       setPlayerName(msg, senderID);
+      createTablesMessage(senderID, MessageType::SEND_TABLES);
       break;
+
     default: break;
   }
 }
@@ -83,6 +85,14 @@ void GameManager::setPlayerName(Message* msg, int clientID) {
   }
 }
 
+void GameManager::createTablesMessage(int receiver, MessageType msgType) {
+  string msg = convertNumberToString(int(msgType));
+  msg += ":";
+  for (int i=0; i<(int)tables->size(); i++)
+    msg += to_string((*tables)[i]->getNumberOfPlayers()) + ",";
+  addMessageToSend(convertConstChar(msg.c_str()), receiver);
+}
+
 int GameManager::getReceiverID() {
   if (messagesToSend->empty())
     return -1;
@@ -93,7 +103,6 @@ int GameManager::getReceiverID() {
 char* GameManager::getMessage() {
   Message* message;
   const char* msg;
-  char* msgFinal;
 
   if (messagesToSend->empty())
     return NULL;
@@ -103,16 +112,30 @@ char* GameManager::getMessage() {
   messagesToSend->pop();
   delete message;
 
-  msgFinal = (char*)malloc(strlen(msg)+1);
-  strcpy(msgFinal, msg);
-  return msgFinal;
+  return convertConstChar(msg);
 }
 
 void GameManager::addMessage(char* newMessage, int sender) {
   messagesNew->push(new Message(newMessage, sender, -1));
-  printf("gameManager.cpp: Received message from client with ID %d: %s.\n", sender, newMessage);
+  printf("gameManager.cpp: Received message from client with ID %d: %s\n", sender, newMessage);
 }
 
 void GameManager::addPlayer(int ID) {
   players->push_back(new Player(ID, PlayerState::fresh));
+}
+
+void GameManager::addMessageToSend(char* msg, int receiver) {
+  messagesToSend->push(new Message(msg, -1, receiver));
+}
+
+string GameManager::convertNumberToString(int number) {
+  if (number < 10)
+    return "0" + to_string(number);
+  return to_string(number);
+}
+
+char* GameManager::convertConstChar(const char* str) {
+  char* strFinal = (char*)malloc(strlen(str)+1);
+  strcpy(strFinal, str);
+  return strFinal;
 }

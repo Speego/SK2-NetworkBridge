@@ -16,6 +16,7 @@
 
 using std::queue;
 using std::vector;
+using std::to_string;
 
 class GameManager {
 private:
@@ -25,7 +26,7 @@ private:
   vector<Table*>* tables;
   vector<Player*>* players;
 
-  vector<string> messageTypesNames = {"Disconnected", "Nickname", "JoinTable"};
+  vector<string> messageTypesNames = {"Disconnected", "Nickname", "SendTables", "JoinTable"};
 
 public:
   GameManager();
@@ -46,6 +47,11 @@ private:
   void removePlayer(int);
 
   void setPlayerName(Message*, int);
+  void createTablesMessage(int, MessageType);
+
+  void addMessageToSend(char*, int);
+  string convertNumberToString(int);
+  char* convertConstChar(const char*);
 };
 
 #endif // GAMEMANAGER_H

@@ -11,7 +11,8 @@ using std::stoi;
 enum class MessageType {
   DISCONNECTED = 0,
   NICKNAME = 1,
-  JOIN_TABLE = 2
+  SEND_TABLES = 2,
+  JOIN_TABLE = 3
 };
 
 class Message {
