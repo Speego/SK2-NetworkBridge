@@ -1,6 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "message.h"
+
 #include <string.h>
 #include <string>
 
@@ -24,6 +26,8 @@ public:
   Player(int, PlayerState);
   Player(int, char*, PlayerState);
   ~Player();
+
+  void setName(Message*);
 };
 
 #endif // PLAYER_H

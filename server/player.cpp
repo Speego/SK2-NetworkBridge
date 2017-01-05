@@ -15,3 +15,8 @@ Player::Player(int ID, char* name, PlayerState st) {
 Player::~Player() {
   delete nickname;
 }
+
+void Player::setName(Message* msg) {
+  nickname = new string(msg->getPlayerName());
+  printf("player.cpp: Player with ID %d nickname set to: %s\n", id, (*nickname).c_str());
+}

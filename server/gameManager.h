@@ -41,9 +41,11 @@ public:
 private:
   void interpretMessage(Message*);
   void chooseTask(Message*, MessageType);
+  int findPlayer(int);
 
   void removePlayer(int);
-  int findPlayer(int);
+
+  void setPlayerName(Message*, int);
 };
 
 #endif // GAMEMANAGER_H

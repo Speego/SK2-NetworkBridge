@@ -28,6 +28,7 @@ public:
   int getSenderID();
   int getReceiverID();
   MessageType getMessageType();
+  string getPlayerName();
 
 private:
   int convertToNumber();

@@ -49,8 +49,19 @@ void GameManager::chooseTask(Message* msg, MessageType msgType) {
     case MessageType::DISCONNECTED:
       removePlayer(senderID);
       break;
+    case MessageType::NICKNAME:
+      setPlayerName(msg, senderID);
+      break;
     default: break;
   }
+}
+
+int GameManager::findPlayer(int clientID) {
+  for(int i=0; i<(int)players->size(); i++) {
+    if ((*players)[i]->id == clientID)
+      return i;
+  }
+  throw "gameManager.cpp: No player with ID " + clientID;
 }
 
 void GameManager::removePlayer(int clientID) {
@@ -63,12 +74,13 @@ void GameManager::removePlayer(int clientID) {
   }
 }
 
-int GameManager::findPlayer(int clientID) {
-  for(int i=0; i<(int)players->size(); i++) {
-    if ((*players)[i]->id == clientID)
-      return i;
+void GameManager::setPlayerName(Message* msg, int clientID) {
+  try {
+    int playerVectorPosition = findPlayer(clientID);
+    (*players)[playerVectorPosition]->setName(msg);
+  } catch (char const* noPlayer) {
+    printf("%s\n", noPlayer);
   }
-  throw "gameManager.cpp: No player with ID " + clientID;
 }
 
 int GameManager::getReceiverID() {

@@ -54,3 +54,7 @@ int Message::convertToNumber() {
 bool Message::isNull() {
   return (*msg) == "";
 }
+
+string Message::getPlayerName() {
+  return msg->substr(3);
+}
