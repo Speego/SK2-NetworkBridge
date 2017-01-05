@@ -46,6 +46,7 @@ private:
   void chooseTask(Message*, MessageType);
   int findPlayer(int);
   int findTable(int);
+  void updateTables();
 
   void removePlayer(int);
 

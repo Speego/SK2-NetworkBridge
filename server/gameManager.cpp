@@ -80,6 +80,10 @@ int GameManager::findTable(int tableID) {
   throw "gameManager.cpp: No table with ID " + tableID;
 }
 
+void GameManager::updateTables() {
+
+}
+
 void GameManager::removePlayer(int clientID) {
   try {
     int playerVectorPosition = findPlayer(clientID);

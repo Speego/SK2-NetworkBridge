@@ -2,10 +2,13 @@
 #define TABLE_H
 
 #include "player.h"
+#include "card.h"
 
 #include <vector>
+#include <algorithm>
 
 using std::vector;
+using std::swap;
 
 enum class TableState {
   WAITING = 0,
@@ -23,6 +26,7 @@ public:
 
 private:
   vector<Player*>* players;
+  vector<Card*>* cards;
 
 public:
   Table(int, Player*);
@@ -34,8 +38,13 @@ public:
   void join(Player*);
   bool canJoin(int);
 
+  void createCards();
+
 private:
   bool playerAtTable(int);
+  void generateCards();
+  void randomShuffle();
+  void dealCards();
 };
 
 #endif // TABLE_H
