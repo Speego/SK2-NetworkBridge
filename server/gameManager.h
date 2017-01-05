@@ -26,7 +26,9 @@ private:
   vector<Table*>* tables;
   vector<Player*>* players;
 
-  vector<string> messageTypesNames = {"Disconnected", "Nickname", "SendTables", "JoinTable"};
+  vector<string> messageTypesNames = {"Disconnected", "Nickname", "SendTables", "CreateTable", "JoinTable"};
+
+  int tablesID;
 
 public:
   GameManager();
@@ -43,11 +45,14 @@ private:
   void interpretMessage(Message*);
   void chooseTask(Message*, MessageType);
   int findPlayer(int);
+  int findTable(int);
 
   void removePlayer(int);
 
   void setPlayerName(Message*, int);
   void createTablesMessage(int, MessageType);
+
+  void createTable(int);
 
   void addMessageToSend(char*, int);
   string convertNumberToString(int);

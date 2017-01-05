@@ -12,7 +12,8 @@ enum class MessageType {
   DISCONNECTED = 0,
   NICKNAME = 1,
   SEND_TABLES = 2,
-  JOIN_TABLE = 3
+  CREATE_TABLE = 3,
+  JOIN_TABLE = 4
 };
 
 class Message {

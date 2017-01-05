@@ -4,7 +4,7 @@ Message::Message(char* newMsg, int sender, int receiver) {
   msg = new string(newMsg);
   senderID = sender;
   receiverID = receiver;
-  printf("message.cpp: Message created: %s\n", newMsg);
+  printf("\nmessage.cpp: Message created: %s\n", newMsg);
 }
 
 Message::~Message() {

@@ -21,6 +21,7 @@ public:
   int id;
   string* nickname;
   PlayerState state;
+  int tableID;
 
 public:
   Player(int, PlayerState);

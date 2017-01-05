@@ -7,14 +7,30 @@
 
 using std::vector;
 
+enum class TableState {
+  WAITING = 0,
+  READY = 1,
+  GAME_ON = 2,
+  BIDDING_ON = 3,
+  BIDDING_END = 4,
+  END_ON = 5
+};
+
 class Table {
+public:
+  TableState state;
+  int id;
+
 private:
   vector<Player*>* players;
 
 public:
-  Table();
+  Table(int, Player*);
+  ~Table();
 
   int getNumberOfPlayers();
+  int findPlayer(int);
+  void removePlayer(int);
 };
 
 #endif // TABLE_H
