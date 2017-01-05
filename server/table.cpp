@@ -9,11 +9,9 @@ Table::Table(int ID, Player* player) {
 }
 
 Table::~Table() {
-  for (int i=0; i<getNumberOfPlayers(); i++)
-    delete (*players)[i];
+  players->clear();
+  cards->clear();
   delete players;
-  for (int i=0; i<(int)cards->size(); i++)
-    delete (*cards)[i];
   delete cards;
 }
 
@@ -90,5 +88,15 @@ void Table::dealCards() {
     (*players)[i]->resetCards();
     for (int j=0; j<13; j++)
       (*players)[i]->insertCard((*cards)[i*13+j]);
+
+    (*players)[i]->sortCards();
   }
+}
+
+string Table::getCardsOfPlayer(int playerVectorPosition) {
+  return (*players)[playerVectorPosition]->getCardsMessage();
+}
+
+int Table::getPlayerID(int playerVectorPosition) {
+  return (*players)[playerVectorPosition]->id;
 }

@@ -4,18 +4,20 @@
 #include "player.h"
 #include "card.h"
 
+#include <string>
 #include <vector>
 #include <algorithm>
 
+using std::string;
 using std::vector;
 using std::swap;
 
 enum class TableState {
   WAITING = 0,
   READY = 1,
-  GAME_ON = 2,
-  BIDDING_ON = 3,
-  BIDDING_END = 4,
+  BIDDING_ON = 2,
+  BIDDING_END = 3,
+  GAME_ON = 4,
   END_ON = 5
 };
 
@@ -39,6 +41,9 @@ public:
   bool canJoin(int);
 
   void createCards();
+
+  string getCardsOfPlayer(int);
+  int getPlayerID(int);
 
 private:
   bool playerAtTable(int);

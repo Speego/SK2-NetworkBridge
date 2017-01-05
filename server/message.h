@@ -13,7 +13,8 @@ enum class MessageType {
   NICKNAME = 1,
   SEND_TABLES = 2,
   CREATE_TABLE = 3,
-  JOIN_TABLE = 4
+  JOIN_TABLE = 4,
+  CARDS = 5
 };
 
 class Message {

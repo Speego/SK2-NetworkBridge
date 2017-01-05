@@ -81,7 +81,14 @@ int GameManager::findTable(int tableID) {
 }
 
 void GameManager::updateTables() {
-
+  for (int i=0; i<(int)tables->size(); i++) {
+    if ((*tables)[i]->state == TableState::READY) {
+      (*tables)[i]->createCards();
+      createCardsMessages(i);
+      // prepare for bidding
+      (*tables)[i]->state = TableState::BIDDING_ON;
+    }
+  }
 }
 
 void GameManager::removePlayer(int clientID) {
@@ -146,6 +153,17 @@ void GameManager::joinTable(int playerID, Message* msg) {
     printf("%s\n", notNumber);
   } catch (string noTable) {
     printf("%s\n", noTable.c_str());
+  }
+}
+
+void GameManager::createCardsMessages(int tableVectorPosition) {
+  string msg;
+  int receiver;
+  for (int i=0; i<(*tables)[tableVectorPosition]->getNumberOfPlayers(); i++) {
+    msg = convertNumberToString((int)MessageType::CARDS) + ":";
+    msg += (*tables)[tableVectorPosition]->getCardsOfPlayer(i);
+    receiver = (*tables)[tableVectorPosition]->getPlayerID(i);
+    addMessageToSend(convertConstChar(msg.c_str()), receiver);
   }
 }
 

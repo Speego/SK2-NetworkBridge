@@ -1,5 +1,13 @@
 #include "player.h"
 
+bool compareCardsSuit(Card* x, Card* y) {
+  return (int)x->suit < (int)y->suit;
+}
+
+bool compareCardsType(Card*x, Card* y) {
+  return (int)x->type < (int)y->type;
+}
+
 Player::Player(int ID, PlayerState st) {
   id = ID;
   state = st;
@@ -16,8 +24,7 @@ Player::Player(int ID, char* name, PlayerState st) {
 
 Player::~Player() {
   delete nickname;
-  for (int i=0; i<(int)cards->size(); i++)
-    delete (*cards)[i];
+  cards->clear();
   delete cards;
 }
 
@@ -32,4 +39,34 @@ void Player::resetCards() {
 
 void Player::insertCard(Card* card) {
   cards->push_back(card);
+}
+
+int Player::getNumberOfCards() {
+  return (int)cards->size();
+}
+
+string Player::getCardsMessage() {
+  string msg;
+  for (int i=0; i<(int)cards->size(); i++)
+    msg += convertNumberToString((int)(*cards)[i]->suit) + '-' + convertNumberToString((int)(*cards)[i]->type) + ',';
+  return msg;
+}
+
+string Player::convertNumberToString(int number) {
+  if (number < 10)
+    return "0" + to_string(number);
+  return to_string(number);
+}
+
+void Player::sortCards() {
+  sortCardsType();
+  sortCardsSuit();
+}
+
+void Player::sortCardsSuit() {
+  sort(cards->begin(), cards->end(), compareCardsSuit);
+}
+
+void Player::sortCardsType() {
+  sort(cards->begin(), cards->end(), compareCardsType);
 }

@@ -7,9 +7,15 @@
 #include <string.h>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using std::string;
+using std::to_string;
 using std::vector;
+using std::sort;
+
+bool compareCardsSuit(Card*, Card*);
+bool compareCardsType(Card*, Card*);
 
 enum class PlayerState {
   fresh,
@@ -37,6 +43,14 @@ public:
   void setName(Message*);
   void resetCards();
   void insertCard(Card*);
+  int getNumberOfCards();
+  string getCardsMessage();
+  void sortCards();
+
+private:
+  string convertNumberToString(int);
+  void sortCardsSuit();
+  void sortCardsType();
 };
 
 #endif // PLAYER_H

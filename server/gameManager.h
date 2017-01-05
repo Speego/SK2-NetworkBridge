@@ -26,7 +26,8 @@ private:
   vector<Table*>* tables;
   vector<Player*>* players;
 
-  vector<string> messageTypesNames = {"Disconnected", "Nickname", "SendTables", "CreateTable", "JoinTable"};
+  vector<string> messageTypesNames = {"Disconnected", "Nickname", "SendTables", "CreateTable", "JoinTable",
+                                      "Cards"};
 
   int tablesID;
 
@@ -55,6 +56,8 @@ private:
 
   void createTable(int);
   void joinTable(int, Message*);
+
+  void createCardsMessages(int);
 
   void addMessageToSend(char*, int);
   string convertNumberToString(int);
