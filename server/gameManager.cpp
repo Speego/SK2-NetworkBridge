@@ -4,14 +4,14 @@ GameManager::GameManager() {
   messagesNew = new queue<Message*>;
   messagesToSend = new queue<Message*>;
   tables = new vector<Table*>;
-  newPlayers = new vector<Player*>;
+  players = new vector<Player*>;
 }
 
 GameManager::~GameManager() {
   delete messagesNew;
   delete messagesToSend;
   delete tables;
-  delete newPlayers;
+  delete players;
 }
 
 void GameManager::update() {
@@ -19,7 +19,11 @@ void GameManager::update() {
 
   while (!messagesNew->empty()) {
     msg = messagesNew->front();
-    interpretMessage(msg);
+    try {
+      interpretMessage(msg);
+    } catch (char const* wrongType) {
+      printf("%s\n", wrongType);
+    }
     messagesNew->pop();
     delete msg;
   }
@@ -29,10 +33,42 @@ void GameManager::interpretMessage(Message* msg) {
   printf("gameManager.cpp: Interpreted message is: %s.\n", msg->getMessage());
   try {
     MessageType msgType = msg->getMessageType();
+    if ((int)msgType >= (int)messageTypesNames.size())
+      throw "gameManager.cpp: Number of message is out of range.";
     printf("gameManager.cpp: Message %d - %s.\n", msgType, messageTypesNames[(int)msgType].c_str());
+    chooseTask(msg, msgType);
   } catch (char const* error) {
     printf("%s\n", error);
   }
+}
+
+void GameManager::chooseTask(Message* msg, MessageType msgType) {
+  int senderID = msg->getSenderID();
+
+  switch(msgType) {
+    case MessageType::DISCONNECTED:
+      removePlayer(senderID);
+      break;
+    default: break;
+  }
+}
+
+void GameManager::removePlayer(int clientID) {
+  try {
+    int playerVectorPosition = findPlayer(clientID);
+    players->erase(players->begin() + playerVectorPosition);
+    printf("gameManager.cpp: Player with ID %d removed. Number of players: %d.\n", clientID, (int)players->size());
+  } catch(char const* noPlayer) {
+    printf("%s\n", noPlayer);
+  }
+}
+
+int GameManager::findPlayer(int clientID) {
+  for(int i=0; i<(int)players->size(); i++) {
+    if ((*players)[i]->id == clientID)
+      return i;
+  }
+  throw "gameManager.cpp: No player with ID " + clientID;
 }
 
 int GameManager::getReceiverID() {
@@ -66,5 +102,5 @@ void GameManager::addMessage(char* newMessage, int sender) {
 }
 
 void GameManager::addPlayer(int ID) {
-  newPlayers->push_back(new Player(ID, PlayerState::fresh));
+  players->push_back(new Player(ID, PlayerState::fresh));
 }

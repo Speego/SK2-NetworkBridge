@@ -23,7 +23,7 @@ private:
   queue<Message*>* messagesToSend;
 
   vector<Table*>* tables;
-  vector<Player*>* newPlayers;
+  vector<Player*>* players;
 
   vector<string> messageTypesNames = {"Disconnected", "Nickname", "JoinTable"};
 
@@ -40,6 +40,10 @@ public:
 
 private:
   void interpretMessage(Message*);
+  void chooseTask(Message*, MessageType);
+
+  void removePlayer(int);
+  int findPlayer(int);
 };
 
 #endif // GAMEMANAGER_H
