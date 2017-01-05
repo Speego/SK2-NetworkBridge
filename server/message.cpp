@@ -25,7 +25,9 @@ int Message::getReceiverID() {
 
 MessageType Message::getMessageType() {
   try {
-    int msgNumber = convertToNumber();
+    string s;
+    s = msg->substr(0,2);
+    int msgNumber = convertToNumber(s);
     return (MessageType)msgNumber;
   } catch (char const* error) {
     if (isNull())
@@ -34,27 +36,37 @@ MessageType Message::getMessageType() {
   }
 }
 
-int Message::convertToNumber() {
-  string* s = new string();
+string Message::getPlayerName() {
+  return getMsgAfterColon();
+}
+
+int Message::getTableToJoin() {
+  try {
+    int id;
+    string strID = getMsgAfterColon();
+    id = convertToNumber(strID);
+    return id;
+  } catch (char const* notNumber) {
+    throw notNumber;
+  }
+}
+
+string Message::getMsgAfterColon() {
+  return msg->substr(3);
+}
+
+int Message::convertToNumber(string s) {
   int num;
   try {
-    (*s) = msg->substr(0,2);
-    num = stoi(*s, nullptr);
+    num = stoi(s, nullptr);
   } catch (const std::invalid_argument& ia) {
-    delete s;
     throw "message.cpp: ERROR, wrong message type.";
   } catch (const std::out_of_range& oor) {
-    delete s;
     throw "message.cpp: ERROR, wrong message type.";
   }
-  delete s;
   return num;
 }
 
 bool Message::isNull() {
   return (*msg) == "";
-}
-
-string Message::getPlayerName() {
-  return msg->substr(3);
 }

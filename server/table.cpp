@@ -32,3 +32,24 @@ void Table::removePlayer(int playerID) {
     printf("%s\n", noPlayer);
   }
 }
+
+void Table::join(Player* player) {
+  players->push_back(player);
+  if (getNumberOfPlayers() == 4)
+    state = TableState::READY;
+}
+
+bool Table::canJoin(int playerID) {
+  if (getNumberOfPlayers() < 4 && !playerAtTable(playerID))
+    return true;
+  return false;
+}
+
+bool Table::playerAtTable(int playerID) {
+  try {
+    findPlayer(playerID);
+    return true;
+  } catch (string noPlayer) {
+    return false;
+  }
+}

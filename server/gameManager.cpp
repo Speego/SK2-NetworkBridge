@@ -58,6 +58,7 @@ void GameManager::chooseTask(Message* msg, MessageType msgType) {
       createTable(senderID);
       break;
     case MessageType::JOIN_TABLE:
+      joinTable(senderID, msg);
       break;
     default: break;
   }
@@ -123,6 +124,24 @@ void GameManager::createTable(int playerID) {
     tablesID++;
   } catch(char const* noPlayer) {
     printf("%s\n", noPlayer);
+  }
+}
+
+void GameManager::joinTable(int playerID, Message* msg) {
+  try {
+    int tableID = msg->getTableToJoin();
+    int tableVectorPosition = findTable(tableID);
+    if ((*tables)[tableVectorPosition]->canJoin(playerID)) {
+      int playerVectorPosition = findPlayer(playerID);
+      (*players)[playerVectorPosition]->state = PlayerState::waitingAtTable;
+      Player* player = (*players)[playerVectorPosition];
+      (*tables)[tableVectorPosition]->join(player);
+    } else
+      printf("gameManager.cpp: Player with ID %d can't join table ID %d!\n", playerID, tableID);
+  } catch (char const* notNumber) {
+    printf("%s\n", notNumber);
+  } catch (string noTable) {
+    printf("%s\n", noTable.c_str());
   }
 }
 

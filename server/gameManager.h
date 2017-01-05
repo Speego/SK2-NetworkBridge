@@ -53,6 +53,7 @@ private:
   void createTablesMessage(int, MessageType);
 
   void createTable(int);
+  void joinTable(int, Message*);
 
   void addMessageToSend(char*, int);
   string convertNumberToString(int);

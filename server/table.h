@@ -31,6 +31,11 @@ public:
   int getNumberOfPlayers();
   int findPlayer(int);
   void removePlayer(int);
+  void join(Player*);
+  bool canJoin(int);
+
+private:
+  bool playerAtTable(int);
 };
 
 #endif // TABLE_H

@@ -31,10 +31,12 @@ public:
   int getReceiverID();
   MessageType getMessageType();
   string getPlayerName();
+  int getTableToJoin();
 
 private:
-  int convertToNumber();
+  int convertToNumber(string);
   bool isNull();
+  string getMsgAfterColon();
 };
 
 #endif // MESSAGE_H
