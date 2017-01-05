@@ -160,7 +160,8 @@ void Server::createReceivingThread(int playerDescriptor) {
     printf("server.cpp: Error while creating receiving thread. Error code: %d\n", createResult);
     exit(-1);
   } else {
-    numberOfClients++;
     clientsDescriptors->push_back(playerDescriptor);
+    gameManager->addPlayer(numberOfClients);
+    numberOfClients++;
   }
 }

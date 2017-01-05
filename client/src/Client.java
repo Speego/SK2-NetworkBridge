@@ -8,14 +8,19 @@ import java.nio.charset.Charset;
 public class Client {
 	
     public static void main(String[] args) throws IOException{
-        Socket clientSocket = new Socket("localhost", 1235);
+        Socket clientSocket = new Socket("localhost", 1234);
 //        BufferedReader socketReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         BufferedReader inLine = new BufferedReader(new InputStreamReader(System.in));
         PrintStream socketWriter = new PrintStream(clientSocket.getOutputStream());
         String writtenLine = inLine.readLine();
         socketWriter.write(writtenLine.getBytes(Charset.forName("UTF-8")));
+
+        while (true) {
+	        writtenLine = inLine.readLine();
+	        socketWriter.write(writtenLine.getBytes(Charset.forName("UTF-8")));
+        }
 //        String serverMessage = socketReader.readLine();
 //        System.out.println(serverMessage);
-        clientSocket.close();
+//        clientSocket.close();
      }
  }

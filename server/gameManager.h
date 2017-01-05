@@ -9,21 +9,23 @@
 #include <stdlib.h>
 #include <queue>
 #include <string.h>
+#include <vector>
+#include <string>
 
 #define BUF_SIZE 1024
 
 using std::queue;
+using std::vector;
 
 class GameManager {
 private:
   queue<Message*>* messagesNew;
   queue<Message*>* messagesToSend;
 
-  enum messageType {
-    newPlayer,
-    newTable,
-    joinTable
-  };
+  vector<Table*>* tables;
+  vector<Player*>* newPlayers;
+
+  vector<string> messageTypesNames = {"Disconnected", "Nickname", "JoinTable"};
 
 public:
   GameManager();
@@ -33,6 +35,8 @@ public:
   int getReceiverID();
   char* getMessage();
   void addMessage(char*, int);
+
+  void addPlayer(int);
 
 private:
   void interpretMessage(Message*);

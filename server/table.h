@@ -2,6 +2,7 @@
 #define TABLE_H
 
 class Table {
+public:
   Table();
 };
 
