@@ -14,7 +14,10 @@ enum class MessageType {
   SEND_TABLES = 2,
   CREATE_TABLE = 3,
   JOIN_TABLE = 4,
-  CARDS = 5
+  CARDS = 5,
+  START_BID = 6,
+  GIVEN_BID = 7,
+  SEND_BID = 8
 };
 
 class Message {
@@ -33,6 +36,8 @@ public:
   MessageType getMessageType();
   string getPlayerName();
   int getTableToJoin();
+  int getBidSuit();
+  int getBidType();
 
 private:
   int convertToNumber(string);

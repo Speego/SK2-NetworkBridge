@@ -30,6 +30,13 @@ private:
   vector<Player*>* players;
   vector<Card*>* cards;
 
+  int numberOfPlayersResponses;
+  int bidWinner;
+  int currentPlayer;
+  int trumpsHeight;
+  CardSuit trumpsSuit;
+  int numberOfPasses;
+
 public:
   Table(int, Player*);
   ~Table();
@@ -45,11 +52,21 @@ public:
   string getCardsOfPlayer(int);
   int getPlayerID(int);
 
+  void prepareForBidding();
+  int getBidderID();
+  bool isBidCorrect(CardSuit, int);
+  void bid(CardSuit, int);
+  int getPlayerNotBiddingID(int);
+  void changeTurn();
+  bool biddingOver();
+
 private:
   bool playerAtTable(int);
   void generateCards();
   void randomShuffle();
   void dealCards();
+
+  void playerPasses();
 };
 
 #endif // TABLE_H

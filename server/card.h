@@ -2,6 +2,7 @@
 #define CARD_H
 
 enum class CardSuit {
+  NONE = -1,
   CLUBS = 0,
   DIAMONDS = 1,
   HEARTS = 2,

@@ -60,6 +60,9 @@ void GameManager::chooseTask(Message* msg, MessageType msgType) {
     case MessageType::JOIN_TABLE:
       joinTable(senderID, msg);
       break;
+    case MessageType::GIVEN_BID:
+      manageGivenBidMessage(msg);
+      break;
     default: break;
   }
 }
@@ -85,10 +88,16 @@ void GameManager::updateTables() {
     if ((*tables)[i]->state == TableState::READY) {
       (*tables)[i]->createCards();
       createCardsMessages(i);
-      // prepare for bidding
-      (*tables)[i]->state = TableState::BIDDING_ON;
+      (*tables)[i]->prepareForBidding();
+      createBidPromptMessage(i);
     }
   }
+}
+
+void GameManager::createBidPromptMessage(int tableVectorPosition) {
+  string msg = convertNumberToString((int)MessageType::START_BID) + ":";
+  int receiver = (*tables)[tableVectorPosition]->getBidderID();
+  addMessageToSend(convertConstChar(msg.c_str()), receiver);
 }
 
 void GameManager::removePlayer(int clientID) {
@@ -163,6 +172,37 @@ void GameManager::createCardsMessages(int tableVectorPosition) {
     msg = convertNumberToString((int)MessageType::CARDS) + ":";
     msg += (*tables)[tableVectorPosition]->getCardsOfPlayer(i);
     receiver = (*tables)[tableVectorPosition]->getPlayerID(i);
+    addMessageToSend(convertConstChar(msg.c_str()), receiver);
+  }
+}
+
+void GameManager::manageGivenBidMessage(Message* msg) {
+  CardSuit suit = (CardSuit)msg->getBidSuit();
+  int trumpsHeight = msg->getBidType();
+
+  int sender = msg->getSenderID();
+  int playerVectorPosition = findPlayer(sender);
+  int tableID = (*players)[playerVectorPosition]->tableID;
+  int tableVectorPosition = findTable(tableID);
+
+  if ((*tables)[tableVectorPosition]->isBidCorrect(suit, trumpsHeight)) {
+    (*tables)[tableVectorPosition]->bid(suit, trumpsHeight);
+    sendGivenBidToOthers(tableVectorPosition, suit, trumpsHeight);
+    // check if it's over
+    // if not, change turn
+    // if yes, prepareForGame and send prompt to start
+
+  } else {
+    createBidPromptMessage(tableVectorPosition);
+  }
+}
+
+void GameManager::sendGivenBidToOthers(int tableVectorPosition, CardSuit suit, int height) {
+  string msg = convertNumberToString((int)MessageType::SEND_BID) + ":";
+  msg += convertNumberToString((*tables)[tableVectorPosition]->getBidderID()) + "-";
+  msg += convertNumberToString((int)suit) + "-" + convertNumberToString(height);
+  for (int i=1; i<(int)(*tables)[tableVectorPosition]->getNumberOfPlayers(); i++) {
+    int receiver = (*tables)[tableVectorPosition]->getPlayerNotBiddingID(i);
     addMessageToSend(convertConstChar(msg.c_str()), receiver);
   }
 }

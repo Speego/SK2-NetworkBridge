@@ -51,6 +51,30 @@ int Message::getTableToJoin() {
   }
 }
 
+int Message::getBidSuit() {
+  try {
+    string s = getMsgAfterColon();
+    s = s.substr(0,2);
+    return convertToNumber(s);
+  } catch (char const* notNumber) {
+    return -1;
+  } catch (const std::out_of_range& oor) {
+    return -1;
+  }
+}
+
+int Message::getBidType() {
+  try {
+    string s = getMsgAfterColon();
+    s = s.substr(3,2);
+    return convertToNumber(s);
+  } catch (char const* notNumber) {
+    return -1;
+  } catch (const std::out_of_range& oor) {
+    return -1;
+  }
+}
+
 string Message::getMsgAfterColon() {
   return msg->substr(3);
 }

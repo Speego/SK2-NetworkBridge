@@ -27,7 +27,7 @@ private:
   vector<Player*>* players;
 
   vector<string> messageTypesNames = {"Disconnected", "Nickname", "SendTables", "CreateTable", "JoinTable",
-                                      "Cards"};
+                                      "Cards", "StartBid", "GivenBid", "SendBid"};
 
   int tablesID;
 
@@ -48,6 +48,7 @@ private:
   int findPlayer(int);
   int findTable(int);
   void updateTables();
+  void createBidPromptMessage(int);
 
   void removePlayer(int);
 
@@ -58,6 +59,9 @@ private:
   void joinTable(int, Message*);
 
   void createCardsMessages(int);
+
+  void manageGivenBidMessage(Message*);
+  void sendGivenBidToOthers(int, CardSuit, int);
 
   void addMessageToSend(char*, int);
   string convertNumberToString(int);

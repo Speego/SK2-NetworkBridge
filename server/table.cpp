@@ -100,3 +100,59 @@ string Table::getCardsOfPlayer(int playerVectorPosition) {
 int Table::getPlayerID(int playerVectorPosition) {
   return (*players)[playerVectorPosition]->id;
 }
+
+void Table::prepareForBidding() {
+  numberOfPlayersResponses = 0;
+  currentPlayer = 0;
+  bidWinner = 0;
+  trumpsHeight = 0;
+  trumpsSuit = CardSuit::NONE;
+  state = TableState::BIDDING_ON;
+}
+
+int Table::getBidderID() {
+  return (*players)[currentPlayer]->id;
+}
+
+bool Table::isBidCorrect(CardSuit suit, int height) {
+  int suitNumber = (int)suit;
+
+  if (suit == CardSuit::NONE)
+    return true;
+  if ((height > 0) && (height < 8) && (height > trumpsHeight)) {
+    if ((suitNumber >= 0) && (suitNumber <= 4))
+      return true;
+    return false;
+  }
+  if ((height == trumpsHeight) && (height <= 4) && (height > (int)trumpsSuit))
+    return true;
+  return false;
+}
+
+void Table::bid(CardSuit suit, int height) {
+  numberOfPlayersResponses++;
+  if (suit == CardSuit::NONE) {
+    playerPasses();
+  } else {
+    trumpsSuit = suit;
+    trumpsHeight = height;
+    bidWinner = currentPlayer;
+    numberOfPasses = 0;
+  }
+}
+
+int Table::getPlayerNotBiddingID(int shift) {
+  return (*players)[(currentPlayer+shift)%getNumberOfPlayers()]->id;
+}
+
+void Table::playerPasses() {
+  numberOfPasses++;
+}
+
+void Table::changeTurn() {
+  currentPlayer = (currentPlayer + 1) % (int)players->size();
+}
+
+bool Table::biddingOver() {
+  return false;
+}
