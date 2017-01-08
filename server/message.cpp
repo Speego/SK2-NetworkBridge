@@ -52,27 +52,19 @@ int Message::getTableToJoin() {
 }
 
 int Message::getBidSuit() {
-  try {
-    string s = getMsgAfterColon();
-    s = s.substr(0,2);
-    return convertToNumber(s);
-  } catch (char const* notNumber) {
-    return -1;
-  } catch (const std::out_of_range& oor) {
-    return -1;
-  }
+  return getBidOrCardSuit();
 }
 
-int Message::getBidType() {
-  try {
-    string s = getMsgAfterColon();
-    s = s.substr(3,2);
-    return convertToNumber(s);
-  } catch (char const* notNumber) {
-    return -1;
-  } catch (const std::out_of_range& oor) {
-    return -1;
-  }
+int Message::getBidHeight() {
+  return getBidHeightOrCardType();
+}
+
+int Message::getCardSuit() {
+  return getBidOrCardSuit();
+}
+
+int Message::getCardType() {
+  return getBidHeightOrCardType();
 }
 
 string Message::getMsgAfterColon() {
@@ -93,4 +85,28 @@ int Message::convertToNumber(string s) {
 
 bool Message::isNull() {
   return (*msg) == "";
+}
+
+int Message::getBidOrCardSuit() {
+  try {
+    string s = getMsgAfterColon();
+    s = s.substr(0,2);
+    return convertToNumber(s);
+  } catch (char const* notNumber) {
+    return -1;
+  } catch (const std::out_of_range& oor) {
+    return -1;
+  }
+}
+
+int Message::getBidHeightOrCardType() {
+  try {
+    string s = getMsgAfterColon();
+    s = s.substr(3,2);
+    return convertToNumber(s);
+  } catch (char const* notNumber) {
+    return -1;
+  } catch (const std::out_of_range& oor) {
+    return -1;
+  }
 }

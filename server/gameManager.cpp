@@ -63,6 +63,9 @@ void GameManager::chooseTask(Message* msg, MessageType msgType) {
     case MessageType::GIVEN_BID:
       manageGivenBidMessage(msg);
       break;
+    case MessageType::GIVEN_CARD:
+      manageGivenCardMessage(msg);
+      break;
     default: break;
   }
 }
@@ -168,7 +171,8 @@ void GameManager::joinTable(int playerID, Message* msg) {
 void GameManager::createCardsMessages(int tableVectorPosition) {
   string msg;
   int receiver;
-  for (int i=0; i<(*tables)[tableVectorPosition]->getNumberOfPlayers(); i++) {
+  int numberOfPlayers = (*tables)[tableVectorPosition]->getNumberOfPlayers();
+  for (int i=0; i<numberOfPlayers; i++) {
     msg = convertNumberToString((int)MessageType::CARDS) + ":";
     msg += (*tables)[tableVectorPosition]->getCardsOfPlayer(i);
     receiver = (*tables)[tableVectorPosition]->getPlayerID(i);
@@ -178,22 +182,28 @@ void GameManager::createCardsMessages(int tableVectorPosition) {
 
 void GameManager::manageGivenBidMessage(Message* msg) {
   CardSuit suit = (CardSuit)msg->getBidSuit();
-  int trumpsHeight = msg->getBidType();
+  int trumpsHeight = msg->getBidHeight();
 
   int sender = msg->getSenderID();
   int playerVectorPosition = findPlayer(sender);
   int tableID = (*players)[playerVectorPosition]->tableID;
   int tableVectorPosition = findTable(tableID);
 
-  if ((*tables)[tableVectorPosition]->isBidCorrect(suit, trumpsHeight)) {
-    (*tables)[tableVectorPosition]->bid(suit, trumpsHeight);
-    sendGivenBidToOthers(tableVectorPosition, suit, trumpsHeight);
-    // check if it's over
-    // if not, change turn
-    // if yes, prepareForGame and send prompt to start
-
-  } else {
-    createBidPromptMessage(tableVectorPosition);
+  if ((*tables)[tableVectorPosition]->isPlayerTurn(sender)) {
+    if ((*tables)[tableVectorPosition]->isBidCorrect(suit, trumpsHeight)) {
+      (*tables)[tableVectorPosition]->bid(suit, trumpsHeight);
+      sendGivenBidToOthers(tableVectorPosition, suit, trumpsHeight);
+      if ((*tables)[tableVectorPosition]->biddingOver()) {
+        sendEndOfBidding(tableVectorPosition);
+        (*tables)[tableVectorPosition]->prepareForGame();
+        createPlayCardPromptMessage(tableVectorPosition);
+      } else {
+        (*tables)[tableVectorPosition]->changeTurn();
+        createBidPromptMessage(tableVectorPosition);
+      }
+    } else {
+      createBidPromptMessage(tableVectorPosition);
+    }
   }
 }
 
@@ -201,10 +211,65 @@ void GameManager::sendGivenBidToOthers(int tableVectorPosition, CardSuit suit, i
   string msg = convertNumberToString((int)MessageType::SEND_BID) + ":";
   msg += convertNumberToString((*tables)[tableVectorPosition]->getBidderID()) + "-";
   msg += convertNumberToString((int)suit) + "-" + convertNumberToString(height);
-  for (int i=1; i<(int)(*tables)[tableVectorPosition]->getNumberOfPlayers(); i++) {
-    int receiver = (*tables)[tableVectorPosition]->getPlayerNotBiddingID(i);
+  int numberOfPlayers = (*tables)[tableVectorPosition]->getNumberOfPlayers();
+  int receiver;
+  for (int i=1; i<numberOfPlayers; i++) {
+    receiver = (*tables)[tableVectorPosition]->getPlayerNotBiddingID(i);
     addMessageToSend(convertConstChar(msg.c_str()), receiver);
   }
+}
+
+void GameManager::sendEndOfBidding(int tableVectorPosition) {
+  string msg;
+  int numberOfPlayers = (*tables)[tableVectorPosition]->getNumberOfPlayers();
+  int receiver;
+  int biddingResult;
+  for (int i=0; i<numberOfPlayers; i++) {
+    biddingResult = (*tables)[tableVectorPosition]->getPlayerIDByBidding((BiddingResult)i);
+    (*tables)[tableVectorPosition]->setPlayerGameType((BiddingResult)biddingResult);
+    msg = convertNumberToString((int)MessageType::BIDDING_RESULT) + ":" + convertNumberToString(biddingResult);
+    receiver = (*tables)[tableVectorPosition]->getPlayerID(i);
+    addMessageToSend(convertConstChar(msg.c_str()), receiver);
+  }
+}
+
+void GameManager::createPlayCardPromptMessage(int tableVectorPosition) {
+  string msg = convertNumberToString((int)MessageType::PLAY_CARD) + ":";
+  int receiver = (*tables)[tableVectorPosition]->getCurrentPlayerID();
+  addMessageToSend(convertConstChar(msg.c_str()), receiver);
+}
+
+void GameManager::manageGivenCardMessage(Message* msg) {
+  CardSuit suit = (CardSuit)msg->getCardSuit();
+  CardType type = (CardType)msg->getCardType();
+
+  int sender = msg->getSenderID();
+  int playerVectorPosition = findPlayer(sender);
+  int tableID = (*players)[playerVectorPosition]->tableID;
+  int tableVectorPosition = findTable(tableID);
+
+  if ((*tables)[playerVectorPosition]->isPlayerTurn(sender)) {
+    if ((*tables)[tableVectorPosition]->isCardCorrect(suit, type, sender)) {
+
+    } else {
+      createPlayCardPromptMessage(tableVectorPosition);
+    }
+  }
+
+  // if ((*tables)[tableVectorPosition]->isBidCorrect(suit, trumpsHeight)) {
+  //   (*tables)[tableVectorPosition]->bid(suit, trumpsHeight);
+  //   sendGivenBidToOthers(tableVectorPosition, suit, trumpsHeight);
+  //   if ((*tables)[tableVectorPosition]->biddingOver()) {
+  //     sendEndOfBidding(tableVectorPosition);
+  //     (*tables)[tableVectorPosition]->prepareForGame();
+  //     createPlayCardPromptMessage(tableVectorPosition);
+  //   } else {
+  //     (*tables)[tableVectorPosition]->changeTurn();
+  //     createBidPromptMessage(tableVectorPosition);
+  //   }
+  // } else {
+  //   createBidPromptMessage(tableVectorPosition);
+  // }
 }
 
 int GameManager::getReceiverID() {

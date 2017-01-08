@@ -25,11 +25,18 @@ enum class PlayerState {
   dummy
 };
 
+enum class GamePlayerType {
+  NONE = -1,
+  DECLARER = 0,
+  DEFENDER = 1
+};
+
 class Player {
 public:
   int id;
   string* nickname;
   PlayerState state;
+  GamePlayerType gamePlayerType;
   int tableID;
 
 private:
@@ -47,10 +54,15 @@ public:
   string getCardsMessage();
   void sortCards();
 
+  bool hasCard(CardSuit, CardType);
+  bool hasSuit(CardSuit);
+
 private:
   string convertNumberToString(int);
   void sortCardsSuit();
   void sortCardsType();
+
+  int findCard(CardSuit, CardType);
 };
 
 #endif // PLAYER_H

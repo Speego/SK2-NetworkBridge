@@ -17,7 +17,12 @@ enum class MessageType {
   CARDS = 5,
   START_BID = 6,
   GIVEN_BID = 7,
-  SEND_BID = 8
+  SEND_BID = 8,
+  BIDDING_RESULT = 9,
+  PLAY_CARD = 10,
+  GIVEN_CARD = 11,
+  SEND_CARD = 12,
+  ROUND_OVER = 13
 };
 
 class Message {
@@ -36,13 +41,20 @@ public:
   MessageType getMessageType();
   string getPlayerName();
   int getTableToJoin();
+
   int getBidSuit();
-  int getBidType();
+  int getBidHeight();
+
+  int getCardSuit();
+  int getCardType();
 
 private:
   int convertToNumber(string);
   bool isNull();
   string getMsgAfterColon();
+
+  int getBidOrCardSuit();
+  int getBidHeightOrCardType();
 };
 
 #endif // MESSAGE_H

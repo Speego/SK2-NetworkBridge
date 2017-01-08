@@ -21,6 +21,13 @@ enum class TableState {
   END_ON = 5
 };
 
+enum class BiddingResult {
+  DECLARER = 0,
+  FIRST_DEFENDER = 1,
+  DUMMY = 2,
+  SECOND_DEFENDER = 3
+};
+
 class Table {
 public:
   TableState state;
@@ -36,6 +43,15 @@ private:
   int trumpsHeight;
   CardSuit trumpsSuit;
   int numberOfPasses;
+
+  CardSuit firstSuit;
+  CardSuit winSuit;
+  CardType winType;
+  int declarerScore;
+  GamePlayerType roundWinner;
+  int cardCounter;
+  int roundCounter;
+  bool dummyPlaying;
 
 public:
   Table(int, Player*);
@@ -59,6 +75,13 @@ public:
   int getPlayerNotBiddingID(int);
   void changeTurn();
   bool biddingOver();
+  int getPlayerIDByBidding(BiddingResult);
+  void setPlayerGameType(BiddingResult);
+  void prepareForGame();
+
+  int getCurrentPlayerID();
+  bool isPlayerTurn(int);
+  bool isCardCorrect(CardSuit, CardType, int);
 
 private:
   bool playerAtTable(int);
@@ -67,6 +90,10 @@ private:
   void dealCards();
 
   void playerPasses();
+
+  bool cardWithWrongSuit(CardSuit);
+  bool cardWithWrongType(CardType);
+  bool iscardFirst();
 };
 
 #endif // TABLE_H

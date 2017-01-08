@@ -70,3 +70,30 @@ void Player::sortCardsSuit() {
 void Player::sortCardsType() {
   sort(cards->begin(), cards->end(), compareCardsType);
 }
+
+bool Player::hasCard(CardSuit suit, CardType type) {
+  try {
+    findCard(suit, type);
+    return true;
+  } catch(const char* noCard) {
+    return false;
+  }
+}
+
+bool Player::hasSuit(CardSuit suit) {
+  int numberOfCards = cards->size();
+  for (int i=0; i<numberOfCards; i++) {
+    if (((*cards)[i]->suit == suit))
+      return true;
+  }
+  return false;
+}
+
+int Player::findCard(CardSuit suit, CardType type) {
+  int numberOfCards = cards->size();
+  for (int i=0; i<numberOfCards; i++) {
+    if (((*cards)[i]->suit == suit) && ((*cards)[i]->type == type))
+      return i;
+  }
+  throw "player.cpp: Player %d - no card found.";
+}

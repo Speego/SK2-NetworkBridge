@@ -142,7 +142,7 @@ void Table::bid(CardSuit suit, int height) {
 }
 
 int Table::getPlayerNotBiddingID(int shift) {
-  return (*players)[(currentPlayer+shift)%getNumberOfPlayers()]->id;
+  return (*players)[(currentPlayer + shift) % getNumberOfPlayers()]->id;
 }
 
 void Table::playerPasses() {
@@ -150,9 +150,86 @@ void Table::playerPasses() {
 }
 
 void Table::changeTurn() {
-  currentPlayer = (currentPlayer + 1) % (int)players->size();
+  currentPlayer = (currentPlayer + 1) % getNumberOfPlayers();
 }
 
 bool Table::biddingOver() {
+  if (numberOfPasses > 4)
+    return true;
+  if ((numberOfPasses == 3) && (numberOfPlayersResponses > 3))
+    return true;
   return false;
+}
+
+int Table::getPlayerIDByBidding(BiddingResult br) {
+  return (*players)[(bidWinner + (int)br) % getNumberOfPlayers()]->id;
+}
+
+void Table::setPlayerGameType(BiddingResult br) {
+  (*players)[(bidWinner + (int)br) % getNumberOfPlayers()]->gamePlayerType = (GamePlayerType)((int)br % 2);
+}
+
+void Table::prepareForGame() {
+  state = TableState::GAME_ON;
+  currentPlayer = (bidWinner + 1) % getNumberOfPlayers();
+  winSuit = CardSuit::NONE;
+  winType = CardType::NONE;
+  firstSuit = CardSuit::NONE;
+  declarerScore = 0;
+  roundWinner = GamePlayerType::NONE;
+  cardCounter = 0;
+  roundCounter = 0;
+  dummyPlaying = false;
+}
+
+int Table::getCurrentPlayerID() {
+  return (*players)[currentPlayer]->id;
+}
+
+bool Table::isPlayerTurn(int playerID) {
+  if ((*players)[currentPlayer]->id == playerID)
+    return true;
+  return false;
+}
+
+bool Table::isCardCorrect(CardSuit suit, CardType type, int playerID) {
+  if (state != TableState::GAME_ON)
+    return false;
+
+  try {
+    int playerVectorPosition = findPlayer(playerID);
+    if (cardWithWrongSuit(suit) || cardWithWrongType(type))
+      return false;
+
+    if ((*players)[playerVectorPosition]->hasCard(suit, type)) {
+      if (iscardFirst()) {
+        return true;
+      } else if ((*players)[playerVectorPosition]->hasSuit(firstSuit)) {
+        if (firstSuit == suit)
+          return true;
+      } else {
+        return true;
+      }
+    }
+
+    return false;
+  } catch(const char* noPlayer) {
+    return false;
+  }
+}
+
+bool Table::cardWithWrongSuit(CardSuit suit) {
+  if (((int)suit < (int)CardSuit::CLUBS) || ((int)suit > (int)CardSuit::SPADES))
+    return true;
+  return false;
+}
+
+bool Table::cardWithWrongType(CardType type) {
+  if (((int)type < (int)CardType::TWO) || ((int)type > (int)CardType::ACE))
+    return true;
+  return false;
+}
+
+bool Table::iscardFirst() {
+  return (firstSuit == CardSuit::NONE);
 }
