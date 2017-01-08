@@ -22,7 +22,8 @@ enum class MessageType {
   PLAY_CARD = 10,
   GIVEN_CARD = 11,
   SEND_CARD = 12,
-  ROUND_OVER = 13
+  ROUND_OVER = 13,
+  GAME_RESULT = 14
 };
 
 class Message {

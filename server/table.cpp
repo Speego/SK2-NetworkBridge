@@ -141,7 +141,7 @@ void Table::bid(CardSuit suit, int height) {
   }
 }
 
-int Table::getPlayerNotBiddingID(int shift) {
+int Table::getNotCurrentPlayerID(int shift) {
   return (*players)[(currentPlayer + shift) % getNumberOfPlayers()]->id;
 }
 
@@ -166,7 +166,7 @@ int Table::getPlayerIDByBidding(BiddingResult br) {
 }
 
 void Table::setPlayerGameType(BiddingResult br) {
-  (*players)[(bidWinner + (int)br) % getNumberOfPlayers()]->gamePlayerType = (GamePlayerType)((int)br % 2);
+  (*players)[(bidWinner + (int)br) % getNumberOfPlayers()]->gamePlayerType = (GamePlayerType)((int)br);
 }
 
 void Table::prepareForGame() {
@@ -176,7 +176,7 @@ void Table::prepareForGame() {
   winType = CardType::NONE;
   firstSuit = CardSuit::NONE;
   declarerScore = 0;
-  roundWinner = GamePlayerType::NONE;
+  roundWinner = -1;
   cardCounter = 0;
   roundCounter = 0;
   dummyPlaying = false;
@@ -202,7 +202,7 @@ bool Table::isCardCorrect(CardSuit suit, CardType type, int playerID) {
       return false;
 
     if ((*players)[playerVectorPosition]->hasCard(suit, type)) {
-      if (iscardFirst()) {
+      if (isCardFirst()) {
         return true;
       } else if ((*players)[playerVectorPosition]->hasSuit(firstSuit)) {
         if (firstSuit == suit)
@@ -230,6 +230,66 @@ bool Table::cardWithWrongType(CardType type) {
   return false;
 }
 
-bool Table::iscardFirst() {
+bool Table::isCardFirst() {
   return (firstSuit == CardSuit::NONE);
+}
+
+void Table::playCard(CardSuit suit, CardType type) {
+  cardCounter++;
+  (*players)[currentPlayer]->removeCard(suit, type);
+  if (isCardFirst())
+    firstSuit = suit;
+  if (isCardWinning(suit, type)) {
+    roundWinner = currentPlayer;
+    winSuit = suit;
+    winType = type;
+  }
+}
+
+bool Table::isCardWinning(CardSuit suit, CardType type) {
+  if (isCardFirst())
+    return true;
+  if (suit == winSuit) {
+    if ((int)type > (int)winType)
+      return true;
+  } else if ((winSuit != trumpsSuit) && (suit == trumpsSuit)) {
+    return true;
+  }
+  return false;
+}
+
+bool Table::roundOver() {
+  return (cardCounter == 4);
+}
+
+GamePlayerType Table::getRoundWinner() {
+  return (*players)[roundWinner]->gamePlayerType;
+}
+
+void Table::endRound() {
+  GamePlayerType typeOfWinner = (*players)[roundWinner]->gamePlayerType;
+  if ((typeOfWinner == GamePlayerType::DECLARER) || (typeOfWinner == GamePlayerType::DUMMY))
+    declarerScore++;
+
+  firstSuit = CardSuit::NONE;
+  winType = CardType::NONE;
+  firstSuit = CardSuit::NONE;
+  cardCounter = 0;
+  roundCounter++;
+  currentPlayer = roundWinner;
+  roundWinner = -1;
+}
+
+bool Table::gameOver() {
+  return (roundCounter == 13);
+}
+
+GameResult Table::getGameResult() {
+  if (declarerScore >= (6 + trumpsHeight))
+    return GameResult::WON;
+  return GameResult::LOST;
+}
+
+int Table::getScore() {
+  return declarerScore;
 }

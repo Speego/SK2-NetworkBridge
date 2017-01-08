@@ -28,7 +28,7 @@ private:
 
   vector<string> messageTypesNames = {"Disconnected", "Nickname", "SendTables", "CreateTable", "JoinTable",
                                       "Cards", "StartBid", "GivenBid", "SendBid", "BiddingResult", "PlayCard",
-                                      "GivenCard", "SendCard", "RoundOver"};
+                                      "GivenCard", "SendCard", "RoundOver", "GameResult"};
 
   int tablesID;
 
@@ -68,6 +68,10 @@ private:
   void createPlayCardPromptMessage(int);
 
   void manageGivenCardMessage(Message*);
+  void sendGivenCardToOthers(int, CardSuit, CardType);
+  void sendEndOfRound(int);
+  void sendEndOfGame(int);
+  void removeTable(int);
 
   void addMessageToSend(char*, int);
   string convertNumberToString(int);

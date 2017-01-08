@@ -214,26 +214,26 @@ void GameManager::sendGivenBidToOthers(int tableVectorPosition, CardSuit suit, i
   int numberOfPlayers = (*tables)[tableVectorPosition]->getNumberOfPlayers();
   int receiver;
   for (int i=1; i<numberOfPlayers; i++) {
-    receiver = (*tables)[tableVectorPosition]->getPlayerNotBiddingID(i);
+    receiver = (*tables)[tableVectorPosition]->getNotCurrentPlayerID(i);
     addMessageToSend(convertConstChar(msg.c_str()), receiver);
   }
 }
 
 void GameManager::sendEndOfBidding(int tableVectorPosition) {
+// <BIDDING_RESULT>:<BiddingResult (enum number)>
   string msg;
   int numberOfPlayers = (*tables)[tableVectorPosition]->getNumberOfPlayers();
   int receiver;
-  int biddingResult;
   for (int i=0; i<numberOfPlayers; i++) {
-    biddingResult = (*tables)[tableVectorPosition]->getPlayerIDByBidding((BiddingResult)i);
-    (*tables)[tableVectorPosition]->setPlayerGameType((BiddingResult)biddingResult);
-    msg = convertNumberToString((int)MessageType::BIDDING_RESULT) + ":" + convertNumberToString(biddingResult);
-    receiver = (*tables)[tableVectorPosition]->getPlayerID(i);
+    (*tables)[tableVectorPosition]->setPlayerGameType((BiddingResult)i);
+    msg = convertNumberToString((int)MessageType::BIDDING_RESULT) + ":" + convertNumberToString(i);
+    receiver = (*tables)[tableVectorPosition]->getPlayerIDByBidding((BiddingResult)i);
     addMessageToSend(convertConstChar(msg.c_str()), receiver);
   }
 }
 
 void GameManager::createPlayCardPromptMessage(int tableVectorPosition) {
+// <PLAY_CARD>:
   string msg = convertNumberToString((int)MessageType::PLAY_CARD) + ":";
   int receiver = (*tables)[tableVectorPosition]->getCurrentPlayerID();
   addMessageToSend(convertConstChar(msg.c_str()), receiver);
@@ -250,26 +250,67 @@ void GameManager::manageGivenCardMessage(Message* msg) {
 
   if ((*tables)[playerVectorPosition]->isPlayerTurn(sender)) {
     if ((*tables)[tableVectorPosition]->isCardCorrect(suit, type, sender)) {
+      (*tables)[tableVectorPosition]->playCard(suit, type);
+      sendGivenCardToOthers(tableVectorPosition, suit, type);
+      if ((*tables)[tableVectorPosition]->roundOver()) {
+        sendEndOfRound(tableVectorPosition);
+        (*tables)[tableVectorPosition]->endRound();
+        if ((*tables)[tableVectorPosition]->gameOver()) {
+          sendEndOfRound(tableVectorPosition);
+          // if yes, sum up game
+        } else {
+          createPlayCardPromptMessage(tableVectorPosition);
+        }
+      } else {
+        (*tables)[tableVectorPosition]->changeTurn();
+        createPlayCardPromptMessage(tableVectorPosition);
+      }
 
     } else {
       createPlayCardPromptMessage(tableVectorPosition);
     }
   }
+}
 
-  // if ((*tables)[tableVectorPosition]->isBidCorrect(suit, trumpsHeight)) {
-  //   (*tables)[tableVectorPosition]->bid(suit, trumpsHeight);
-  //   sendGivenBidToOthers(tableVectorPosition, suit, trumpsHeight);
-  //   if ((*tables)[tableVectorPosition]->biddingOver()) {
-  //     sendEndOfBidding(tableVectorPosition);
-  //     (*tables)[tableVectorPosition]->prepareForGame();
-  //     createPlayCardPromptMessage(tableVectorPosition);
-  //   } else {
-  //     (*tables)[tableVectorPosition]->changeTurn();
-  //     createBidPromptMessage(tableVectorPosition);
-  //   }
-  // } else {
-  //   createBidPromptMessage(tableVectorPosition);
-  // }
+void GameManager::sendGivenCardToOthers(int tableVectorPosition, CardSuit suit, CardType type) {
+  string msg = convertNumberToString((int)MessageType::SEND_CARD) + ":";
+  msg += convertNumberToString((*tables)[tableVectorPosition]->getCurrentPlayerID()) + "-";
+  msg += convertNumberToString((int)suit) + "-" + convertNumberToString((int)type);
+  int numberOfPlayers = (*tables)[tableVectorPosition]->getNumberOfPlayers();
+  int receiver;
+  for (int i=1; i<numberOfPlayers; i++) {
+    receiver = (*tables)[tableVectorPosition]->getNotCurrentPlayerID(i);
+    addMessageToSend(convertConstChar(msg.c_str()), receiver);
+  }
+}
+
+void GameManager::sendEndOfRound(int tableVectorPosition) {
+// <ROUND_OVER>:<GamePlayerType (enum number) who won round>
+  string msg = convertNumberToString((int)MessageType::ROUND_OVER) + ":";
+  msg += convertNumberToString((int)((*tables)[tableVectorPosition]->getRoundWinner()));
+  int numberOfPlayers = (*tables)[tableVectorPosition]->getNumberOfPlayers();
+  int receiver;
+  for (int i=0; i<numberOfPlayers; i++) {
+    receiver = (*tables)[tableVectorPosition]->getPlayerID(i);
+    addMessageToSend(convertConstChar(msg.c_str()), receiver);
+  }
+}
+
+void GameManager::sendEndOfGame(int tableVectorPosition) {
+// <GAME_RESULT>:<GameResult (enum number)>-<number of tricks taken>
+  string msg = convertNumberToString((int)MessageType::GAME_RESULT) + ":";
+  msg += convertNumberToString((int)(*tables)[tableVectorPosition]->getGameResult()) + '-';
+  msg += convertNumberToString((*tables)[tableVectorPosition]->getScore());
+  int numberOfPlayers = (*tables)[tableVectorPosition]->getNumberOfPlayers();
+  int receiver;
+  for (int i=0; i<numberOfPlayers; i++) {
+    receiver = (*tables)[tableVectorPosition]->getPlayerID(i);
+    addMessageToSend(convertConstChar(msg.c_str()), receiver);
+  }
+}
+
+void GameManager::removeTable(int tableVectorPosition) {
+  tables->erase(tables->begin() + tableVectorPosition);
 }
 
 int GameManager::getReceiverID() {

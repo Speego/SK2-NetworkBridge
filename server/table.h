@@ -28,6 +28,11 @@ enum class BiddingResult {
   SECOND_DEFENDER = 3
 };
 
+enum class GameResult {
+  WON = 0,
+  LOST = 1
+};
+
 class Table {
 public:
   TableState state;
@@ -48,7 +53,7 @@ private:
   CardSuit winSuit;
   CardType winType;
   int declarerScore;
-  GamePlayerType roundWinner;
+  int roundWinner;
   int cardCounter;
   int roundCounter;
   bool dummyPlaying;
@@ -72,7 +77,7 @@ public:
   int getBidderID();
   bool isBidCorrect(CardSuit, int);
   void bid(CardSuit, int);
-  int getPlayerNotBiddingID(int);
+  int getNotCurrentPlayerID(int);
   void changeTurn();
   bool biddingOver();
   int getPlayerIDByBidding(BiddingResult);
@@ -82,6 +87,14 @@ public:
   int getCurrentPlayerID();
   bool isPlayerTurn(int);
   bool isCardCorrect(CardSuit, CardType, int);
+  void playCard(CardSuit, CardType);
+
+  bool roundOver();
+  GamePlayerType getRoundWinner();
+  void endRound();
+  bool gameOver();
+  GameResult getGameResult();
+  int getScore();
 
 private:
   bool playerAtTable(int);
@@ -93,7 +106,9 @@ private:
 
   bool cardWithWrongSuit(CardSuit);
   bool cardWithWrongType(CardType);
-  bool iscardFirst();
+  bool isCardFirst();
+
+  bool isCardWinning(CardSuit, CardType);
 };
 
 #endif // TABLE_H

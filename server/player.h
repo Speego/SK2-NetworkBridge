@@ -28,7 +28,9 @@ enum class PlayerState {
 enum class GamePlayerType {
   NONE = -1,
   DECLARER = 0,
-  DEFENDER = 1
+  FIRST_DEFENDER = 1,
+  DUMMY = 2,
+  SECOND_DEFENDER = 3
 };
 
 class Player {
@@ -56,6 +58,7 @@ public:
 
   bool hasCard(CardSuit, CardType);
   bool hasSuit(CardSuit);
+  void removeCard(CardSuit, CardType);
 
 private:
   string convertNumberToString(int);

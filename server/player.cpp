@@ -89,6 +89,15 @@ bool Player::hasSuit(CardSuit suit) {
   return false;
 }
 
+void Player::removeCard(CardSuit suit, CardType type) {
+  try {
+    int cardVectorPosition = findCard(suit, type);
+    cards->erase(cards->begin() + cardVectorPosition);
+  } catch (const char* noCard) {
+
+  }
+}
+
 int Player::findCard(CardSuit suit, CardType type) {
   int numberOfCards = cards->size();
   for (int i=0; i<numberOfCards; i++) {
