@@ -54,3 +54,6 @@ Temporary Items
 
 # JAVA binaries
 .class
+/client/nbproject/private/
+/client/build/
+/client/dist/

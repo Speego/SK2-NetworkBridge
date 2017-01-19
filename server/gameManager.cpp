@@ -257,7 +257,8 @@ void GameManager::manageGivenCardMessage(Message* msg) {
         (*tables)[tableVectorPosition]->endRound();
         if ((*tables)[tableVectorPosition]->gameOver()) {
           sendEndOfRound(tableVectorPosition);
-          // if yes, sum up game
+          sendEndOfGame(tableVectorPosition);
+          removeTable(tableVectorPosition);
         } else {
           createPlayCardPromptMessage(tableVectorPosition);
         }
@@ -310,6 +311,7 @@ void GameManager::sendEndOfGame(int tableVectorPosition) {
 }
 
 void GameManager::removeTable(int tableVectorPosition) {
+  delete (*tables)[tableVectorPosition];
   tables->erase(tables->begin() + tableVectorPosition);
 }
 
