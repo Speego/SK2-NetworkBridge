@@ -9,10 +9,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.nio.charset.Charset;
+import javax.swing.JFrame;
 
 
 public class ConnectionController {
-    private ConnectionView connectionView;
+    private final ConnectionView connectionView;
     private GameModel gameModel;
     
     private Socket socket;
@@ -21,6 +22,7 @@ public class ConnectionController {
     
     private String ip;
     private int port;
+    private String name;
     
     public ConnectionController(ConnectionView cView, GameModel gModel) {
         this.connectionView = cView;
@@ -35,23 +37,36 @@ public class ConnectionController {
             try {
                 ip = connectionView.getIP();
                 port = connectionView.getPort();
+                name = connectionView.getLogin();
+                
+                if (name.equals(""))
+                    throw new Exception("Podaj login!");
                 
                 connect();
-//                connectionView.dispose();
+                
+                disposeWindow(connectionView);
+            } catch(IOException ex) {
+                System.out.println(ex);
+                connectionView.displayErrorMesage("Nie można się połączyć.");
             } catch(Exception ex) {
                 System.out.println(ex);
-                connectionView.displayErrorMesage("Cannot connect.");
+                connectionView.displayErrorMesage(ex.getMessage());
             }
         }
         
         private void connect() throws IOException {
             socket = new Socket(ip, port);
             socketReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            BufferedReader inLine = new BufferedReader(new InputStreamReader(System.in));
+//            BufferedReader inLine = new BufferedReader(new InputStreamReader(System.in));
             socketWriter = new PrintStream(socket.getOutputStream());
-            String writtenLine = inLine.readLine();
-            socketWriter.write(writtenLine.getBytes(Charset.forName("UTF-8")));
+//            String writtenLine = inLine.readLine();
+//            socketWriter.write(writtenLine.getBytes(Charset.forName("UTF-8")));
         }
+    }
+    
+    private void disposeWindow(JFrame frame) {
+        frame.setVisible(false);
+        frame.dispose();
     }
 }
 
