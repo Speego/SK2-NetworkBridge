@@ -34,6 +34,10 @@ public class Message {
         this.message = parseMessageTypeToString(msgType) + ":" + msg;
     }
     
+    public String getMessage() {
+        return this.message;
+    }
+    
     private int getIdFromMsg(String msg) {
         String idStr = msg.substring(0, 1);
         return Integer.parseInt(idStr);

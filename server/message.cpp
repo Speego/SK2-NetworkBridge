@@ -12,7 +12,8 @@ Message::~Message() {
 }
 
 const char* Message::getMessage() {
-  return (*msg).c_str();
+  string message = *msg + "\n";
+  return message.c_str();
 }
 
 int Message::getSenderID() {
