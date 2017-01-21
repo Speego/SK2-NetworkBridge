@@ -20,16 +20,18 @@ int Table::getNumberOfPlayers() {
 }
 
 int Table::findPlayer(int clientID) {
-  for (int i=0; i<(int)players->size(); i++) {
+  int numberOfPlayers = getNumberOfPlayers();
+  for (int i=0; i<numberOfPlayers; i++) {
     if ((*players)[i]->id == clientID)
       return i;
   }
-  throw "table.cpp: No player with ID " + clientID;
+  string ex = "table.cpp: No player with ID " + to_string(clientID);
+  throw ex;
 }
 
 void Table::removePlayer(int playerID) {
   try {
-    int playerVectorPosition = findPlayer(playerID);
+    int playerVectorPosition = this->findPlayer(playerID);
     players->erase(players->begin() + playerVectorPosition);
     printf("table.cpp: Player with ID %d removed. Number of players at table: %d.\n", playerID, (int)players->size());
   } catch(char const* noPlayer) {
@@ -50,12 +52,12 @@ bool Table::canJoin(int playerID) {
 }
 
 bool Table::playerAtTable(int playerID) {
-  try {
-    findPlayer(playerID);
-    return true;
-  } catch (string noPlayer) {
-    return false;
+  int numberOfPlayers = getNumberOfPlayers();
+  for (int i=0; i<numberOfPlayers; i++) {
+    if ((*players)[i]->id == playerID)
+      return true;
   }
+  return false;
 }
 
 void Table::createCards() {
@@ -197,7 +199,7 @@ bool Table::isCardCorrect(CardSuit suit, CardType type, int playerID) {
     return false;
 
   try {
-    int playerVectorPosition = findPlayer(playerID);
+    int playerVectorPosition = this->findPlayer(playerID);
     if (cardWithWrongSuit(suit) || cardWithWrongType(type))
       return false;
 

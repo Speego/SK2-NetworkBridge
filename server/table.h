@@ -9,6 +9,7 @@
 #include <algorithm>
 
 using std::string;
+using std::to_string;
 using std::vector;
 using std::swap;
 

@@ -105,7 +105,7 @@ void GameManager::createBidPromptMessage(int tableVectorPosition) {
 
 void GameManager::removePlayer(int clientID) {
   try {
-    int playerVectorPosition = findPlayer(clientID);
+    int playerVectorPosition = this->findPlayer(clientID);
     int tableVectorPosition = findTable((*players)[playerVectorPosition]->tableID);
     players->erase(players->begin() + playerVectorPosition);
     (*tables)[tableVectorPosition]->removePlayer(clientID);
@@ -119,7 +119,7 @@ void GameManager::removePlayer(int clientID) {
 
 void GameManager::setPlayerName(Message* msg, int clientID) {
   try {
-    int playerVectorPosition = findPlayer(clientID);
+    int playerVectorPosition = this->findPlayer(clientID);
     (*players)[playerVectorPosition]->setName(msg);
   } catch (char const* noPlayer) {
     printf("%s\n", noPlayer);
@@ -138,7 +138,7 @@ void GameManager::createTablesMessage(int receiver, MessageType msgType) {
 
 void GameManager::createTable(int playerID) {
   try {
-    int playerVectorPosition = findPlayer(playerID);
+    int playerVectorPosition = this->findPlayer(playerID);
     (*players)[playerVectorPosition]->tableID = tablesID;
     (*players)[playerVectorPosition]->state = PlayerState::waitingAtTable;
     Player* player = (*players)[playerVectorPosition];
@@ -155,7 +155,8 @@ void GameManager::joinTable(int playerID, Message* msg) {
     int tableID = msg->getTableToJoin();
     int tableVectorPosition = findTable(tableID);
     if ((*tables)[tableVectorPosition]->canJoin(playerID)) {
-      int playerVectorPosition = findPlayer(playerID);
+      printf("gameManager.cpp: Player %d can join.\n", playerID);
+      int playerVectorPosition = this->findPlayer(playerID);
       (*players)[playerVectorPosition]->state = PlayerState::waitingAtTable;
       Player* player = (*players)[playerVectorPosition];
       (*tables)[tableVectorPosition]->join(player);
@@ -185,7 +186,7 @@ void GameManager::manageGivenBidMessage(Message* msg) {
   int trumpsHeight = msg->getBidHeight();
 
   int sender = msg->getSenderID();
-  int playerVectorPosition = findPlayer(sender);
+  int playerVectorPosition = this->findPlayer(sender);
   int tableID = (*players)[playerVectorPosition]->tableID;
   int tableVectorPosition = findTable(tableID);
 
@@ -244,7 +245,7 @@ void GameManager::manageGivenCardMessage(Message* msg) {
   CardType type = (CardType)msg->getCardType();
 
   int sender = msg->getSenderID();
-  int playerVectorPosition = findPlayer(sender);
+  int playerVectorPosition = this->findPlayer(sender);
   int tableID = (*players)[playerVectorPosition]->tableID;
   int tableVectorPosition = findTable(tableID);
 

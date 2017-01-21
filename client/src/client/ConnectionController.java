@@ -174,6 +174,10 @@ public class ConnectionController {
         @Override
         public void actionPerformed(ActionEvent e) {
             String table = tablesView.getSelectedTable();
+            table = table.substring(0, 1);
+            System.out.println("Selected table is: " + table);
+            sendMessage(new Message(MessageType.JOIN_TABLE, table));
+            tablesView.displayErrorMesage("Joined to table " + table);
             // JOIN TABLE
         }
         
