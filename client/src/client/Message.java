@@ -1,6 +1,5 @@
 package client;
 
-
 enum MessageType {
     NONE,
     DISCONNECTED,
@@ -32,14 +31,42 @@ public class Message {
     Message(MessageType msgType, String msg) {
         this.type  = msgType;
         this.message = parseMessageTypeToString(msgType) + ":" + msg;
+        System.out.println("Message " + type + " " + message + " created.");
     }
     
     public String getMessage() {
         return this.message;
     }
     
+    protected MessageType getMessageType() {
+        return type;
+    }
+    
+    protected int getNumberOfTables() throws Exception {
+        if (this.type != MessageType.SEND_TABLES)
+            throw new Exception("SEND_TABLES: Wrong type of message.");
+        
+        return (message.length() / 4);
+    }
+    
+    protected String getTableID(int position) throws Exception {
+        if (this.type != MessageType.SEND_TABLES)
+            throw new Exception("SEND_TABLES: Wrong type of message.");
+        
+        String msg = message.substring(4*position, 4*position+1);
+        return msg;
+    }
+    
+    protected String getTableNumberOfPlayers(int position) throws Exception {
+        if (this.type != MessageType.SEND_TABLES)
+            throw new Exception("SEND_TABLES: Wrong type of message");
+        
+        String msg = message.substring(4*position+2, 4*position+3);
+        return msg;
+    }
+    
     private int getIdFromMsg(String msg) {
-        String idStr = msg.substring(0, 1);
+        String idStr = msg.substring(0, 2);
         return Integer.parseInt(idStr);
     }
     

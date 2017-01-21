@@ -16,7 +16,8 @@ import javax.swing.JFrame;
 
 public class ConnectionController {
     private final ConnectionView connectionView;
-    private GameModel gameModel;
+    private TablesView tablesView;
+    private final GameModel gameModel;
     
     private Socket socket;
     private BufferedReader socketReader;
@@ -29,27 +30,31 @@ public class ConnectionController {
     public ConnectionController(ConnectionView cView, GameModel gModel) {
         this.connectionView = cView;
         this.gameModel = gModel;
+        System.out.println("Connection controller created.");
         
-        this.connectionView.addConnectButtonListener(new ConnectionListener());
+        this.connectionView.addConnectButtonListener(new ConnectListener());
     }
     
-    class ConnectionListener implements ActionListener {
+    class ConnectListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
                 ip = connectionView.getIP();
                 port = connectionView.getPort();
                 nickname = connectionView.getLogin();
-                
+                createTablesView();
+
                 if (nickname.equals(""))
                     throw new Exception("Podaj login!");
                 
                 connect();
+                System.out.println("Connection established.");
                 runGettingMessagesThread();
                 
                 sendMessage(new Message(MessageType.NICKNAME, nickname));
                 
                 disposeWindow(connectionView);
+                tablesView.setVisible(true);
             } catch(IOException ex) {
                 System.out.println(ex);
                 connectionView.displayErrorMesage("Nie można się połączyć.");
@@ -81,14 +86,23 @@ public class ConnectionController {
         }
     }
     
+    private void createTablesView() {
+        this.tablesView = new TablesView();
+        this.tablesView.setVisible(false);
+        this.tablesView.addCreateButtonListener(new CreateTableListener());
+        this.tablesView.addJoinButtonListener(new JoinTableListener());
+    }
+    
     private void runGettingMessagesThread() {
         
         Runnable MessageGet = new Runnable() {
             private String msg;
+            
             @Override
             public void run() {
                 while (true) {
                     msg = getMessage();
+                    interpretMessage(msg);
                 }
             }
         };
@@ -97,7 +111,7 @@ public class ConnectionController {
     }
     
     private String getMessage() {
-        String msg = new String("");
+        String msg = "";
         
         try {
             msg = socketReader.readLine();
@@ -107,6 +121,62 @@ public class ConnectionController {
         }
 
         return msg;
+    }
+    
+    private void interpretMessage(String message) {
+        Message msg = new Message(message);
+        MessageType type = msg.getMessageType();
+        System.out.println("Message " + message + " interpreted as: " + type + " " + msg.getMessage());
+        
+        switch (type) {
+            case SEND_TABLES: {
+                showTables(msg);
+                break;
+            }
+        }
+    }
+    
+    private void showTables(Message msg) {
+        String tableId;
+        String tableNumberOfPlayers;
+        int numberOfTables = 0;
+        
+        try {
+            numberOfTables = msg.getNumberOfTables();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+        for (int i = 0; i < numberOfTables; i++) {
+            try {
+                tableId = msg.getTableID(i);
+                tableNumberOfPlayers = msg.getTableNumberOfPlayers(i);
+                tablesView.addTable(new String(tableId + "-" + tableNumberOfPlayers));
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+    }
+    
+    class CreateTableListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            sendMessage(new Message(MessageType.CREATE_TABLE, ""));
+            tablesView.displayErrorMesage("Table created.");
+            // WŁĄCZ WIDOK STOŁU
+        }
+        
+    }
+    
+    class JoinTableListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String table = tablesView.getSelectedTable();
+            // JOIN TABLE
+        }
+        
     }
 }
 
