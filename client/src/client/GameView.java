@@ -24,7 +24,7 @@ public class GameView extends javax.swing.JFrame {
         suitGroup = new javax.swing.ButtonGroup();
         heightGroup = new javax.swing.ButtonGroup();
         cardGroup = new javax.swing.ButtonGroup();
-        bidPanel = new javax.swing.JPanel();
+        playButton = new javax.swing.JPanel();
         suitSpades = new javax.swing.JToggleButton();
         suitNoTrumps = new javax.swing.JToggleButton();
         suitHearts = new javax.swing.JToggleButton();
@@ -105,6 +105,12 @@ public class GameView extends javax.swing.JFrame {
         cardPlayer110 = new javax.swing.JLabel();
         cardPlayer111 = new javax.swing.JLabel();
         cardPlayer112 = new javax.swing.JLabel();
+        gamePanel = new javax.swing.JPanel();
+        cardPlayedThis = new javax.swing.JLabel();
+        cardPlayed1 = new javax.swing.JLabel();
+        cardPlayed2 = new javax.swing.JLabel();
+        cardPlayed3 = new javax.swing.JLabel();
+        playCardButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -157,28 +163,28 @@ public class GameView extends javax.swing.JFrame {
 
         sendButton.setText("SEND");
 
-        javax.swing.GroupLayout bidPanelLayout = new javax.swing.GroupLayout(bidPanel);
-        bidPanel.setLayout(bidPanelLayout);
-        bidPanelLayout.setHorizontalGroup(
-            bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(bidPanelLayout.createSequentialGroup()
-                .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(bidPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout playButtonLayout = new javax.swing.GroupLayout(playButton);
+        playButton.setLayout(playButtonLayout);
+        playButtonLayout.setHorizontalGroup(
+            playButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(playButtonLayout.createSequentialGroup()
+                .addGroup(playButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(playButtonLayout.createSequentialGroup()
                         .addGap(35, 35, 35)
-                        .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(playButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(suitsLabel)
-                            .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(playButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(suitSpades, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(suitNoTrumps, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(suitHearts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(suitDiamonds, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(suitClubs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(suitPass, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(bidPanelLayout.createSequentialGroup()
+                    .addGroup(playButtonLayout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(40, 40, 40)
-                .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(playButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(height1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(heightsLabel)
                     .addComponent(height7, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -189,45 +195,45 @@ public class GameView extends javax.swing.JFrame {
                     .addComponent(height2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
-        bidPanelLayout.setVerticalGroup(
-            bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(bidPanelLayout.createSequentialGroup()
+        playButtonLayout.setVerticalGroup(
+            playButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(playButtonLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(playButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(suitsLabel)
                     .addComponent(heightsLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(playButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(suitNoTrumps)
                     .addComponent(height7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(playButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(suitSpades)
                     .addComponent(height6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(playButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(suitHearts)
                     .addComponent(height5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(playButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(suitDiamonds)
                     .addComponent(height4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(playButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(suitClubs)
                     .addComponent(height3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(playButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(suitPass)
                     .addComponent(height2))
-                .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(bidPanelLayout.createSequentialGroup()
+                .addGroup(playButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(playButtonLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(height1))
-                    .addGroup(bidPanelLayout.createSequentialGroup()
+                    .addGroup(playButtonLayout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         labelBidThis.setText("Bid:");
@@ -268,9 +274,9 @@ public class GameView extends javax.swing.JFrame {
                 .addComponent(labelBidThis)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bidThis, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(622, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, playerThisLayout.createSequentialGroup()
-                .addGap(0, 12, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(cardButton0, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cardButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -386,9 +392,9 @@ public class GameView extends javax.swing.JFrame {
                 .addComponent(labelBidPlayer3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bidPlayer3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(236, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, player3Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 32, Short.MAX_VALUE)
                 .addComponent(cardPlayer30, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cardPlayer31, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -482,7 +488,7 @@ public class GameView extends javax.swing.JFrame {
                         .addComponent(cardPlayer211)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cardPlayer212)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
         player2Layout.setVerticalGroup(
             player2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -601,47 +607,105 @@ public class GameView extends javax.swing.JFrame {
                 .addGap(25, 25, 25))
         );
 
+        cardPlayedThis.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B21.jpg"))); // NOI18N
+
+        cardPlayed1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B11.jpg"))); // NOI18N
+
+        cardPlayed2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B21.jpg"))); // NOI18N
+
+        cardPlayed3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B11.jpg"))); // NOI18N
+
+        playCardButton.setText("PLAY");
+
+        javax.swing.GroupLayout gamePanelLayout = new javax.swing.GroupLayout(gamePanel);
+        gamePanel.setLayout(gamePanelLayout);
+        gamePanelLayout.setHorizontalGroup(
+            gamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(gamePanelLayout.createSequentialGroup()
+                .addGap(102, 102, 102)
+                .addComponent(cardPlayed3)
+                .addGap(18, 18, 18)
+                .addGroup(gamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cardPlayedThis)
+                    .addComponent(cardPlayed2))
+                .addGroup(gamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(gamePanelLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(cardPlayed1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gamePanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(playCardButton, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21))))
+        );
+        gamePanelLayout.setVerticalGroup(
+            gamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(gamePanelLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(cardPlayed2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(cardPlayedThis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(65, 65, 65))
+            .addGroup(gamePanelLayout.createSequentialGroup()
+                .addGroup(gamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(gamePanelLayout.createSequentialGroup()
+                        .addGap(89, 89, 89)
+                        .addComponent(cardPlayed3))
+                    .addGroup(gamePanelLayout.createSequentialGroup()
+                        .addGap(86, 86, 86)
+                        .addComponent(cardPlayed1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(playCardButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(3, 3, 3)
+                .addComponent(player2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(player1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(player3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(playerThis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addComponent(player2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(player3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(255, 255, 255)
-                                .addComponent(bidPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 296, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(player1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)))
-                .addContainerGap())
+                        .addGap(33, 33, 33)
+                        .addComponent(playButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(gamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(playerThis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(player1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(playerThis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(player1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(185, 185, 185)
+                        .addComponent(gamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(player2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bidPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(player3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(12, 12, 12)))
-                .addGap(12, 12, 12))
+                        .addGap(24, 24, 24))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(playButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(playerThis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -678,7 +742,7 @@ public class GameView extends javax.swing.JFrame {
         });
     }
     
-    protected void addConnectButtonListener(ActionListener listener) {
+    protected void addSendBidButtonListener(ActionListener listener) {
         sendButton.addActionListener(listener);
     }
     
@@ -710,7 +774,6 @@ public class GameView extends javax.swing.JFrame {
     
     protected void setBidLabel(int playerLocation, String suit, int height) {
         JLabel label;
-        System.out.println("Bid suit: " + suit + ", bid height: " + String.valueOf(height));
         
         switch(playerLocation) {
             case 1: label = bidPlayer1; break;
@@ -728,7 +791,20 @@ public class GameView extends javax.swing.JFrame {
         }
     }
     
-    protected void displayErrorMesage(String errorMessage) {
+    protected void setBiddingWinnerLabel(int playerLocation) {
+        bidThis.setVisible(false);
+        bidPlayer1.setVisible(false);
+        bidPlayer2.setVisible(false);
+        bidPlayer3.setVisible(false);
+        switch(playerLocation) {
+            case 0: bidThis.setVisible(true); break;
+            case 1: bidPlayer3.setVisible(true); break;
+            case 2: bidPlayer2.setVisible(true); break;
+            case 3: bidPlayer1.setVisible(true); break;
+        }
+    }
+    
+    protected void displayErrorMessage(String errorMessage) {
         JOptionPane.showMessageDialog(this, errorMessage);
     }
     
@@ -751,9 +827,51 @@ public class GameView extends javax.swing.JFrame {
             }
         }
     }
+    
+    protected void setOthersCard(int numberOfCards) {
+        int i = 0;
+        for (Component c: player1.getComponents()) {
+            if (i < numberOfCards)
+                c.setVisible(true);
+            else
+                c.setVisible(false);
+            i++;
+        }
+        i = 0;
+        for (Component c: player2.getComponents()) {
+            if (i < numberOfCards)
+                c.setVisible(true);
+            else
+                c.setVisible(false);
+            i++;
+        }
+        i = 0;
+        for (Component c: player3.getComponents()) {
+            if (i < numberOfCards)
+                c.setVisible(true);
+            else
+                c.setVisible(false);
+            i++;
+        }
+    }
+    
+    protected void addPlayCardButtonListener(ActionListener listener) {
+        playCardButton.addActionListener(listener);
+    }
+    
+    protected String getSelectedCard() {
+        for (Enumeration<AbstractButton> buttons = cardGroup.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+
+            if (button.isVisible() && button.isSelected())
+                return button.getName();
+        }        
+        return "";
+
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel bidPanel;
     private javax.swing.JLabel bidPlayer1;
     private javax.swing.JLabel bidPlayer2;
     private javax.swing.JLabel bidPlayer3;
@@ -772,6 +890,10 @@ public class GameView extends javax.swing.JFrame {
     private javax.swing.JToggleButton cardButton8;
     private javax.swing.JToggleButton cardButton9;
     private javax.swing.ButtonGroup cardGroup;
+    private javax.swing.JLabel cardPlayed1;
+    private javax.swing.JLabel cardPlayed2;
+    private javax.swing.JLabel cardPlayed3;
+    private javax.swing.JLabel cardPlayedThis;
     private javax.swing.JLabel cardPlayer10;
     private javax.swing.JLabel cardPlayer11;
     private javax.swing.JLabel cardPlayer110;
@@ -811,6 +933,7 @@ public class GameView extends javax.swing.JFrame {
     private javax.swing.JLabel cardPlayer37;
     private javax.swing.JLabel cardPlayer38;
     private javax.swing.JLabel cardPlayer39;
+    private javax.swing.JPanel gamePanel;
     private javax.swing.JToggleButton height1;
     private javax.swing.JToggleButton height2;
     private javax.swing.JToggleButton height3;
@@ -824,6 +947,8 @@ public class GameView extends javax.swing.JFrame {
     private javax.swing.JLabel labelBidPlayer3;
     private javax.swing.JLabel labelBidThis;
     private javax.swing.JLabel labelBidplayer2;
+    private javax.swing.JPanel playButton;
+    private javax.swing.JButton playCardButton;
     private javax.swing.JPanel player1;
     private javax.swing.JPanel player2;
     private javax.swing.JPanel player3;

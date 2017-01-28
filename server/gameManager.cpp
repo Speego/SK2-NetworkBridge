@@ -33,7 +33,7 @@ void GameManager::update() {
 }
 
 void GameManager::interpretMessage(Message* msg) {
-  printf("\ngameManager.cpp: Interpreted message is: %s\n", msg->getMessage());
+  printf("gameManager.cpp: Interpreted message is: %s\n", msg->getMessage());
   try {
     MessageType msgType = msg->getMessageType();
     if ((int)msgType >= (int)messageTypesNames.size())
@@ -280,19 +280,23 @@ void GameManager::createPlayCardPromptMessage(int tableVectorPosition) {
 }
 
 void GameManager::manageGivenCardMessage(Message* msg) {
-  CardSuit suit = (CardSuit)msg->getCardSuit();
-  CardType type = (CardType)msg->getCardType();
+  CardSuit suit = msg->getCardSuit();
+  CardType type = msg->getCardType();
 
   int sender = msg->getSenderID();
   int playerVectorPosition = this->findPlayer(sender);
   int tableID = (*players)[playerVectorPosition]->tableID;
   int tableVectorPosition = findTable(tableID);
 
-  if ((*tables)[playerVectorPosition]->isPlayerTurn(sender)) {
+  if ((*tables)[tableVectorPosition]->isPlayerTurn(sender)) {
+    printf("gameManager.cpp: manageGivenCard - player turn\n");
+
     if ((*tables)[tableVectorPosition]->isCardCorrect(suit, type, sender)) {
       sendAcceptance(MessageType::GIVEN_CARD, true, sender);
       (*tables)[tableVectorPosition]->playCard(suit, type);
       sendGivenCardToOthers(tableVectorPosition, suit, type);
+      printf("gameManager.cpp: manageGivenCard - card correct\n");
+
       if ((*tables)[tableVectorPosition]->roundOver()) {
         sendEndOfRound(tableVectorPosition);
         (*tables)[tableVectorPosition]->endRound();
@@ -309,10 +313,12 @@ void GameManager::manageGivenCardMessage(Message* msg) {
       }
 
     } else {
+      printf("gameManager.cpp: manageGivenCard - card not correct\n");
       sendAcceptance(MessageType::GIVEN_CARD, false, sender);
       createPlayCardPromptMessage(tableVectorPosition);
     }
   } else {
+    printf("gameManager.cpp: manageGivenCard - not player turn\n");
     sendAcceptance(MessageType::GIVEN_CARD, false, sender);
   }
 }

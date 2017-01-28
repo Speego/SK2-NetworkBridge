@@ -104,6 +104,13 @@ public class Message {
         return Integer.parseInt(message.substring(3, 5));
     }
     
+    protected int getBiddingWinner() throws Exception {
+        if (this.type != MessageType.BIDDING_RESULT)
+            throw new Exception("BIDDING_RESULT: Wrong type of message");
+        
+        return Integer.parseInt(message.substring(1,2));
+    }
+    
     protected MessageType getAcceptanceType() throws Exception {
         if (this.type != MessageType.ACCEPTANCE)
             throw new Exception("ACCEPTANCE: Wrong type of message");

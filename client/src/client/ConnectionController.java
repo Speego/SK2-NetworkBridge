@@ -60,10 +60,10 @@ public class ConnectionController {
                 tablesView.setVisible(true);
             } catch(IOException ex) {
                 System.out.println(ex);
-                connectionView.displayErrorMesage("Nie można się połączyć.");
+                connectionView.displayErrorMessage("Nie można się połączyć.");
             } catch(Exception ex) {
                 System.out.println(ex);
-                connectionView.displayErrorMesage(ex.getMessage());
+                connectionView.displayErrorMessage(ex.getMessage());
             }
         }
         
@@ -141,11 +141,19 @@ public class ConnectionController {
                 break;
             }
             case START_BID: {
-                gameView.displayErrorMesage("Your turn to bid.");
+                gameView.displayErrorMessage("Your turn to bid.");
                 break;
             }
             case SEND_BID: {
                 setBidLabel(msg);
+                break;
+            }
+            case BIDDING_RESULT: {
+                setBiddingWinnerLabel(msg);
+                break;
+            }
+            case PLAY_CARD: {
+                gameView.displayErrorMessage("Play card!");
                 break;
             }
             case ACCEPTANCE: {
@@ -188,6 +196,14 @@ public class ConnectionController {
         }
     }
     
+    private void setBiddingWinnerLabel(Message msg) {
+        try {
+            int playerPosition = msg.getBiddingWinner();
+            gameView.setBiddingWinnerLabel(playerPosition);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());        }
+    }
+    
     private void interpretAcceptance(Message msg) {
         try {
             MessageType msgType = msg.getAcceptanceType();
@@ -200,7 +216,7 @@ public class ConnectionController {
                         createGameView();
                     }
                     else
-                        tablesView.displayErrorMesage("Cannot create table.");
+                        tablesView.displayErrorMessage("Cannot create table.");
                     break;
                 }
                 case JOIN_TABLE: {
@@ -208,12 +224,18 @@ public class ConnectionController {
                         disposeWindow(tablesView);
                         createGameView();
                     } else
-                        tablesView.displayErrorMesage("Cannot join selected table.");
+                        tablesView.displayErrorMessage("Cannot join selected table.");
                     break;
                 }
                 case GIVEN_BID: {
                     if (!accepted)
-                        gameView.displayErrorMesage("You've bidden wrong.");
+                        gameView.displayErrorMessage("You've bidden wrong.");
+                    break;
+                }
+                case GIVEN_CARD: {
+                    if (!accepted)
+                        gameView.displayErrorMessage("You've played wrong card.");
+                    break;
                 }
                 default: break;
             }
@@ -225,19 +247,25 @@ public class ConnectionController {
     private void createGameView() {
         this.gameView = new GameView();
         this.gameView.setVisible(true);
-        this.gameView.addConnectButtonListener(new SendBidListener());
+        this.gameView.addSendBidButtonListener(new SendBidListener());
+        this.gameView.addPlayCardButtonListener(new PlayCardListener());
     }
     
     class SendBidListener implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             sendMessage(new Message(MessageType.GIVEN_BID, gameView.getSelectedBid()));
         }
     }
-        
-
     
+    class PlayCardListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            sendMessage(new Message(MessageType.GIVEN_CARD, gameView.getSelectedCard()));
+        }
+        
+    }
+        
     private void setCards(Message msg) {
         List<String> cards = new ArrayList();
         try {
@@ -247,6 +275,7 @@ public class ConnectionController {
             }
 
             gameView.setCards(cards);
+            gameView.setOthersCard(numberOfCards);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }

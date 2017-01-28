@@ -30,7 +30,7 @@ public class ConnectionView extends javax.swing.JFrame {
 
         ip.setText("localhost");
 
-        port.setText("1235");
+        port.setText("1234");
 
         buttonConnect.setText("Połącz");
 
@@ -85,7 +85,7 @@ public class ConnectionView extends javax.swing.JFrame {
         buttonConnect.addActionListener(listener);
     }
     
-    void displayErrorMesage(String errorMessage) {
+    void displayErrorMessage(String errorMessage) {
         JOptionPane.showMessageDialog(this, errorMessage);
     }
     

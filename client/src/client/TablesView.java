@@ -119,7 +119,7 @@ public class TablesView extends javax.swing.JFrame {
         buttonJoin.addActionListener(listener);
     }
     
-    void displayErrorMesage(String errorMessage) {
+    void displayErrorMessage(String errorMessage) {
         JOptionPane.showMessageDialog(this, errorMessage);
     }
     

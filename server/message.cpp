@@ -70,12 +70,24 @@ int Message::getBidHeight() {
   return convertToNumber(s);
 }
 
-int Message::getCardSuit() {
-  return getBidOrCardSuit();
+CardSuit Message::getCardSuit() {
+  string s = getMsgAfterColon();
+  s = s.substr(0,1);
+  if (s == "S") return CardSuit::SPADES;
+  if (s == "H") return CardSuit::HEARTS;
+  if (s == "D") return CardSuit::DIAMONDS;
+  if (s == "C") return CardSuit::CLUBS;
+  return CardSuit::NONE;
 }
 
-int Message::getCardType() {
-  return getBidHeightOrCardType();
+CardType Message::getCardType() {
+  string s = getMsgAfterColon();
+  s = s.substr(1,2);
+  try {
+    return ((CardType)convertToNumber(s));
+  } catch (const char* error) {
+    return CardType::NONE;
+  }
 }
 
 string Message::getMsgAfterColon() {
@@ -96,28 +108,4 @@ int Message::convertToNumber(string s) {
 
 bool Message::isNull() {
   return (*msg) == "";
-}
-
-int Message::getBidOrCardSuit() {
-  try {
-    string s = getMsgAfterColon();
-    s = s.substr(0,2);
-    return convertToNumber(s);
-  } catch (char const* notNumber) {
-    return -1;
-  } catch (const std::out_of_range& oor) {
-    return -1;
-  }
-}
-
-int Message::getBidHeightOrCardType() {
-  try {
-    string s = getMsgAfterColon();
-    s = s.substr(3,2);
-    return convertToNumber(s);
-  } catch (char const* notNumber) {
-    return -1;
-  } catch (const std::out_of_range& oor) {
-    return -1;
-  }
 }

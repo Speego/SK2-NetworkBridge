@@ -5,6 +5,8 @@
 #include <string>
 #include <stdexcept>
 
+#include "card.h"
+
 using std::string;
 using std::stoi;
 
@@ -47,16 +49,13 @@ public:
   int getBidSuit();
   int getBidHeight();
 
-  int getCardSuit();
-  int getCardType();
+  CardSuit getCardSuit();
+  CardType getCardType();
 
 private:
   int convertToNumber(string);
   bool isNull();
   string getMsgAfterColon();
-
-  int getBidOrCardSuit();
-  int getBidHeightOrCardType();
 };
 
 #endif // MESSAGE_H
