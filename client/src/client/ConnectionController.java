@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 public class ConnectionController {
     private final ConnectionView connectionView;
     private TablesView tablesView;
+    private GameView gameView;
     private final GameModel gameModel;
     
     private Socket socket;
@@ -42,12 +43,12 @@ public class ConnectionController {
                 ip = connectionView.getIP();
                 port = connectionView.getPort();
                 nickname = connectionView.getLogin();
-                createTablesView();
 
                 if (nickname.equals(""))
                     throw new Exception("Podaj login!");
                 
                 connect();
+                createTablesView();
                 System.out.println("Connection established.");
                 runGettingMessagesThread();
                 
@@ -168,31 +169,36 @@ public class ConnectionController {
         
         switch(msgType) {
             case CREATE_TABLE: {
-                if (accepted)
-                    createTable();
+                if (accepted) {
+                    disposeWindow(tablesView);
+                    createGameView();
+                }
                 else
                     tablesView.displayErrorMesage("Cannot create table.");
                 break;
             }
             case JOIN_TABLE: {
-                if (accepted)
-                    joinTable();
+                if (accepted) {
+                    disposeWindow(tablesView);
+                    createGameView();
+                }
                 else
                     tablesView.displayErrorMesage("Cannot join selected table.");
+                break;
+            }
+            case CARDS: {
+                
                 break;
             }
             default: break;
         }
     }
     
-    private void createTable() {
-        tablesView.displayErrorMesage("Table created.");
+    private void createGameView() {
+        this.gameView = new GameView();
+        this.gameView.setVisible(true);
     }
     
-    private void joinTable() {
-        tablesView.displayErrorMesage("Table joined.");
-    }
-        
     class CreateTableListener implements ActionListener {
 
         @Override

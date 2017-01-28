@@ -14,6 +14,7 @@ public class GameView extends javax.swing.JFrame {
 
         suitGroup = new javax.swing.ButtonGroup();
         heightGroup = new javax.swing.ButtonGroup();
+        cardGroup = new javax.swing.ButtonGroup();
         bidPanel = new javax.swing.JPanel();
         suitSpades = new javax.swing.JToggleButton();
         suitNoTrumps = new javax.swing.JToggleButton();
@@ -32,13 +33,69 @@ public class GameView extends javax.swing.JFrame {
         height1 = new javax.swing.JToggleButton();
         sendButton = new javax.swing.JButton();
         playerThis = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        labelBidThis = new javax.swing.JLabel();
+        bidThis = new javax.swing.JLabel();
+        cardButton0 = new javax.swing.JToggleButton();
+        cardButton1 = new javax.swing.JToggleButton();
+        cardButton2 = new javax.swing.JToggleButton();
+        cardButton3 = new javax.swing.JToggleButton();
+        cardButton4 = new javax.swing.JToggleButton();
+        cardButton5 = new javax.swing.JToggleButton();
+        cardButton6 = new javax.swing.JToggleButton();
+        cardButton7 = new javax.swing.JToggleButton();
+        cardButton8 = new javax.swing.JToggleButton();
+        cardButton9 = new javax.swing.JToggleButton();
+        cardButton10 = new javax.swing.JToggleButton();
+        cardButton11 = new javax.swing.JToggleButton();
+        cardButton12 = new javax.swing.JToggleButton();
         player1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        labelBidPlayer1 = new javax.swing.JLabel();
+        bidPlayer1 = new javax.swing.JLabel();
+        cardPlayer10 = new javax.swing.JLabel();
+        cardPlayer11 = new javax.swing.JLabel();
+        cardPlayer12 = new javax.swing.JLabel();
+        cardPlayer13 = new javax.swing.JLabel();
+        cardPlayer14 = new javax.swing.JLabel();
+        cardPlayer15 = new javax.swing.JLabel();
+        cardPlayer16 = new javax.swing.JLabel();
+        cardPlayer17 = new javax.swing.JLabel();
+        cardPlayer18 = new javax.swing.JLabel();
+        cardPlayer19 = new javax.swing.JLabel();
+        cardPlayer110 = new javax.swing.JLabel();
+        cardPlayer111 = new javax.swing.JLabel();
+        cardPlayer112 = new javax.swing.JLabel();
         player2 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        labelBidplayer2 = new javax.swing.JLabel();
+        bidPlayer2 = new javax.swing.JLabel();
+        cardPlayer20 = new javax.swing.JLabel();
+        cardPlayer21 = new javax.swing.JLabel();
+        cardPlayer22 = new javax.swing.JLabel();
+        cardPlayer23 = new javax.swing.JLabel();
+        cardPlayer24 = new javax.swing.JLabel();
+        cardPlayer25 = new javax.swing.JLabel();
+        cardPlayer26 = new javax.swing.JLabel();
+        cardPlayer27 = new javax.swing.JLabel();
+        cardPlayer28 = new javax.swing.JLabel();
+        cardPlayer29 = new javax.swing.JLabel();
+        cardPlayer210 = new javax.swing.JLabel();
+        cardPlayer211 = new javax.swing.JLabel();
+        cardPlayer212 = new javax.swing.JLabel();
         player3 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        labelBidPlayer3 = new javax.swing.JLabel();
+        bidPlayer3 = new javax.swing.JLabel();
+        cardPlayer30 = new javax.swing.JLabel();
+        cardPlayer31 = new javax.swing.JLabel();
+        cardPlayer32 = new javax.swing.JLabel();
+        cardPlayer33 = new javax.swing.JLabel();
+        cardPlayer34 = new javax.swing.JLabel();
+        cardPlayer35 = new javax.swing.JLabel();
+        cardPlayer36 = new javax.swing.JLabel();
+        cardPlayer37 = new javax.swing.JLabel();
+        cardPlayer38 = new javax.swing.JLabel();
+        cardPlayer39 = new javax.swing.JLabel();
+        cardPlayer310 = new javax.swing.JLabel();
+        cardPlayer311 = new javax.swing.JLabel();
+        cardPlayer312 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,9 +166,9 @@ public class GameView extends javax.swing.JFrame {
                                 .addComponent(suitClubs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(suitPass, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(bidPanelLayout.createSequentialGroup()
-                        .addGap(25, 25, 25)
+                        .addGap(21, 21, 21)
                         .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(36, 36, 36)
+                .addGap(40, 40, 40)
                 .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(height1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(heightsLabel)
@@ -130,156 +187,450 @@ public class GameView extends javax.swing.JFrame {
                 .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(suitsLabel)
                     .addComponent(heightsLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(suitNoTrumps)
+                    .addComponent(height7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(suitSpades)
+                    .addComponent(height6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(suitHearts)
+                    .addComponent(height5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(suitDiamonds)
+                    .addComponent(height4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(suitClubs)
+                    .addComponent(height3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(suitPass)
+                    .addComponent(height2))
                 .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(bidPanelLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(suitNoTrumps)
-                            .addComponent(height7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(suitSpades)
-                            .addComponent(height6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(suitHearts)
-                            .addComponent(height5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(suitDiamonds)
-                            .addComponent(height4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(suitClubs)
-                            .addComponent(height3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(bidPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(suitPass)
-                            .addComponent(height2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(height1)
-                        .addContainerGap(42, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bidPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addComponent(height1))
+                    .addGroup(bidPanelLayout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        jLabel3.setText("Bid:");
+        labelBidThis.setText("Bid:");
+
+        cardGroup.add(cardButton0);
+
+        cardGroup.add(cardButton1);
+
+        cardGroup.add(cardButton2);
+
+        cardGroup.add(cardButton3);
+
+        cardGroup.add(cardButton4);
+
+        cardGroup.add(cardButton5);
+
+        cardGroup.add(cardButton6);
+
+        cardGroup.add(cardButton7);
+
+        cardGroup.add(cardButton8);
+
+        cardGroup.add(cardButton9);
+
+        cardGroup.add(cardButton10);
+
+        cardGroup.add(cardButton11);
+
+        cardGroup.add(cardButton12);
 
         javax.swing.GroupLayout playerThisLayout = new javax.swing.GroupLayout(playerThis);
         playerThis.setLayout(playerThisLayout);
         playerThisLayout.setHorizontalGroup(
             playerThisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(playerThisLayout.createSequentialGroup()
-                .addGap(263, 263, 263)
-                .addComponent(jLabel3)
-                .addContainerGap(344, Short.MAX_VALUE))
+                .addGap(305, 305, 305)
+                .addComponent(labelBidThis)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bidThis, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, playerThisLayout.createSequentialGroup()
+                .addGap(0, 12, Short.MAX_VALUE)
+                .addComponent(cardButton0, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(cardButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
+                .addComponent(cardButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         playerThisLayout.setVerticalGroup(
             playerThisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(playerThisLayout.createSequentialGroup()
-                .addComponent(jLabel3)
-                .addGap(0, 106, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, playerThisLayout.createSequentialGroup()
+                .addGroup(playerThisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelBidThis, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bidThis, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(playerThisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cardButton0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cardButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cardButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cardButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cardButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cardButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cardButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cardButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cardButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cardButton9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cardButton12, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+                    .addComponent(cardButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cardButton11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
-        jLabel2.setText("Bid:");
+        labelBidPlayer1.setText("Bid:");
+
+        cardPlayer10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B14.jpg"))); // NOI18N
+
+        cardPlayer11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B14.jpg"))); // NOI18N
+
+        cardPlayer12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B14.jpg"))); // NOI18N
+
+        cardPlayer13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B14.jpg"))); // NOI18N
+
+        cardPlayer14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B14.jpg"))); // NOI18N
+
+        cardPlayer15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B14.jpg"))); // NOI18N
+
+        cardPlayer16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B14.jpg"))); // NOI18N
+
+        cardPlayer17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B14.jpg"))); // NOI18N
+
+        cardPlayer18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B14.jpg"))); // NOI18N
+
+        cardPlayer19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B14.jpg"))); // NOI18N
+
+        cardPlayer110.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B14.jpg"))); // NOI18N
+
+        cardPlayer111.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B14.jpg"))); // NOI18N
+
+        cardPlayer112.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B14.jpg"))); // NOI18N
 
         javax.swing.GroupLayout player1Layout = new javax.swing.GroupLayout(player1);
         player1.setLayout(player1Layout);
         player1Layout.setHorizontalGroup(
             player1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, player1Layout.createSequentialGroup()
-                .addContainerGap(101, Short.MAX_VALUE)
-                .addComponent(jLabel2)
+            .addGroup(player1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(player1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cardPlayer16, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cardPlayer15, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cardPlayer17, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cardPlayer19, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cardPlayer18, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cardPlayer110, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cardPlayer111, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cardPlayer112, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cardPlayer13, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cardPlayer11, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cardPlayer12, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cardPlayer14, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(player1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelBidPlayer1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(bidPlayer1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
+            .addGroup(player1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cardPlayer10, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         player1Layout.setVerticalGroup(
             player1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(player1Layout.createSequentialGroup()
-                .addGap(184, 184, 184)
-                .addComponent(jLabel2)
-                .addContainerGap(304, Short.MAX_VALUE))
+                .addGap(163, 163, 163)
+                .addComponent(labelBidPlayer1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bidPlayer1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(236, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, player1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(cardPlayer10, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardPlayer11, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardPlayer12, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardPlayer13, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardPlayer14, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardPlayer15, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardPlayer16, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardPlayer17, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
+                .addComponent(cardPlayer18, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardPlayer19, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardPlayer110, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardPlayer111, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardPlayer112, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jLabel4.setText("Bid:");
+        labelBidplayer2.setText("Bid:");
+
+        cardPlayer20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B21.jpg"))); // NOI18N
+
+        cardPlayer21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B21.jpg"))); // NOI18N
+
+        cardPlayer22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B21.jpg"))); // NOI18N
+
+        cardPlayer23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B21.jpg"))); // NOI18N
+
+        cardPlayer24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B21.jpg"))); // NOI18N
+
+        cardPlayer25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B21.jpg"))); // NOI18N
+
+        cardPlayer26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B21.jpg"))); // NOI18N
+
+        cardPlayer27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B21.jpg"))); // NOI18N
+
+        cardPlayer28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B21.jpg"))); // NOI18N
+
+        cardPlayer29.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B21.jpg"))); // NOI18N
+
+        cardPlayer210.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B21.jpg"))); // NOI18N
+
+        cardPlayer211.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B21.jpg"))); // NOI18N
+
+        cardPlayer212.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B21.jpg"))); // NOI18N
 
         javax.swing.GroupLayout player2Layout = new javax.swing.GroupLayout(player2);
         player2.setLayout(player2Layout);
         player2Layout.setHorizontalGroup(
             player2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(player2Layout.createSequentialGroup()
-                .addGap(280, 280, 280)
-                .addComponent(jLabel4)
+                .addGroup(player2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(player2Layout.createSequentialGroup()
+                        .addGap(270, 270, 270)
+                        .addComponent(labelBidplayer2)
+                        .addGap(21, 21, 21)
+                        .addComponent(bidPlayer2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(player2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(cardPlayer20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cardPlayer21)
+                        .addGap(1, 1, 1)
+                        .addComponent(cardPlayer22)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cardPlayer23)
+                        .addGap(1, 1, 1)
+                        .addComponent(cardPlayer24)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cardPlayer25)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cardPlayer26)
+                        .addGap(4, 4, 4)
+                        .addComponent(cardPlayer27)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cardPlayer28)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cardPlayer29)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cardPlayer210)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cardPlayer211)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cardPlayer212)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         player2Layout.setVerticalGroup(
             player2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, player2Layout.createSequentialGroup()
-                .addContainerGap(95, Short.MAX_VALUE)
-                .addComponent(jLabel4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(player2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(player2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(cardPlayer20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cardPlayer25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cardPlayer21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cardPlayer22, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cardPlayer23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cardPlayer24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cardPlayer26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cardPlayer27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cardPlayer28)
+                    .addComponent(cardPlayer29)
+                    .addComponent(cardPlayer210)
+                    .addComponent(cardPlayer211)
+                    .addComponent(cardPlayer212))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(player2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelBidplayer2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bidPlayer2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        jLabel1.setText("Bid:");
+        labelBidPlayer3.setText("Bid:");
+
+        cardPlayer30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B15.jpg"))); // NOI18N
+
+        cardPlayer31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B15.jpg"))); // NOI18N
+
+        cardPlayer32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B15.jpg"))); // NOI18N
+
+        cardPlayer33.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B15.jpg"))); // NOI18N
+
+        cardPlayer34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B15.jpg"))); // NOI18N
+
+        cardPlayer35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B15.jpg"))); // NOI18N
+
+        cardPlayer36.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B15.jpg"))); // NOI18N
+
+        cardPlayer37.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B15.jpg"))); // NOI18N
+
+        cardPlayer38.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B15.jpg"))); // NOI18N
+
+        cardPlayer39.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B15.jpg"))); // NOI18N
+
+        cardPlayer310.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B15.jpg"))); // NOI18N
+
+        cardPlayer311.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B15.jpg"))); // NOI18N
+
+        cardPlayer312.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cards/B15.jpg"))); // NOI18N
 
         javax.swing.GroupLayout player3Layout = new javax.swing.GroupLayout(player3);
         player3.setLayout(player3Layout);
         player3Layout.setHorizontalGroup(
             player3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(player3Layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(0, 113, Short.MAX_VALUE))
+                .addGroup(player3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelBidPlayer3)
+                    .addComponent(bidPlayer3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(player3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cardPlayer30, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cardPlayer31, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cardPlayer36, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cardPlayer35, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cardPlayer37, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cardPlayer39, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cardPlayer38, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cardPlayer310, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cardPlayer311, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cardPlayer312, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cardPlayer33, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cardPlayer32, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cardPlayer34, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         player3Layout.setVerticalGroup(
             player3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(player3Layout.createSequentialGroup()
                 .addGap(183, 183, 183)
-                .addComponent(jLabel1)
-                .addContainerGap(297, Short.MAX_VALUE))
+                .addComponent(labelBidPlayer3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bidPlayer3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, player3Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(cardPlayer30, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardPlayer31, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardPlayer32, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardPlayer33, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardPlayer34, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardPlayer35, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardPlayer36, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardPlayer37, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
+                .addComponent(cardPlayer38, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardPlayer39, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardPlayer310, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardPlayer311, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardPlayer312, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(player1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(player2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(playerThis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(playerThis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(154, 154, 154)
-                        .addComponent(bidPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
-                .addComponent(player3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(3, 3, 3)
+                                .addComponent(player2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(player1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(267, 267, 267)
+                                .addComponent(bidPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 288, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(player3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(player1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62))
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(player3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(playerThis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(player2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bidPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(player2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(bidPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(playerThis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addComponent(player3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                        .addComponent(player1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(12, 12, 12)))
+                .addGap(12, 12, 12))
         );
 
         pack();
@@ -323,6 +674,63 @@ public class GameView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bidPanel;
+    private javax.swing.JLabel bidPlayer1;
+    private javax.swing.JLabel bidPlayer2;
+    private javax.swing.JLabel bidPlayer3;
+    private javax.swing.JLabel bidThis;
+    private javax.swing.JToggleButton cardButton0;
+    private javax.swing.JToggleButton cardButton1;
+    private javax.swing.JToggleButton cardButton10;
+    private javax.swing.JToggleButton cardButton11;
+    private javax.swing.JToggleButton cardButton12;
+    private javax.swing.JToggleButton cardButton2;
+    private javax.swing.JToggleButton cardButton3;
+    private javax.swing.JToggleButton cardButton4;
+    private javax.swing.JToggleButton cardButton5;
+    private javax.swing.JToggleButton cardButton6;
+    private javax.swing.JToggleButton cardButton7;
+    private javax.swing.JToggleButton cardButton8;
+    private javax.swing.JToggleButton cardButton9;
+    private javax.swing.ButtonGroup cardGroup;
+    private javax.swing.JLabel cardPlayer10;
+    private javax.swing.JLabel cardPlayer11;
+    private javax.swing.JLabel cardPlayer110;
+    private javax.swing.JLabel cardPlayer111;
+    private javax.swing.JLabel cardPlayer112;
+    private javax.swing.JLabel cardPlayer12;
+    private javax.swing.JLabel cardPlayer13;
+    private javax.swing.JLabel cardPlayer14;
+    private javax.swing.JLabel cardPlayer15;
+    private javax.swing.JLabel cardPlayer16;
+    private javax.swing.JLabel cardPlayer17;
+    private javax.swing.JLabel cardPlayer18;
+    private javax.swing.JLabel cardPlayer19;
+    private javax.swing.JLabel cardPlayer20;
+    private javax.swing.JLabel cardPlayer21;
+    private javax.swing.JLabel cardPlayer210;
+    private javax.swing.JLabel cardPlayer211;
+    private javax.swing.JLabel cardPlayer212;
+    private javax.swing.JLabel cardPlayer22;
+    private javax.swing.JLabel cardPlayer23;
+    private javax.swing.JLabel cardPlayer24;
+    private javax.swing.JLabel cardPlayer25;
+    private javax.swing.JLabel cardPlayer26;
+    private javax.swing.JLabel cardPlayer27;
+    private javax.swing.JLabel cardPlayer28;
+    private javax.swing.JLabel cardPlayer29;
+    private javax.swing.JLabel cardPlayer30;
+    private javax.swing.JLabel cardPlayer31;
+    private javax.swing.JLabel cardPlayer310;
+    private javax.swing.JLabel cardPlayer311;
+    private javax.swing.JLabel cardPlayer312;
+    private javax.swing.JLabel cardPlayer32;
+    private javax.swing.JLabel cardPlayer33;
+    private javax.swing.JLabel cardPlayer34;
+    private javax.swing.JLabel cardPlayer35;
+    private javax.swing.JLabel cardPlayer36;
+    private javax.swing.JLabel cardPlayer37;
+    private javax.swing.JLabel cardPlayer38;
+    private javax.swing.JLabel cardPlayer39;
     private javax.swing.JToggleButton height1;
     private javax.swing.JToggleButton height2;
     private javax.swing.JToggleButton height3;
@@ -332,10 +740,10 @@ public class GameView extends javax.swing.JFrame {
     private javax.swing.JToggleButton height7;
     private javax.swing.ButtonGroup heightGroup;
     private javax.swing.JLabel heightsLabel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel labelBidPlayer1;
+    private javax.swing.JLabel labelBidPlayer3;
+    private javax.swing.JLabel labelBidThis;
+    private javax.swing.JLabel labelBidplayer2;
     private javax.swing.JPanel player1;
     private javax.swing.JPanel player2;
     private javax.swing.JPanel player3;
