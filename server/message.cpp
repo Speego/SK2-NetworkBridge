@@ -64,10 +64,16 @@ int Message::getBidSuit() {
 }
 
 int Message::getBidHeight() {
-  string s = getMsgAfterColon();
-  s = s.substr(1,1);
-  if (s == "") return -1;
-  return convertToNumber(s);
+  try {
+    string s = getMsgAfterColon();
+    s = s.substr(1,1);
+    if (s == "") return -1;
+    return convertToNumber(s);
+  } catch (const char* error) {
+    return -1;
+  } catch (const std::out_of_range& oor) {
+    return -1;
+  }
 }
 
 CardSuit Message::getCardSuit() {
@@ -82,10 +88,12 @@ CardSuit Message::getCardSuit() {
 
 CardType Message::getCardType() {
   string s = getMsgAfterColon();
-  s = s.substr(1,2);
   try {
+    s = s.substr(1,2);
     return ((CardType)convertToNumber(s));
   } catch (const char* error) {
+    return CardType::NONE;
+  } catch (const std::out_of_range& oor) {
     return CardType::NONE;
   }
 }

@@ -197,12 +197,12 @@ bool Table::isPlayerTurn(int playerID) {
 bool Table::isCardCorrect(CardSuit suit, CardType type, int playerID) {
   if (state != TableState::GAME_ON)
     return false;
+  printf("table.cpp: Checked card - suit %d, type %d", suit, type);
 
   try {
     int playerVectorPosition = this->findPlayer(playerID);
     if (cardWithWrongSuit(suit) || cardWithWrongType(type))
       return false;
-
     if ((*players)[playerVectorPosition]->hasCard(suit, type)) {
       if (isCardFirst()) {
         return true;
@@ -233,6 +233,7 @@ bool Table::cardWithWrongType(CardType type) {
 }
 
 bool Table::isCardFirst() {
+  printf("Card first: %d", (firstSuit == CardSuit::NONE));
   return (firstSuit == CardSuit::NONE);
 }
 
@@ -243,7 +244,7 @@ void Table::playCard(CardSuit suit, CardType type) {
     roundWinner = currentPlayer;
     winSuit = suit;
     winType = type;
-  } else
+  }
   if (isCardFirst())
     firstSuit = suit;
 }
