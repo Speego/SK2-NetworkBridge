@@ -52,7 +52,7 @@ void GameManager::chooseTask(Message* msg, MessageType msgType) {
       break;
     case MessageType::NICKNAME:
       setPlayerName(msg, senderID);
-      createTablesMessage(senderID, MessageType::SEND_TABLES);
+      createTablesMessage(senderID);
       break;
     case MessageType::CREATE_TABLE:
       createTable(senderID);
@@ -126,9 +126,8 @@ void GameManager::setPlayerName(Message* msg, int clientID) {
   }
 }
 
-void GameManager::createTablesMessage(int receiver, MessageType msgType) {
-  string msg = convertNumberToString(int(msgType));
-  msg += ":";
+void GameManager::createTablesMessage(int receiver) {
+  string msg = convertNumberToString(int(MessageType::SEND_TABLES)) + ":";
   for (int i=0; i<(int)tables->size(); i++) {
     msg += to_string((*tables)[i]->id) + '-';
     msg += to_string((*tables)[i]->getNumberOfPlayers()) + ",";
@@ -145,8 +144,11 @@ void GameManager::createTable(int playerID) {
     tables->push_back(new Table(tablesID, player));
     printf("gameManager.cpp: Created new table with ID %d with player ID %d.\n", tablesID, player->id);
     tablesID++;
+    sendAcceptance(MessageType::CREATE_TABLE, true, playerID);
   } catch(char const* noPlayer) {
     printf("%s\n", noPlayer);
+    sendAcceptance(MessageType::CREATE_TABLE, false, playerID);
+    createTablesMessage(playerID);
   }
 }
 
@@ -160,12 +162,16 @@ void GameManager::joinTable(int playerID, Message* msg) {
       (*players)[playerVectorPosition]->state = PlayerState::waitingAtTable;
       Player* player = (*players)[playerVectorPosition];
       (*tables)[tableVectorPosition]->join(player);
+      sendAcceptance(MessageType::JOIN_TABLE, true, playerID);
     } else
       printf("gameManager.cpp: Player with ID %d can't join table ID %d!\n", playerID, tableID);
+      sendAcceptance(MessageType::JOIN_TABLE, false, playerID);
   } catch (char const* notNumber) {
     printf("%s\n", notNumber);
+    sendAcceptance(MessageType::JOIN_TABLE, false, playerID);
   } catch (string noTable) {
     printf("%s\n", noTable.c_str());
+    sendAcceptance(MessageType::JOIN_TABLE, false, playerID);
   }
 }
 
@@ -192,6 +198,7 @@ void GameManager::manageGivenBidMessage(Message* msg) {
 
   if ((*tables)[tableVectorPosition]->isPlayerTurn(sender)) {
     if ((*tables)[tableVectorPosition]->isBidCorrect(suit, trumpsHeight)) {
+      sendAcceptance(MessageType::GIVEN_BID, true, sender);
       (*tables)[tableVectorPosition]->bid(suit, trumpsHeight);
       sendGivenBidToOthers(tableVectorPosition, suit, trumpsHeight);
       if ((*tables)[tableVectorPosition]->biddingOver()) {
@@ -203,8 +210,11 @@ void GameManager::manageGivenBidMessage(Message* msg) {
         createBidPromptMessage(tableVectorPosition);
       }
     } else {
+      sendAcceptance(MessageType::GIVEN_BID, false, sender);
       createBidPromptMessage(tableVectorPosition);
     }
+  } else {
+    sendAcceptance(MessageType::GIVEN_BID, false, sender);
   }
 }
 
@@ -251,6 +261,7 @@ void GameManager::manageGivenCardMessage(Message* msg) {
 
   if ((*tables)[playerVectorPosition]->isPlayerTurn(sender)) {
     if ((*tables)[tableVectorPosition]->isCardCorrect(suit, type, sender)) {
+      sendAcceptance(MessageType::GIVEN_CARD, true, sender);
       (*tables)[tableVectorPosition]->playCard(suit, type);
       sendGivenCardToOthers(tableVectorPosition, suit, type);
       if ((*tables)[tableVectorPosition]->roundOver()) {
@@ -269,8 +280,11 @@ void GameManager::manageGivenCardMessage(Message* msg) {
       }
 
     } else {
+      sendAcceptance(MessageType::GIVEN_CARD, false, sender);
       createPlayCardPromptMessage(tableVectorPosition);
     }
+  } else {
+    sendAcceptance(MessageType::GIVEN_CARD, false, sender);
   }
 }
 
@@ -321,6 +335,16 @@ int GameManager::getReceiverID() {
     return -1;
 
   return messagesToSend->front()->getReceiverID();
+}
+
+void GameManager::sendAcceptance(MessageType msgType, bool accepted, int playerID) {
+  string msg = convertNumberToString(int(MessageType::ACCEPTANCE)) + ":";
+  msg += convertNumberToString(int(msgType)) + "-";
+  if (accepted)
+    msg += "T";
+  else
+    msg += "F";
+  addMessageToSend(convertConstChar(msg.c_str()), playerID);
 }
 
 char* GameManager::getMessage() {
