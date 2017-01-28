@@ -156,6 +156,10 @@ public class ConnectionController {
                 gameView.displayErrorMessage("Play card!");
                 break;
             }
+            case SEND_CARD: {
+                setCardImage(msg);
+                break;
+            }
             case ACCEPTANCE: {
                 interpretAcceptance(msg);
                 break;
@@ -201,7 +205,18 @@ public class ConnectionController {
             int playerPosition = msg.getBiddingWinner();
             gameView.setBiddingWinnerLabel(playerPosition);
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());        }
+            System.out.println(ex.getMessage());     
+        }
+    }
+    
+    private void setCardImage(Message msg) {
+        try {
+            int playerLocation = msg.getPlayingLocation();
+            String card = msg.getCard();
+            gameView.setPlayedCard(playerLocation, card);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
     
     private void interpretAcceptance(Message msg) {

@@ -18,7 +18,7 @@ void* threadGameManager(void* t_data) {
     pthread_mutex_unlock(&(*th_data).messagesMutex);
 
     if (buffer != NULL) {
-      printf("server.cpp: Message sent to player with ID %d: %s\n", receiverID, buffer);
+      printf("server.cpp: Message sent to player with ID %d: %s", receiverID, buffer);
       messageLength = write((*clientsDescriptors)[receiverID], buffer, strlen(buffer));
       if (messageLength < 0)
         printf("server.cpp: Error while writing to socket. Client id: %d, message: %s\n", receiverID, buffer);

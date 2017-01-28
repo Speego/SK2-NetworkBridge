@@ -867,7 +867,16 @@ public class GameView extends javax.swing.JFrame {
                 return button.getName();
         }        
         return "";
-
+    }
+    
+    protected void setPlayedCard(int playerLocation, String card) {
+        String path = "cards/" + card + ".jpg";
+        switch(playerLocation) {
+            case 0: cardPlayedThis.setIcon(new ImageIcon(getClass().getClassLoader().getResource(path))); break;
+            case 1: cardPlayed1.setIcon(new ImageIcon(getClass().getClassLoader().getResource(path))); break;
+            case 2: cardPlayed2.setIcon(new ImageIcon(getClass().getClassLoader().getResource(path))); break;
+            case 3: cardPlayed3.setIcon(new ImageIcon(getClass().getClassLoader().getResource(path))); break;
+        }
     }
 
 

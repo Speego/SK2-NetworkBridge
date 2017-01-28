@@ -33,7 +33,7 @@ void GameManager::update() {
 }
 
 void GameManager::interpretMessage(Message* msg) {
-  printf("gameManager.cpp: Interpreted message is: %s\n", msg->getMessage());
+  printf("gameManager.cpp: Interpreted message is: %s", msg->getMessage());
   try {
     MessageType msgType = msg->getMessageType();
     if ((int)msgType >= (int)messageTypesNames.size())
@@ -231,10 +231,9 @@ void GameManager::sendGivenBidToPlayers(int tableVectorPosition, CardSuit suit, 
   string msgHeader = convertNumberToString((int)MessageType::SEND_BID) + ":";
   string bid = convertBidToString(suit, height);
   string msg;
-  // msg += convertNumberToString((*tables)[tableVectorPosition]->getBidderID()) + "-";
-  // msg += convertNumberToString((int)suit) + "-" + convertNumberToString(height);
-  msg = msgHeader + convertNumberToString(0) + bid;
   int numberOfPlayers = (*tables)[tableVectorPosition]->getNumberOfPlayers();
+
+  msg = msgHeader + convertNumberToString(0) + bid;
   int receiver = (*tables)[tableVectorPosition]->getCurrentPlayerID();
   addMessageToSend(convertConstChar(msg.c_str()), receiver);
   for (int i=1; i<numberOfPlayers; i++) {
@@ -289,12 +288,11 @@ void GameManager::manageGivenCardMessage(Message* msg) {
   int tableVectorPosition = findTable(tableID);
 
   if ((*tables)[tableVectorPosition]->isPlayerTurn(sender)) {
-    printf("gameManager.cpp: manageGivenCard - player turn\n");
 
     if ((*tables)[tableVectorPosition]->isCardCorrect(suit, type, sender)) {
       sendAcceptance(MessageType::GIVEN_CARD, true, sender);
       (*tables)[tableVectorPosition]->playCard(suit, type);
-      sendGivenCardToOthers(tableVectorPosition, suit, type);
+      sendGivenCardToPlayers(tableVectorPosition, suit, type);
       printf("gameManager.cpp: manageGivenCard - card correct\n");
 
       if ((*tables)[tableVectorPosition]->roundOver()) {
@@ -313,26 +311,43 @@ void GameManager::manageGivenCardMessage(Message* msg) {
       }
 
     } else {
-      printf("gameManager.cpp: manageGivenCard - card not correct\n");
       sendAcceptance(MessageType::GIVEN_CARD, false, sender);
       createPlayCardPromptMessage(tableVectorPosition);
     }
   } else {
-    printf("gameManager.cpp: manageGivenCard - not player turn\n");
     sendAcceptance(MessageType::GIVEN_CARD, false, sender);
   }
 }
 
-void GameManager::sendGivenCardToOthers(int tableVectorPosition, CardSuit suit, CardType type) {
-  string msg = convertNumberToString((int)MessageType::SEND_CARD) + ":";
-  msg += convertNumberToString((*tables)[tableVectorPosition]->getCurrentPlayerID()) + "-";
-  msg += convertNumberToString((int)suit) + "-" + convertNumberToString((int)type);
+void GameManager::sendGivenCardToPlayers(int tableVectorPosition, CardSuit suit, CardType type) {
+  string msgHeader = convertNumberToString((int)MessageType::SEND_CARD) + ":";
+  string card = convertCardToString(suit, type);
+  string msg;
   int numberOfPlayers = (*tables)[tableVectorPosition]->getNumberOfPlayers();
-  int receiver;
+
+  msg = msgHeader + convertNumberToString(0) + card;
+  int receiver = (*tables)[tableVectorPosition]->getCurrentPlayerID();
+  addMessageToSend(convertConstChar(msg.c_str()), receiver);
   for (int i=1; i<numberOfPlayers; i++) {
+    msg = msgHeader + convertNumberToString(4-i) + card;
     receiver = (*tables)[tableVectorPosition]->getNotCurrentPlayerID(i);
     addMessageToSend(convertConstChar(msg.c_str()), receiver);
   }
+}
+
+string GameManager::convertCardToString(CardSuit suit, CardType type) {
+  int suitNumber = (int)suit;
+  string bid;
+  switch(suitNumber) {
+    case 3: {bid += "S"; break;}
+    case 2: {bid += "H"; break;}
+    case 1: {bid += "D"; break;}
+    case 0: {bid += "C"; break;}
+    default: bid += "X";
+  }
+  bid += convertNumberToString((int)type);
+  return bid;
+
 }
 
 void GameManager::sendEndOfRound(int tableVectorPosition) {

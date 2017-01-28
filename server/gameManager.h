@@ -69,7 +69,8 @@ private:
   void createPlayCardPromptMessage(int);
 
   void manageGivenCardMessage(Message*);
-  void sendGivenCardToOthers(int, CardSuit, CardType);
+  void sendGivenCardToPlayers(int, CardSuit, CardType);
+  string convertCardToString(CardSuit, CardType);
   void sendEndOfRound(int);
   void sendEndOfGame(int);
   void removeTable(int);

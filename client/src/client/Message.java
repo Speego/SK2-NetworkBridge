@@ -111,6 +111,20 @@ public class Message {
         return Integer.parseInt(message.substring(1,2));
     }
     
+    protected int getPlayingLocation() throws Exception {
+        if (this.type != MessageType.SEND_CARD)
+            throw new Exception("SEND_CARD: Wrong type of message");
+        
+        return Integer.parseInt(message.substring(1, 2));
+    }
+    
+    protected String getCard() throws Exception {
+        if (this.type != MessageType.SEND_CARD)
+            throw new Exception("SEND_CARD: Wrong type of message");
+        
+        return message.substring(2, 5);
+    }
+    
     protected MessageType getAcceptanceType() throws Exception {
         if (this.type != MessageType.ACCEPTANCE)
             throw new Exception("ACCEPTANCE: Wrong type of message");
