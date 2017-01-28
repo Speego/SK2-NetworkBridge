@@ -62,7 +62,8 @@ private:
   void createCardsMessages(int);
 
   void manageGivenBidMessage(Message*);
-  void sendGivenBidToOthers(int, CardSuit, int);
+  void sendGivenBidToPlayers(int, CardSuit, int);
+  string convertBidToString(CardSuit, int);
   void sendEndOfBidding(int);
 
   void createPlayCardPromptMessage(int);

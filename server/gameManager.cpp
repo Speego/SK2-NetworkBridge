@@ -204,7 +204,7 @@ void GameManager::manageGivenBidMessage(Message* msg) {
       if ((*tables)[tableVectorPosition]->isBidCorrect(suit, trumpsHeight)) {
         sendAcceptance(MessageType::GIVEN_BID, true, sender);
         (*tables)[tableVectorPosition]->bid(suit, trumpsHeight);
-        sendGivenBidToOthers(tableVectorPosition, suit, trumpsHeight);
+        sendGivenBidToPlayers(tableVectorPosition, suit, trumpsHeight);
         if ((*tables)[tableVectorPosition]->biddingOver()) {
           sendEndOfBidding(tableVectorPosition);
           (*tables)[tableVectorPosition]->prepareForGame();
@@ -227,16 +227,36 @@ void GameManager::manageGivenBidMessage(Message* msg) {
   }
 }
 
-void GameManager::sendGivenBidToOthers(int tableVectorPosition, CardSuit suit, int height) {
-  string msg = convertNumberToString((int)MessageType::SEND_BID) + ":";
-  msg += convertNumberToString((*tables)[tableVectorPosition]->getBidderID()) + "-";
-  msg += convertNumberToString((int)suit) + "-" + convertNumberToString(height);
+void GameManager::sendGivenBidToPlayers(int tableVectorPosition, CardSuit suit, int height) {
+  string msgHeader = convertNumberToString((int)MessageType::SEND_BID) + ":";
+  string bid = convertBidToString(suit, height);
+  string msg;
+  // msg += convertNumberToString((*tables)[tableVectorPosition]->getBidderID()) + "-";
+  // msg += convertNumberToString((int)suit) + "-" + convertNumberToString(height);
+  msg = msgHeader + convertNumberToString(0) + bid;
   int numberOfPlayers = (*tables)[tableVectorPosition]->getNumberOfPlayers();
-  int receiver;
+  int receiver = (*tables)[tableVectorPosition]->getCurrentPlayerID();
+  addMessageToSend(convertConstChar(msg.c_str()), receiver);
   for (int i=1; i<numberOfPlayers; i++) {
+    msg = msgHeader + convertNumberToString(4-i) + bid;
     receiver = (*tables)[tableVectorPosition]->getNotCurrentPlayerID(i);
     addMessageToSend(convertConstChar(msg.c_str()), receiver);
   }
+}
+
+string GameManager::convertBidToString(CardSuit suit, int height) {
+  int suitNumber = (int)suit;
+  string bid;
+  switch(suitNumber) {
+    case 4: {bid += "N"; break;}
+    case 3: {bid += "S"; break;}
+    case 2: {bid += "H"; break;}
+    case 1: {bid += "D"; break;}
+    case 0: {bid += "C"; break;}
+    default: bid += "P";
+  }
+  bid += convertNumberToString(height);
+  return bid;
 }
 
 void GameManager::sendEndOfBidding(int tableVectorPosition) {

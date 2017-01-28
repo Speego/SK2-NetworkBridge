@@ -144,6 +144,10 @@ public class ConnectionController {
                 gameView.displayErrorMesage("Your turn to bid.");
                 break;
             }
+            case SEND_BID: {
+                setBidLabel(msg);
+                break;
+            }
             case ACCEPTANCE: {
                 interpretAcceptance(msg);
                 break;
@@ -170,6 +174,17 @@ public class ConnectionController {
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
+        }
+    }
+    
+    private void setBidLabel(Message msg) {
+        try {
+            int playerLocation = msg.getBiddingPlayerLocation();
+            String suit = msg.getBidSuit();
+            int height = msg.getBidHeight();
+            gameView.setBidLabel(playerLocation, suit, height);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
     }
     

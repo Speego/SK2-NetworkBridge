@@ -58,7 +58,6 @@ public class Message {
         return msg;
     }
     
-    
     protected String getTableNumberOfPlayers(int position) throws Exception {
         if (this.type != MessageType.SEND_TABLES)
             throw new Exception("SEND_TABLES: Wrong type of message");
@@ -73,7 +72,6 @@ public class Message {
         
         return (message.length() / 4);
     }
-
     
     protected String getCard(int position) throws Exception {
         if (this.type != MessageType.CARDS)
@@ -83,12 +81,41 @@ public class Message {
         return msg;
     }
     
-    protected MessageType getAcceptanceType() {
+    protected int getBiddingPlayerLocation() throws Exception {
+        if (this.type != MessageType.SEND_BID)
+            throw new Exception("SEND_BID: Wrong type of message");
+
+        return (Integer.parseInt(message.substring(1, 2)));
+    }
+    
+    protected String getBidSuit() throws Exception {
+        if (this.type != MessageType.SEND_BID)
+            throw new Exception("SEND_BID: Wrong type of message");
+        
+        return message.substring(2, 3);
+    }
+    
+    protected int getBidHeight() throws Exception {
+        if (this.type != MessageType.SEND_BID)
+            throw new Exception("SEND_BID: Wrong type of message");
+        
+        if ("P".equals(message.substring(2, 3)))
+            return -1;
+        return Integer.parseInt(message.substring(3, 5));
+    }
+    
+    protected MessageType getAcceptanceType() throws Exception {
+        if (this.type != MessageType.ACCEPTANCE)
+            throw new Exception("ACCEPTANCE: Wrong type of message");
+        
         String msg = message.substring(0, 2);
         return parseIntToMessageType(Integer.parseInt(msg));
     }
     
-    protected boolean isAccepted() {
+    protected boolean isAccepted() throws Exception {
+        if (this.type != MessageType.ACCEPTANCE)
+            throw new Exception("ACCEPTANCE: Wrong type of message");
+
         return (message.substring(3,4).equals("T"));
     }
     
