@@ -28,6 +28,8 @@ void GameManager::update() {
     messagesNew->pop();
     delete msg;
   }
+
+  updateTables();
 }
 
 void GameManager::interpretMessage(Message* msg) {
@@ -163,9 +165,10 @@ void GameManager::joinTable(int playerID, Message* msg) {
       Player* player = (*players)[playerVectorPosition];
       (*tables)[tableVectorPosition]->join(player);
       sendAcceptance(MessageType::JOIN_TABLE, true, playerID);
-    } else
+    } else {
       printf("gameManager.cpp: Player with ID %d can't join table ID %d!\n", playerID, tableID);
       sendAcceptance(MessageType::JOIN_TABLE, false, playerID);
+    }
   } catch (char const* notNumber) {
     printf("%s\n", notNumber);
     sendAcceptance(MessageType::JOIN_TABLE, false, playerID);
@@ -350,6 +353,7 @@ void GameManager::sendAcceptance(MessageType msgType, bool accepted, int playerI
 char* GameManager::getMessage() {
   Message* message;
   const char* msg;
+  char* msg2;
 
   if (messagesToSend->empty())
     return NULL;
@@ -359,7 +363,9 @@ char* GameManager::getMessage() {
   messagesToSend->pop();
   delete message;
 
-  return convertConstChar(msg);
+  msg2 = convertConstChar(msg);
+  printf("gameManager.cpp: Message given to server to send: %s\n", msg2);
+  return msg2;
 }
 
 void GameManager::addMessage(char* newMessage, int sender) {
@@ -372,6 +378,7 @@ void GameManager::addPlayer(int ID) {
 }
 
 void GameManager::addMessageToSend(char* msg, int receiver) {
+
   messagesToSend->push(new Message(msg, -1, receiver));
 }
 
@@ -382,7 +389,9 @@ string GameManager::convertNumberToString(int number) {
 }
 
 char* GameManager::convertConstChar(const char* str) {
+  printf("gameManager.cpp: Message from front of queue: %s\n", str);
   char* strFinal = (char*)malloc(strlen(str)+1);
   strcpy(strFinal, str);
+  printf("gameManager.cpp: Message converted from const char* to char*: %s\n", strFinal);
   return strFinal;
 }

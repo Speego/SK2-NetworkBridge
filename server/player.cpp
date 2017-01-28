@@ -48,7 +48,7 @@ int Player::getNumberOfCards() {
 string Player::getCardsMessage() {
   string msg;
   for (int i=0; i<(int)cards->size(); i++)
-    msg += convertNumberToString((int)(*cards)[i]->suit) + '-' + convertNumberToString((int)(*cards)[i]->type) + ',';
+    msg += convertNumberToCardType((int)(*cards)[i]->suit) + convertNumberToString((int)(*cards)[i]->type) + ',';
   return msg;
 }
 
@@ -56,6 +56,16 @@ string Player::convertNumberToString(int number) {
   if (number < 10)
     return "0" + to_string(number);
   return to_string(number);
+}
+
+char Player::convertNumberToCardType(int number) {
+  switch (number) {
+    case 0: return 'C';
+    case 1: return 'D';
+    case 2: return 'H';
+    case 3: return 'S';
+    default: return 'X';
+  }
 }
 
 void Player::sortCards() {

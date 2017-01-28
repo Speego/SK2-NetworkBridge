@@ -61,6 +61,7 @@ public:
   void removeCard(CardSuit, CardType);
 
 private:
+  char convertNumberToCardType(int);
   string convertNumberToString(int);
   void sortCardsSuit();
   void sortCardsType();

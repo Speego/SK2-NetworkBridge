@@ -2,7 +2,7 @@
 
 void* threadGameManager(void* t_data) {
   struct thread_sending_data *th_data = (struct thread_sending_data*)t_data;
-  char* buffer = (char*)malloc(BUF_SIZE*sizeof(char));
+  char* buffer;
   int receiverID;
   GameManager* gameManager = (*th_data).gameManager;
   vector<int>* clientsDescriptors = (*th_data).clientsDescriptors;
@@ -12,16 +12,18 @@ void* threadGameManager(void* t_data) {
     pthread_mutex_lock(&(*th_data).messagesMutex);
     // mutex pobierający z kolejki oczekujących
     gameManager->update();
-    // ten sam mutex (w ogóle jeden i ten sam)
-    pthread_mutex_unlock(&(*th_data).messagesMutex);
     receiverID = gameManager->getReceiverID();
     buffer = gameManager->getMessage();
+    // ten sam mutex (w ogóle jeden i ten sam)
+    pthread_mutex_unlock(&(*th_data).messagesMutex);
+
     if (buffer != NULL) {
       printf("\nserver.cpp: Message sent to player with ID %d: %s\n", receiverID, buffer);
       messageLength = write((*clientsDescriptors)[receiverID], buffer, strlen(buffer));
       if (messageLength < 0)
         printf("server.cpp: Error while writing to socket. Client id: %d, message: %s\n", receiverID, buffer);
     }
+    free(buffer);
   }
 
   printf("server.cpp: Game manager thread terminated.\n");
