@@ -133,6 +133,10 @@ public class ConnectionController {
                 showTables(msg);
                 break;
             }
+            case ACCEPTANCE: {
+                interpretAcceptance(msg);
+                break;
+            }
         }
     }
     
@@ -158,13 +162,42 @@ public class ConnectionController {
         }
     }
     
+    private void interpretAcceptance(Message msg) {
+        MessageType msgType = msg.getAcceptanceType();
+        boolean accepted = msg.isAccepted();
+        
+        switch(msgType) {
+            case CREATE_TABLE: {
+                if (accepted)
+                    createTable();
+                else
+                    tablesView.displayErrorMesage("Cannot create table.");
+                break;
+            }
+            case JOIN_TABLE: {
+                if (accepted)
+                    joinTable();
+                else
+                    tablesView.displayErrorMesage("Cannot join selected table.");
+                break;
+            }
+            default: break;
+        }
+    }
+    
+    private void createTable() {
+        tablesView.displayErrorMesage("Table created.");
+    }
+    
+    private void joinTable() {
+        tablesView.displayErrorMesage("Table joined.");
+    }
+        
     class CreateTableListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             sendMessage(new Message(MessageType.CREATE_TABLE, ""));
-            tablesView.displayErrorMesage("Table created.");
-            // WŁĄCZ WIDOK STOŁU
         }
         
     }
@@ -177,8 +210,6 @@ public class ConnectionController {
             table = table.substring(0, 1);
             System.out.println("Selected table is: " + table);
             sendMessage(new Message(MessageType.JOIN_TABLE, table));
-            tablesView.displayErrorMesage("Joined to table " + table);
-            // JOIN TABLE
         }
         
     }

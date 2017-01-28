@@ -16,7 +16,8 @@ enum MessageType {
     GIVEN_CARD,
     SEND_CARD,
     ROUND_OVER,
-    GAME_RESULT
+    GAME_RESULT,
+    ACCEPTANCE
 }
 
 public class Message {
@@ -65,6 +66,15 @@ public class Message {
         return msg;
     }
     
+    protected MessageType getAcceptanceType() {
+        String msg = message.substring(0, 2);
+        return parseIntToMessageType(Integer.parseInt(msg));
+    }
+    
+    protected boolean isAccepted() {
+        return (message.substring(3,4).equals("T"));
+    }
+    
     private int getIdFromMsg(String msg) {
         String idStr = msg.substring(0, 2);
         return Integer.parseInt(idStr);
@@ -86,7 +96,8 @@ public class Message {
             case 11: return MessageType.GIVEN_CARD;
             case 12: return MessageType.SEND_CARD;       
             case 13: return MessageType.ROUND_OVER;       
-            case 14: return MessageType.GAME_RESULT;     
+            case 14: return MessageType.GAME_RESULT;   
+            case 15: return MessageType.ACCEPTANCE;
             default: return MessageType.NONE;     
         }
     }
@@ -108,6 +119,7 @@ public class Message {
             case SEND_CARD: return "12";
             case ROUND_OVER: return "13";
             case GAME_RESULT: return "14";
+            case ACCEPTANCE: return "15";
             default: return "xx";
         }
     }
