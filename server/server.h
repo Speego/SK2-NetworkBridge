@@ -19,9 +19,9 @@
 #include <stdbool.h>
 #include <vector>
 
-#define BUF_SIZE 1024
+#define BUF_SIZE 1
 #define SERVER_PORT 1234
-#define QUEUE_SIZE 64
+#define QUEUE_SIZE 4
 
 using std::vector;
 

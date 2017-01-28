@@ -33,13 +33,16 @@ void* threadGameManager(void* t_data) {
 void* threadReceivingBehavior(void* t_data) {
   struct thread_receive_data *th_data = (struct thread_receive_data*)t_data;
   char buffer[BUF_SIZE];
+  char* msg = (char*)(malloc(1024*sizeof(char)));
+  char cToStr[2];
+  cToStr[1] = '\0';
   GameManager* gameManager = (*th_data).gameManager;
   int messageLength = 1;
   printf("server.cpp: New client with ID: %d.\n", (*th_data).id);
 
   while (messageLength > 0) {
     bzero(buffer, BUF_SIZE);
-    messageLength = read((*th_data).descriptor, buffer, BUF_SIZE-1);
+    messageLength = read((*th_data).descriptor, buffer, BUF_SIZE);
     if (messageLength < 0) {
       printf("server.cpp: Error while reading from socket %d.\n", (*th_data).descriptor);
       pthread_mutex_lock(&(*th_data).messagesMutex);
@@ -47,11 +50,17 @@ void* threadReceivingBehavior(void* t_data) {
       gameManager->addMessage(buffer, (*th_data).id);
       pthread_mutex_unlock(&(*th_data).messagesMutex);
     } else {
-      pthread_mutex_lock(&(*th_data).messagesMutex);
-      // mutex uaktualniający kolejkę oczekujących
-      gameManager->addMessage(buffer, (*th_data).id);
-      // ten sam mutex (w ogóle jeden i ten sam)
-      pthread_mutex_unlock(&(*th_data).messagesMutex);
+      if (buffer[0] == '&') {
+        pthread_mutex_lock(&(*th_data).messagesMutex);
+        // mutex uaktualniający kolejkę oczekujących
+        gameManager->addMessage(msg, (*th_data).id);
+        // ten sam mutex (w ogóle jeden i ten sam)
+        pthread_mutex_unlock(&(*th_data).messagesMutex);
+        msg[0] = '\0';
+      } else {
+        cToStr[0] = buffer[0];
+        strcat(msg, cToStr);
+      }
     }
   }
 

@@ -12,8 +12,6 @@
 #include <vector>
 #include <string>
 
-#define BUF_SIZE 1024
-
 using std::queue;
 using std::vector;
 using std::to_string;

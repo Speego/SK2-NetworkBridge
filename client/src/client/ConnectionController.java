@@ -80,7 +80,7 @@ public class ConnectionController {
     }
     
     private void sendMessage(Message msg) {
-        String msgStr = msg.getMessage();
+        String msgStr = msg.getMessage() + "&";
         try {
             socketWriter.write(msgStr.getBytes(Charset.forName("UTF-8")));
             System.out.println("Message sent: " + msgStr);
