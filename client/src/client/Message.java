@@ -58,11 +58,28 @@ public class Message {
         return msg;
     }
     
+    
     protected String getTableNumberOfPlayers(int position) throws Exception {
         if (this.type != MessageType.SEND_TABLES)
             throw new Exception("SEND_TABLES: Wrong type of message");
         
         String msg = message.substring(4*position+2, 4*position+3);
+        return msg;
+    }
+    
+    protected int getNumberOfCards() throws Exception {
+        if (this.type != MessageType.CARDS)
+            throw new Exception("CARDS: Wrong type of message");
+        
+        return (message.length() / 4);
+    }
+
+    
+    protected String getCard(int position) throws Exception {
+        if (this.type != MessageType.CARDS)
+            throw new Exception("CARDS: Wrong type of message");
+        
+        String msg = message.substring(4*position, 4*position+3);
         return msg;
     }
     

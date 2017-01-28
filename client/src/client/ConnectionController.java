@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -134,6 +136,10 @@ public class ConnectionController {
                 showTables(msg);
                 break;
             }
+            case CARDS: {
+                setCards(msg);
+                break;
+            }
             case ACCEPTANCE: {
                 interpretAcceptance(msg);
                 break;
@@ -164,39 +170,53 @@ public class ConnectionController {
     }
     
     private void interpretAcceptance(Message msg) {
-        MessageType msgType = msg.getAcceptanceType();
-        boolean accepted = msg.isAccepted();
-        
-        switch(msgType) {
-            case CREATE_TABLE: {
-                if (accepted) {
-                    disposeWindow(tablesView);
-                    createGameView();
+        try {
+            MessageType msgType = msg.getAcceptanceType();
+            boolean accepted = msg.isAccepted();
+
+            switch(msgType) {
+                case CREATE_TABLE: {
+                    if (accepted) {
+                        disposeWindow(tablesView);
+                        createGameView();
+                    }
+                    else
+                        tablesView.displayErrorMesage("Cannot create table.");
+                    break;
                 }
-                else
-                    tablesView.displayErrorMesage("Cannot create table.");
-                break;
-            }
-            case JOIN_TABLE: {
-                if (accepted) {
-                    disposeWindow(tablesView);
-                    createGameView();
+                case JOIN_TABLE: {
+                    if (accepted) {
+                        disposeWindow(tablesView);
+                        createGameView();
+                    }
+                    else
+                        tablesView.displayErrorMesage("Cannot join selected table.");
+                    break;
                 }
-                else
-                    tablesView.displayErrorMesage("Cannot join selected table.");
-                break;
+                default: break;
             }
-            case CARDS: {
-                
-                break;
-            }
-            default: break;
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
     }
     
     private void createGameView() {
         this.gameView = new GameView();
         this.gameView.setVisible(true);
+    }
+    
+    private void setCards(Message msg) {
+        List<String> cards = new ArrayList();
+        try {
+            int numberOfCards = msg.getNumberOfCards();
+            for (int i = 0; i < numberOfCards; i++) {
+                cards.add(msg.getCard(i));
+            }
+
+            gameView.setCards(cards);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
     
     class CreateTableListener implements ActionListener {

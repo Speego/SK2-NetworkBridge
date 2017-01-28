@@ -1,6 +1,11 @@
 package client;
 
+import java.awt.Component;
+import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JToggleButton;
 
 public class GameView extends javax.swing.JFrame {
 
@@ -224,6 +229,7 @@ public class GameView extends javax.swing.JFrame {
         labelBidThis.setText("Bid:");
 
         cardGroup.add(cardButton0);
+        cardButton0.setName(""); // NOI18N
 
         cardGroup.add(cardButton1);
 
@@ -266,9 +272,9 @@ public class GameView extends javax.swing.JFrame {
                 .addComponent(cardButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cardButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cardButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cardButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cardButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -285,7 +291,8 @@ public class GameView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cardButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cardButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(cardButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1))
         );
         playerThisLayout.setVerticalGroup(
             playerThisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -606,9 +613,9 @@ public class GameView extends javax.swing.JFrame {
                                 .addComponent(player2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(player1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(267, 267, 267)
+                                .addGap(255, 255, 255)
                                 .addComponent(bidPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 288, Short.MAX_VALUE)))
+                                .addGap(0, 296, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(player3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)))
@@ -670,7 +677,24 @@ public class GameView extends javax.swing.JFrame {
     void displayErrorMesage(String errorMessage) {
         JOptionPane.showMessageDialog(this, errorMessage);
     }
-
+    
+    void setCards(List<String> cards) {
+        int i = 0;
+        int numberOfCards = cards.size();
+        System.out.println("Number of cards: " + cards.size());
+        
+        System.out.println("Setting images...");
+        for (Component c: playerThis.getComponents()) {
+            if (c instanceof JToggleButton) {
+                if (i < numberOfCards)
+                    ((JToggleButton) c).setIcon(new ImageIcon(getClass().getClassLoader().getResource("cards/" + cards.get(i) + ".jpg")));
+                else
+                    c.setVisible(false);
+                
+                i++;
+            }
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bidPanel;
