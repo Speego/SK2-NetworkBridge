@@ -140,6 +140,10 @@ public class ConnectionController {
                 setCards(msg);
                 break;
             }
+            case START_BID: {
+                gameView.displayErrorMesage("Your turn to bid.");
+                break;
+            }
             case ACCEPTANCE: {
                 interpretAcceptance(msg);
                 break;
@@ -188,10 +192,13 @@ public class ConnectionController {
                     if (accepted) {
                         disposeWindow(tablesView);
                         createGameView();
-                    }
-                    else
+                    } else
                         tablesView.displayErrorMesage("Cannot join selected table.");
                     break;
+                }
+                case GIVEN_BID: {
+                    if (!accepted)
+                        gameView.displayErrorMesage("You've bidden wrong.");
                 }
                 default: break;
             }
@@ -203,7 +210,18 @@ public class ConnectionController {
     private void createGameView() {
         this.gameView = new GameView();
         this.gameView.setVisible(true);
+        this.gameView.addConnectButtonListener(new SendBidListener());
     }
+    
+    class SendBidListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            sendMessage(new Message(MessageType.GIVEN_BID, gameView.getSelectedBid()));
+        }
+    }
+        
+
     
     private void setCards(Message msg) {
         List<String> cards = new ArrayList();

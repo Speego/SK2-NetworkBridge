@@ -118,15 +118,18 @@ int Table::getBidderID() {
 
 bool Table::isBidCorrect(CardSuit suit, int height) {
   int suitNumber = (int)suit;
-
+  printf("Checking bid - height=%d, trumpsHeight=%d, suit=%d, trumpsSuit=%d\n", height, trumpsHeight, suitNumber, (int)trumpsSuit);
+  printf("table.cpp: First stage.\n");
   if (suit == CardSuit::NONE)
     return true;
+  printf("table.cpp: Second stage.\n");
   if ((height > 0) && (height < 8) && (height > trumpsHeight)) {
     if ((suitNumber >= 0) && (suitNumber <= 4))
       return true;
     return false;
   }
-  if ((height == trumpsHeight) && (height <= 4) && (height > (int)trumpsSuit))
+  printf("table.cpp: Third stage\n");
+  if ((height == trumpsHeight) && (suitNumber <= 4) && (suitNumber > (int)trumpsSuit))
     return true;
   return false;
 }

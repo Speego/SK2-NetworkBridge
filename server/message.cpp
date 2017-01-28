@@ -53,11 +53,21 @@ int Message::getTableToJoin() {
 }
 
 int Message::getBidSuit() {
-  return getBidOrCardSuit();
+  string s = getMsgAfterColon();
+  s = s.substr(0,1);
+  if (s == "N") return 4;
+  if (s == "S") return 3;
+  if (s == "H") return 2;
+  if (s == "D") return 1;
+  if (s == "C") return 0;
+  return -1;
 }
 
 int Message::getBidHeight() {
-  return getBidHeightOrCardType();
+  string s = getMsgAfterColon();
+  s = s.substr(1,1);
+  if (s == "") return -1;
+  return convertToNumber(s);
 }
 
 int Message::getCardSuit() {

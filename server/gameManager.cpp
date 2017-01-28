@@ -191,33 +191,39 @@ void GameManager::createCardsMessages(int tableVectorPosition) {
 }
 
 void GameManager::manageGivenBidMessage(Message* msg) {
-  CardSuit suit = (CardSuit)msg->getBidSuit();
-  int trumpsHeight = msg->getBidHeight();
-
   int sender = msg->getSenderID();
   int playerVectorPosition = this->findPlayer(sender);
   int tableID = (*players)[playerVectorPosition]->tableID;
   int tableVectorPosition = findTable(tableID);
 
-  if ((*tables)[tableVectorPosition]->isPlayerTurn(sender)) {
-    if ((*tables)[tableVectorPosition]->isBidCorrect(suit, trumpsHeight)) {
-      sendAcceptance(MessageType::GIVEN_BID, true, sender);
-      (*tables)[tableVectorPosition]->bid(suit, trumpsHeight);
-      sendGivenBidToOthers(tableVectorPosition, suit, trumpsHeight);
-      if ((*tables)[tableVectorPosition]->biddingOver()) {
-        sendEndOfBidding(tableVectorPosition);
-        (*tables)[tableVectorPosition]->prepareForGame();
-        createPlayCardPromptMessage(tableVectorPosition);
+  try {
+    CardSuit suit = (CardSuit)msg->getBidSuit();
+    int trumpsHeight = msg->getBidHeight();
+
+    if ((*tables)[tableVectorPosition]->isPlayerTurn(sender)) {
+      if ((*tables)[tableVectorPosition]->isBidCorrect(suit, trumpsHeight)) {
+        sendAcceptance(MessageType::GIVEN_BID, true, sender);
+        (*tables)[tableVectorPosition]->bid(suit, trumpsHeight);
+        sendGivenBidToOthers(tableVectorPosition, suit, trumpsHeight);
+        if ((*tables)[tableVectorPosition]->biddingOver()) {
+          sendEndOfBidding(tableVectorPosition);
+          (*tables)[tableVectorPosition]->prepareForGame();
+          createPlayCardPromptMessage(tableVectorPosition);
+        } else {
+          (*tables)[tableVectorPosition]->changeTurn();
+          createBidPromptMessage(tableVectorPosition);
+        }
       } else {
-        (*tables)[tableVectorPosition]->changeTurn();
+        sendAcceptance(MessageType::GIVEN_BID, false, sender);
         createBidPromptMessage(tableVectorPosition);
       }
     } else {
-      sendAcceptance(MessageType::GIVEN_BID, false, sender);
-      createBidPromptMessage(tableVectorPosition);
+      // sendAcceptance(MessageType::GIVEN_BID, false, sender);
     }
-  } else {
+  } catch (const char* error) {
+    printf("%s\n", error);
     sendAcceptance(MessageType::GIVEN_BID, false, sender);
+    createBidPromptMessage(tableVectorPosition);
   }
 }
 
@@ -364,7 +370,6 @@ char* GameManager::getMessage() {
   delete message;
 
   msg2 = convertConstChar(msg);
-  printf("gameManager.cpp: Message given to server to send: %s\n", msg2);
   return msg2;
 }
 
@@ -389,9 +394,7 @@ string GameManager::convertNumberToString(int number) {
 }
 
 char* GameManager::convertConstChar(const char* str) {
-  printf("gameManager.cpp: Message from front of queue: %s\n", str);
   char* strFinal = (char*)malloc(strlen(str)+1);
   strcpy(strFinal, str);
-  printf("gameManager.cpp: Message converted from const char* to char*: %s\n", strFinal);
   return strFinal;
 }

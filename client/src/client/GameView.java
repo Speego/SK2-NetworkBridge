@@ -1,7 +1,10 @@
 package client;
 
 import java.awt.Component;
+import java.awt.event.ActionListener;
+import java.util.Enumeration;
 import java.util.List;
+import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -674,11 +677,47 @@ public class GameView extends javax.swing.JFrame {
         });
     }
     
-    void displayErrorMesage(String errorMessage) {
+    protected void addConnectButtonListener(ActionListener listener) {
+        sendButton.addActionListener(listener);
+    }
+    
+    protected String getSelectedBid() {
+        String bid = getSelectedSuit();
+        bid += getSelectedHeight();
+        return bid;
+    }
+    
+    private String getSelectedSuit() {
+        for (Enumeration<AbstractButton> buttons = suitGroup.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+
+            if (button.isSelected())
+                return button.getText().substring(0, 1);
+        }        
+        
+        return "";
+    }
+    
+    private String getSelectedHeight() {
+        for (Enumeration<AbstractButton> buttons = heightGroup.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+            
+            if (button.isSelected())
+                return button.getText();
+        }
+        
+        return "";
+    }
+    
+    protected void setYourBid() {
+        
+    }
+    
+    protected void displayErrorMesage(String errorMessage) {
         JOptionPane.showMessageDialog(this, errorMessage);
     }
     
-    void setCards(List<String> cards) {
+    protected void setCards(List<String> cards) {
         int i = 0;
         int numberOfCards = cards.size();
         System.out.println("Number of cards: " + cards.size());
@@ -686,8 +725,10 @@ public class GameView extends javax.swing.JFrame {
         System.out.println("Setting images...");
         for (Component c: playerThis.getComponents()) {
             if (c instanceof JToggleButton) {
-                if (i < numberOfCards)
+                if (i < numberOfCards) {
                     ((JToggleButton) c).setIcon(new ImageIcon(getClass().getClassLoader().getResource("cards/" + cards.get(i) + ".jpg")));
+                    c.setName(cards.get(i));
+                }
                 else
                     c.setVisible(false);
                 
