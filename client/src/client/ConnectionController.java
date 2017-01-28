@@ -160,6 +160,10 @@ public class ConnectionController {
                 setCardImage(msg);
                 break;
             }
+            case ROUND_OVER: {
+                updateResult(msg);
+                break;
+            }
             case ACCEPTANCE: {
                 interpretAcceptance(msg);
                 break;
@@ -214,6 +218,26 @@ public class ConnectionController {
             int playerLocation = msg.getPlayingLocation();
             String card = msg.getCard();
             gameView.setPlayedCard(playerLocation, card);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    private void updateResult(Message msg) {
+        try {
+            int winner = msg.getRoundWinner();
+            if (winner % 2 == 0)
+                gameModel.yourTricks++;
+            else gameModel.opponentsTricks++;
+            
+            if (winner == 0)
+                gameView.displayErrorMessage("You won round!");
+            else 
+                gameView.displayErrorMessage("Round winner is player " + String.valueOf(winner));
+            
+            gameView.updateYourScore(gameModel.yourTricks);
+            gameView.updateOpponentsScore(gameModel.opponentsTricks);
+            gameView.resetPlayedCards();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }

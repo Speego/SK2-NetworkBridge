@@ -91,7 +91,9 @@ public:
   void playCard(CardSuit, CardType);
 
   bool roundOver();
-  GamePlayerType getRoundWinner();
+  // GamePlayerType getRoundWinner();
+  int getRoundWinnerID();
+  int getNotRoundWinnerID(int);
   void endRound();
   bool gameOver();
   GameResult getGameResult();

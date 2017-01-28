@@ -125,6 +125,13 @@ public class Message {
         return message.substring(2, 5);
     }
     
+    protected int getRoundWinner() throws Exception {
+        if (this.type != MessageType.ROUND_OVER)
+            throw new Exception("ROUND_OVER: Wrong type of message");
+        
+        return Integer.parseInt(message.substring(1, 2));
+    }
+    
     protected MessageType getAcceptanceType() throws Exception {
         if (this.type != MessageType.ACCEPTANCE)
             throw new Exception("ACCEPTANCE: Wrong type of message");

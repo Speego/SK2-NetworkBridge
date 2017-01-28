@@ -118,17 +118,14 @@ int Table::getBidderID() {
 
 bool Table::isBidCorrect(CardSuit suit, int height) {
   int suitNumber = (int)suit;
-  printf("Checking bid - height=%d, trumpsHeight=%d, suit=%d, trumpsSuit=%d\n", height, trumpsHeight, suitNumber, (int)trumpsSuit);
-  printf("table.cpp: First stage.\n");
+  printf("table.cpp: Checking bid - height=%d, trumpsHeight=%d, suit=%d, trumpsSuit=%d\n", height, trumpsHeight, suitNumber, (int)trumpsSuit);
   if (suit == CardSuit::NONE)
     return true;
-  printf("table.cpp: Second stage.\n");
   if ((height > 0) && (height < 8) && (height > trumpsHeight)) {
     if ((suitNumber >= 0) && (suitNumber <= 4))
       return true;
     return false;
   }
-  printf("table.cpp: Third stage\n");
   if ((height == trumpsHeight) && (suitNumber <= 4) && (suitNumber > (int)trumpsSuit))
     return true;
   return false;
@@ -242,16 +239,17 @@ bool Table::isCardFirst() {
 void Table::playCard(CardSuit suit, CardType type) {
   cardCounter++;
   (*players)[currentPlayer]->removeCard(suit, type);
-  if (isCardFirst())
-    firstSuit = suit;
   if (isCardWinning(suit, type)) {
     roundWinner = currentPlayer;
     winSuit = suit;
     winType = type;
-  }
+  } else
+  if (isCardFirst())
+    firstSuit = suit;
 }
 
 bool Table::isCardWinning(CardSuit suit, CardType type) {
+  printf("table.cpp: Suit played - %d, win suit - %d, first suit - %d, type played - %d, win type - %d\n", suit, winSuit, firstSuit, type, winType);
   if (isCardFirst())
     return true;
   if (suit == winSuit) {
@@ -267,8 +265,16 @@ bool Table::roundOver() {
   return (cardCounter == 4);
 }
 
-GamePlayerType Table::getRoundWinner() {
-  return (*players)[roundWinner]->gamePlayerType;
+// GamePlayerType Table::getRoundWinner() {
+//   return (*players)[roundWinner]->gamePlayerType;
+// }
+
+int Table::getRoundWinnerID() {
+  return (*players)[roundWinner]->id;
+}
+
+int Table::getNotRoundWinnerID(int shift) {
+  return (*players)[(roundWinner + shift) % getNumberOfPlayers()]->id;
 }
 
 void Table::endRound() {

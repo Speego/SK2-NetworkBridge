@@ -259,7 +259,6 @@ string GameManager::convertBidToString(CardSuit suit, int height) {
 }
 
 void GameManager::sendEndOfBidding(int tableVectorPosition) {
-// <BIDDING_RESULT>:<BiddingResult (enum number)>
   string msg;
   int numberOfPlayers = (*tables)[tableVectorPosition]->getNumberOfPlayers();
   int receiver;
@@ -272,7 +271,6 @@ void GameManager::sendEndOfBidding(int tableVectorPosition) {
 }
 
 void GameManager::createPlayCardPromptMessage(int tableVectorPosition) {
-// <PLAY_CARD>:
   string msg = convertNumberToString((int)MessageType::PLAY_CARD) + ":";
   int receiver = (*tables)[tableVectorPosition]->getCurrentPlayerID();
   addMessageToSend(convertConstChar(msg.c_str()), receiver);
@@ -288,15 +286,14 @@ void GameManager::manageGivenCardMessage(Message* msg) {
   int tableVectorPosition = findTable(tableID);
 
   if ((*tables)[tableVectorPosition]->isPlayerTurn(sender)) {
-
     if ((*tables)[tableVectorPosition]->isCardCorrect(suit, type, sender)) {
       sendAcceptance(MessageType::GIVEN_CARD, true, sender);
       (*tables)[tableVectorPosition]->playCard(suit, type);
       sendGivenCardToPlayers(tableVectorPosition, suit, type);
-      printf("gameManager.cpp: manageGivenCard - card correct\n");
 
       if ((*tables)[tableVectorPosition]->roundOver()) {
         sendEndOfRound(tableVectorPosition);
+        createCardsMessages(tableVectorPosition);
         (*tables)[tableVectorPosition]->endRound();
         if ((*tables)[tableVectorPosition]->gameOver()) {
           sendEndOfRound(tableVectorPosition);
@@ -351,13 +348,15 @@ string GameManager::convertCardToString(CardSuit suit, CardType type) {
 }
 
 void GameManager::sendEndOfRound(int tableVectorPosition) {
-// <ROUND_OVER>:<GamePlayerType (enum number) who won round>
-  string msg = convertNumberToString((int)MessageType::ROUND_OVER) + ":";
-  msg += convertNumberToString((int)((*tables)[tableVectorPosition]->getRoundWinner()));
+  string msgHeader = convertNumberToString((int)MessageType::ROUND_OVER) + ":";
   int numberOfPlayers = (*tables)[tableVectorPosition]->getNumberOfPlayers();
-  int receiver;
-  for (int i=0; i<numberOfPlayers; i++) {
-    receiver = (*tables)[tableVectorPosition]->getPlayerID(i);
+
+  // string msg = msgHeader + convertNumberToString((int)((*tables)[tableVectorPosition]->getRoundWinner()));
+  string msg = msgHeader + convertNumberToString(0);
+  int receiver = (*tables)[tableVectorPosition]->getRoundWinnerID();;
+  for (int i=1; i<numberOfPlayers; i++) {
+    msg = msgHeader + convertNumberToString(4-i);
+    receiver = (*tables)[tableVectorPosition]->getNotRoundWinnerID(i);
     addMessageToSend(convertConstChar(msg.c_str()), receiver);
   }
 }
