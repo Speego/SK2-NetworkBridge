@@ -20,6 +20,7 @@ public class TablesView extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         buttonJoin = new javax.swing.JButton();
         buttonCreate = new javax.swing.JButton();
+        buttonRequestTables = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -27,13 +28,15 @@ public class TablesView extends javax.swing.JFrame {
         tables.setModel(new DefaultListModel());
         jScrollPane1.setViewportView(tables);
 
-        jLabel1.setText("Stoły");
+        jLabel1.setText("Tables");
 
-        buttonJoin.setText("Dołącz");
+        buttonJoin.setText("Join");
 
-        buttonCreate.setText("Utwórz");
+        buttonCreate.setText("Create");
 
-        jLabel2.setText("ID stołu - liczba graczy");
+        buttonRequestTables.setText("Check tables");
+
+        jLabel2.setText("Table ID - number of players");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -43,6 +46,8 @@ public class TablesView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
+                        .addComponent(buttonRequestTables)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(buttonCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonJoin, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -71,7 +76,8 @@ public class TablesView extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonJoin)
-                    .addComponent(buttonCreate))
+                    .addComponent(buttonCreate)
+                    .addComponent(buttonRequestTables))
                 .addGap(25, 25, 25))
         );
 
@@ -111,31 +117,42 @@ public class TablesView extends javax.swing.JFrame {
         });
     }
     
-    void addCreateButtonListener(ActionListener listener) {
+    protected void addCreateButtonListener(ActionListener listener) {
         buttonCreate.addActionListener(listener);
     }
     
-    void addJoinButtonListener(ActionListener listener) {
+    protected void addJoinButtonListener(ActionListener listener) {
         buttonJoin.addActionListener(listener);
     }
     
-    void displayErrorMessage(String errorMessage) {
+    protected void addRequestTablesButtonListener(ActionListener listener) {
+        buttonRequestTables.addActionListener(listener);
+    }
+    
+    protected void displayErrorMessage(String errorMessage) {
         JOptionPane.showMessageDialog(this, errorMessage);
     }
     
-    public String getSelectedTable() {
+    protected String getSelectedTable() {
         return tables.getSelectedValue();
     }
     
-    public void addTable(String table) {
+    protected void addTable(String table) {
         DefaultListModel model = (DefaultListModel) tables.getModel();
         model.addElement(table);
+        tables.repaint();
+    }
+    
+    protected void resetTables() {
+        DefaultListModel model = (DefaultListModel) tables.getModel();
+        model.clear();
         tables.repaint();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCreate;
     private javax.swing.JButton buttonJoin;
+    private javax.swing.JButton buttonRequestTables;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

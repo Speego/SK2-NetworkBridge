@@ -68,6 +68,9 @@ void GameManager::chooseTask(Message* msg, MessageType msgType) {
     case MessageType::GIVEN_CARD:
       manageGivenCardMessage(msg);
       break;
+    case MessageType::TABLES_REQUEST:
+      createTablesMessage(senderID);
+      break;
     default: break;
   }
 }

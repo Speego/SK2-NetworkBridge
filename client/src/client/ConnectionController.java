@@ -47,7 +47,7 @@ public class ConnectionController {
                 nickname = connectionView.getLogin();
 
                 if (nickname.equals(""))
-                    throw new Exception("Podaj login!");
+                    throw new Exception("Write login!");
                 
                 connect();
                 createTablesView();
@@ -60,7 +60,7 @@ public class ConnectionController {
                 tablesView.setVisible(true);
             } catch(IOException ex) {
                 System.out.println(ex);
-                connectionView.displayErrorMessage("Nie można się połączyć.");
+                connectionView.displayErrorMessage("Cannot connect server.");
             } catch(Exception ex) {
                 System.out.println(ex);
                 connectionView.displayErrorMessage(ex.getMessage());
@@ -94,6 +94,7 @@ public class ConnectionController {
         this.tablesView.setVisible(false);
         this.tablesView.addCreateButtonListener(new CreateTableListener());
         this.tablesView.addJoinButtonListener(new JoinTableListener());
+        this.tablesView.addRequestTablesButtonListener(new RequestTablesListener());
     }
     
     private void runGettingMessagesThread() {
@@ -179,6 +180,7 @@ public class ConnectionController {
         String tableId;
         String tableNumberOfPlayers;
         int numberOfTables = 0;
+        tablesView.resetTables();
         
         try {
             numberOfTables = msg.getNumberOfTables();
@@ -355,6 +357,15 @@ public class ConnectionController {
             table = table.substring(0, 1);
             System.out.println("Selected table is: " + table);
             sendMessage(new Message(MessageType.JOIN_TABLE, table));
+        }
+        
+    }
+    
+    class RequestTablesListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            sendMessage(new Message(MessageType.REQUEST_TABLES, ""));
         }
         
     }

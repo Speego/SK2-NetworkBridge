@@ -17,7 +17,8 @@ enum MessageType {
     SEND_CARD,
     ROUND_OVER,
     GAME_RESULT,
-    ACCEPTANCE
+    ACCEPTANCE,
+    REQUEST_TABLES
 }
 
 public class Message {
@@ -178,6 +179,7 @@ public class Message {
             case 13: return MessageType.ROUND_OVER;       
             case 14: return MessageType.GAME_RESULT;   
             case 15: return MessageType.ACCEPTANCE;
+            case 16: return MessageType.REQUEST_TABLES;
             default: return MessageType.NONE;     
         }
     }
@@ -200,6 +202,7 @@ public class Message {
             case ROUND_OVER: return "13";
             case GAME_RESULT: return "14";
             case ACCEPTANCE: return "15";
+            case REQUEST_TABLES: return "16";
             default: return "xx";
         }
     }

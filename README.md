@@ -39,6 +39,7 @@ Poniżej opisane są komunikaty w następujący sposób: [nazwa] - [format_komun
 -> ROUND_OVER - 13:[gracz] - serwer->klient - informacja o zwycięzcy rundy (0 - zwycięzca itd.)  
 -> GAME_RESULT - 14:[nr_zwycięstwa] - serwer->klient - informacja o zwycięzcy gry (0 - zwycięzca, 1 - przegrany)  
 -> ACCEPTANCE - 15:[nr_wiadomości]-[czy_zaakceptowano(T/F)] - klient->serwer - potwierdzenie poprawności otrzymanego komunikatu (na przykład zagranej karty, licytacji, możliwości dołączenia do stołu)  
+-> TABLES_REQUEST - 16: - klient->serwer - prośba o wysłanie SEND_TABLES
 
 Aby uruchomić serwer, należy go skompilować poleceniem "make" i włączyć. Aby uruchomić klienta, należy włączyć plik .jar ("java -jar client.jar").  
 

@@ -26,7 +26,7 @@ private:
 
   vector<string> messageTypesNames = {"Disconnected", "Nickname", "SendTables", "CreateTable", "JoinTable",
                                       "Cards", "StartBid", "GivenBid", "SendBid", "BiddingResult", "PlayCard",
-                                      "GivenCard", "SendCard", "RoundOver", "GameResult", "Acceptance"};
+                                      "GivenCard", "SendCard", "RoundOver", "GameResult", "Acceptance", "TablesRequest"};
 
   int tablesID;
 

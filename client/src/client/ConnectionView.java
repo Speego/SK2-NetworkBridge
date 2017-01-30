@@ -24,15 +24,15 @@ public class ConnectionView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Okno połączenia");
 
-        jLabel1.setText("Adres IP");
+        jLabel1.setText("IP Address");
 
-        jLabel2.setText("Nr portu");
+        jLabel2.setText("Port Number");
 
         ip.setText("localhost");
 
         port.setText("1234");
 
-        buttonConnect.setText("Połącz");
+        buttonConnect.setText("Connect");
 
         jLabel3.setText("Login");
 
