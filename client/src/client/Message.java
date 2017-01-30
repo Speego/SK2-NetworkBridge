@@ -132,6 +132,14 @@ public class Message {
         return Integer.parseInt(message.substring(1, 2));
     }
     
+    protected int getGameWinner() throws Exception {
+        if (this.type != MessageType.GAME_RESULT) 
+            throw new Exception("GAME_RESULT: Wrong type of message");
+        
+        return Integer.parseInt(message.substring(1, 2));
+    }
+
+    
     protected MessageType getAcceptanceType() throws Exception {
         if (this.type != MessageType.ACCEPTANCE)
             throw new Exception("ACCEPTANCE: Wrong type of message");

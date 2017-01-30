@@ -164,6 +164,10 @@ public class ConnectionController {
                 updateResult(msg);
                 break;
             }
+            case GAME_RESULT: {
+                endGame(msg);
+                break;
+            }
             case ACCEPTANCE: {
                 interpretAcceptance(msg);
                 break;
@@ -243,6 +247,20 @@ public class ConnectionController {
         }
     }
     
+    private void endGame(Message msg) {
+        try {
+            int gameWinner = msg.getGameWinner();
+            switch (gameWinner) {
+                case 0: gameView.displayErrorMessage("Declarers won game!"); break;
+                case 1: gameView.displayErrorMessage("Declarers lost game!"); break;
+            }
+            disposeWindow(gameView);
+            tablesView.setVisible(true);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
     private void interpretAcceptance(Message msg) {
         try {
             MessageType msgType = msg.getAcceptanceType();
@@ -251,7 +269,7 @@ public class ConnectionController {
             switch(msgType) {
                 case CREATE_TABLE: {
                     if (accepted) {
-                        disposeWindow(tablesView);
+                        tablesView.setVisible(false);
                         createGameView();
                     }
                     else
@@ -260,7 +278,7 @@ public class ConnectionController {
                 }
                 case JOIN_TABLE: {
                     if (accepted) {
-                        disposeWindow(tablesView);
+                        tablesView.setVisible(false);
                         createGameView();
                     } else
                         tablesView.displayErrorMessage("Cannot join selected table.");

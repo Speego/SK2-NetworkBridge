@@ -298,7 +298,6 @@ void GameManager::manageGivenCardMessage(Message* msg) {
         createCardsMessages(tableVectorPosition);
         (*tables)[tableVectorPosition]->endRound();
         if ((*tables)[tableVectorPosition]->gameOver()) {
-          sendEndOfRound(tableVectorPosition);
           sendEndOfGame(tableVectorPosition);
           removeTable(tableVectorPosition);
         } else {
@@ -308,7 +307,6 @@ void GameManager::manageGivenCardMessage(Message* msg) {
         (*tables)[tableVectorPosition]->changeTurn();
         createPlayCardPromptMessage(tableVectorPosition);
       }
-
     } else {
       sendAcceptance(MessageType::GIVEN_CARD, false, sender);
     }
@@ -361,12 +359,12 @@ void GameManager::sendEndOfRound(int tableVectorPosition) {
 }
 
 void GameManager::sendEndOfGame(int tableVectorPosition) {
-  string msg = convertNumberToString((int)MessageType::GAME_RESULT) + ":";
-  msg += convertNumberToString((int)(*tables)[tableVectorPosition]->getGameResult()) + '-';
-  msg += convertNumberToString((*tables)[tableVectorPosition]->getScore());
+  string msgHeader = convertNumberToString((int)MessageType::GAME_RESULT) + ":";
+  string msg;
   int numberOfPlayers = (*tables)[tableVectorPosition]->getNumberOfPlayers();
   int receiver;
   for (int i=0; i<numberOfPlayers; i++) {
+    msg = msgHeader + convertNumberToString((int)(*tables)[tableVectorPosition]->getGameResult());
     receiver = (*tables)[tableVectorPosition]->getPlayerID(i);
     addMessageToSend(convertConstChar(msg.c_str()), receiver);
   }

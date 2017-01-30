@@ -9,10 +9,15 @@ Table::Table(int ID, Player* player) {
 }
 
 Table::~Table() {
+  printf("table.cpp: Deleting1\n");
   players->clear();
+  printf("table.cpp: Deleting2\n");
   cards->clear();
+  printf("table.cpp: Deleting3\n");
   delete players;
+  printf("table.cpp: Deleting4\n");
   delete cards;
+  printf("table.cpp: Deleting5\n");
 }
 
 int Table::getNumberOfPlayers() {
@@ -266,10 +271,6 @@ bool Table::roundOver() {
   return (cardCounter == 4);
 }
 
-// GamePlayerType Table::getRoundWinner() {
-//   return (*players)[roundWinner]->gamePlayerType;
-// }
-
 int Table::getRoundWinnerID() {
   return (*players)[roundWinner]->id;
 }
@@ -293,7 +294,7 @@ void Table::endRound() {
 }
 
 bool Table::gameOver() {
-  return (roundCounter == 13);
+  return (roundCounter == 1);
 }
 
 GameResult Table::getGameResult() {
