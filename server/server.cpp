@@ -150,7 +150,10 @@ void Server::createGameManagerThread() {
 
 void Server::waitForPlayers(char* fileName) {
   int playerDescriptor =  acceptConnection(fileName);
-  createReceivingThread(playerDescriptor);
+  if (gameManager->getNumberOfPlayers() >= QUEUE_SIZE)
+    close(playerDescriptor);
+  else
+    createReceivingThread(playerDescriptor);
 }
 
 int Server::acceptConnection(char* fileName) {

@@ -41,6 +41,8 @@ public:
 
   void addPlayer(int);
 
+  int getNumberOfPlayers();
+
 private:
   void interpretMessage(Message*);
   void chooseTask(Message*, MessageType);

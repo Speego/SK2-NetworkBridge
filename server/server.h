@@ -21,7 +21,7 @@
 
 #define BUF_SIZE 1
 #define SERVER_PORT 1235
-#define QUEUE_SIZE 4
+#define QUEUE_SIZE 40
 
 using std::vector;
 

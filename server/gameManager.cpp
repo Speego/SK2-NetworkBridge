@@ -438,6 +438,10 @@ void GameManager::addPlayer(int ID) {
   printf("ADDED PLAYER TABLE ID - %d\n", players->back()->tableID);
 }
 
+int GameManager::getNumberOfPlayers() {
+  return (int)players->size();
+}
+
 void GameManager::addMessageToSend(char* msg, int receiver) {
   messagesToSend->push(new Message(msg, -1, receiver));
 }
