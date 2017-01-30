@@ -41,6 +41,8 @@ void Table::removePlayer(int playerID) {
     printf("table.cpp: Player with ID %d removed. Number of players at table: %d.\n", playerID, (int)players->size());
   } catch(char const* noPlayer) {
     printf("%s\n", noPlayer);
+  } catch (string noPlayer) {
+    printf("%s\n", noPlayer.c_str());
   }
 }
 

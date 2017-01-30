@@ -20,7 +20,7 @@
 #include <vector>
 
 #define BUF_SIZE 1
-#define SERVER_PORT 1234
+#define SERVER_PORT 1235
 #define QUEUE_SIZE 4
 
 using std::vector;

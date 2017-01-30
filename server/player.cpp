@@ -12,6 +12,7 @@ Player::Player(int ID, PlayerState st) {
   id = ID;
   state = st;
   cards = new vector<Card*>();
+  tableID = -1;
   printf("player.cpp: New player without name.\n");
 }
 
@@ -19,6 +20,7 @@ Player::Player(int ID, char* name, PlayerState st) {
   id = ID;
   nickname = new string(name);
   state = st;
+  tableID = -1;
   cards = new vector<Card*>();
 }
 

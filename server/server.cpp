@@ -43,15 +43,18 @@ void* threadReceivingBehavior(void* t_data) {
   while (messageLength > 0) {
     bzero(buffer, BUF_SIZE);
     messageLength = read((*th_data).descriptor, buffer, BUF_SIZE);
-    if (messageLength < 0) {
-      printf("server.cpp: Error while reading from socket %d.\n", (*th_data).descriptor);
+    if (messageLength <= 0) {
+      printf("server.cpp: Error while reading from socket %d. Player disconnected.\n", (*th_data).descriptor);
       pthread_mutex_lock(&(*th_data).messagesMutex);
       bzero(buffer, BUF_SIZE);
-      gameManager->addMessage(buffer, (*th_data).id);
+      msg[0] = '\0';
+      strcat(msg, "00:");
+      gameManager->addMessage(msg, (*th_data).id);
       pthread_mutex_unlock(&(*th_data).messagesMutex);
     } else {
       if (buffer[0] == '&') {
         pthread_mutex_lock(&(*th_data).messagesMutex);
+        printf("server.cpp: Message added to game manager - %s\n", msg);
         // mutex uaktualniający kolejkę oczekujących
         gameManager->addMessage(msg, (*th_data).id);
         // ten sam mutex (w ogóle jeden i ten sam)
@@ -177,7 +180,9 @@ void Server::createReceivingThread(int playerDescriptor) {
     exit(-1);
   } else {
     clientsDescriptors->push_back(playerDescriptor);
+    pthread_mutex_lock(&messagesMutex);
     gameManager->addPlayer(numberOfClients);
+    pthread_mutex_unlock(&messagesMutex);
     numberOfClients++;
   }
 }

@@ -357,10 +357,14 @@ public class ConnectionController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            String table = tablesView.getSelectedTable();
-            table = table.substring(0, 1);
-            System.out.println("Selected table is: " + table);
-            sendMessage(new Message(MessageType.JOIN_TABLE, table));
+            try {
+                String table = tablesView.getSelectedTable();
+                table = table.substring(0, 1);
+                System.out.println("Selected table is: " + table);
+                sendMessage(new Message(MessageType.JOIN_TABLE, table));
+            } catch (Exception ex) {
+                System.out.println("JOIN button clicked without selected table.");
+            }
         }
         
     }

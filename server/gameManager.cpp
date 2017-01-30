@@ -80,7 +80,7 @@ int GameManager::findPlayer(int clientID) {
     if ((*players)[i]->id == clientID)
       return i;
   }
-  throw "gameManager.cpp: No player with ID " + clientID;
+  throw "gameManager.cpp: No player with ID " + (clientID);
 }
 
 int GameManager::findTable(int tableID) {
@@ -88,7 +88,7 @@ int GameManager::findTable(int tableID) {
     if ((*tables)[i]->id == tableID)
       return i;
   }
-  throw "gameManager.cpp: No table with ID " + tableID;
+  throw "gameManager.cpp: No table with ID " + (tableID);
 }
 
 void GameManager::updateTables() {
@@ -109,17 +109,17 @@ void GameManager::createBidPromptMessage(int tableVectorPosition) {
 }
 
 void GameManager::removePlayer(int clientID) {
+  int playerVectorPosition = this->findPlayer(clientID);
   try {
-    int playerVectorPosition = this->findPlayer(clientID);
     int tableVectorPosition = findTable((*players)[playerVectorPosition]->tableID);
-    players->erase(players->begin() + playerVectorPosition);
     (*tables)[tableVectorPosition]->removePlayer(clientID);
     if ((*tables)[tableVectorPosition]->getNumberOfPlayers() == 0)
       tables->erase(tables->begin() + tableVectorPosition);
-    printf("gameManager.cpp: Player with ID %d removed. Number of players: %d.\n", clientID, (int)players->size());
-  } catch(char const* noPlayer) {
-    printf("%s\n", noPlayer);
+  } catch(char const* noTable) {
+    printf("%s\n", noTable);
   }
+  players->erase(players->begin() + playerVectorPosition);
+  printf("gameManager.cpp: Player with ID %d removed. Number of players: %d.\n", clientID, (int)players->size());
 }
 
 void GameManager::setPlayerName(Message* msg, int clientID) {
@@ -165,6 +165,7 @@ void GameManager::joinTable(int playerID, Message* msg) {
       printf("gameManager.cpp: Player %d can join.\n", playerID);
       int playerVectorPosition = this->findPlayer(playerID);
       (*players)[playerVectorPosition]->state = PlayerState::waitingAtTable;
+      (*players)[playerVectorPosition]->tableID = tableID;
       Player* player = (*players)[playerVectorPosition];
       (*tables)[tableVectorPosition]->join(player);
       sendAcceptance(MessageType::JOIN_TABLE, true, playerID);
@@ -419,6 +420,7 @@ void GameManager::addMessage(char* newMessage, int sender) {
 
 void GameManager::addPlayer(int ID) {
   players->push_back(new Player(ID, PlayerState::fresh));
+  printf("ADDED PLAYER TABLE ID - %d\n", players->back()->tableID);
 }
 
 void GameManager::addMessageToSend(char* msg, int receiver) {
