@@ -26,7 +26,7 @@ Poniżej opisane są komunikaty w następujący sposób: [nazwa] - [format_komun
 -> DISCONNECTED - 00: - klient->serwer - tworzony, gdy klient wyśle nulla (proces klienta zakończy się)  
 -> DISCONNECTED - 00: - serwer->klient - wysyła informację, że jeden z graczy rozłaczył się podczas trwania gry  
 -> NICKNAME - 01:[nickname] - klient->serwer - wysyłany na początku nickname gracza  
--> SEND_TABLES - 02:[id_stołu]-[liczba_graczy],... - serwer->klient - wysyłany po połączeniu (docelowo także w odpowiedzi na żądanie klienta po wciśnięciu przycisku)  
+-> SEND_TABLES - 02:[id_stołu]-[liczba_graczy],... - serwer->klient - wysyłany po połączeniu oraz w odpowiedzi na żądanie nr 16
 -> CREATE_TABLE - 03: - klient->serwer - chęć utworzenia nowego stołu  
 -> JOIN_TABLE - 02:[id_stołu] - klient->serwer - chęć dołączenia do wybranego stołu  
 -> CARDS - 05:[kolor][typ],... - serwer->klient - karty należące do gracza, wysyłane po każdej rundzie  
