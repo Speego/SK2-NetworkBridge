@@ -112,9 +112,19 @@ void GameManager::removePlayer(int clientID) {
   int playerVectorPosition = this->findPlayer(clientID);
   try {
     int tableVectorPosition = findTable((*players)[playerVectorPosition]->tableID);
-    (*tables)[tableVectorPosition]->removePlayer(clientID);
-    if ((*tables)[tableVectorPosition]->getNumberOfPlayers() == 0)
+    if ((*tables)[tableVectorPosition]->getNumberOfPlayers() == 4) {
+      string msg = convertNumberToString((int)MessageType::DISCONNECTED) + ":";
+      int receiver;
+      for (int i = 0; i < 4; i++) {
+        receiver = (*tables)[tableVectorPosition]->getPlayerID(i);
+        addMessageToSend(convertConstChar(msg.c_str()), receiver);
+      }
       tables->erase(tables->begin() + tableVectorPosition);
+    } else {
+      (*tables)[tableVectorPosition]->removePlayer(clientID);
+      if ((*tables)[tableVectorPosition]->getNumberOfPlayers() == 0)
+      tables->erase(tables->begin() + tableVectorPosition);
+    }
   } catch(char const* noTable) {
     printf("%s\n", noTable);
   }
@@ -214,8 +224,13 @@ void GameManager::manageGivenBidMessage(Message* msg) {
         sendGivenBidToPlayers(tableVectorPosition, suit, trumpsHeight);
         if ((*tables)[tableVectorPosition]->biddingOver()) {
           sendEndOfBidding(tableVectorPosition);
-          (*tables)[tableVectorPosition]->prepareForGame();
-          createPlayCardPromptMessage(tableVectorPosition);
+          if ((*tables)[tableVectorPosition]->gameOver()) {
+              sendEndOfGame(tableVectorPosition);
+              tables->erase(tables->begin() + tableVectorPosition);
+          } else {
+            (*tables)[tableVectorPosition]->prepareForGame();
+            createPlayCardPromptMessage(tableVectorPosition);
+          }
         } else {
           (*tables)[tableVectorPosition]->changeTurn();
           createBidPromptMessage(tableVectorPosition);
@@ -424,7 +439,6 @@ void GameManager::addPlayer(int ID) {
 }
 
 void GameManager::addMessageToSend(char* msg, int receiver) {
-
   messagesToSend->push(new Message(msg, -1, receiver));
 }
 

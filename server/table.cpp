@@ -9,15 +9,10 @@ Table::Table(int ID, Player* player) {
 }
 
 Table::~Table() {
-  printf("table.cpp: Deleting1\n");
   players->clear();
-  printf("table.cpp: Deleting2\n");
   cards->clear();
-  printf("table.cpp: Deleting3\n");
   delete players;
-  printf("table.cpp: Deleting4\n");
   delete cards;
-  printf("table.cpp: Deleting5\n");
 }
 
 int Table::getNumberOfPlayers() {
@@ -163,7 +158,7 @@ void Table::changeTurn() {
 }
 
 bool Table::biddingOver() {
-  if (numberOfPasses > 4)
+  if (numberOfPasses > 3)
     return true;
   if ((numberOfPasses == 3) && (numberOfPlayersResponses > 3))
     return true;
@@ -296,10 +291,12 @@ void Table::endRound() {
 }
 
 bool Table::gameOver() {
-  return (roundCounter == 13);
+  return ((roundCounter == 13) || (numberOfPasses == 4));
 }
 
 GameResult Table::getGameResult() {
+  if (numberOfPasses == 4)
+    return GameResult::PASS;
   if (declarerScore >= (6 + trumpsHeight))
     return GameResult::WON;
   return GameResult::LOST;

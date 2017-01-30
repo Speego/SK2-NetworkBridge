@@ -31,7 +31,8 @@ enum class BiddingResult {
 
 enum class GameResult {
   WON = 0,
-  LOST = 1
+  LOST = 1,
+  PASS = 2
 };
 
 class Table {

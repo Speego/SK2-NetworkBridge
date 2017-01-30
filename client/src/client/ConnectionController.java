@@ -137,6 +137,10 @@ public class ConnectionController {
         System.out.println("Message " + message + " interpreted as: " + type + " " + msg.getMessage());
         
         switch (type) {
+            case DISCONNECTED: {
+                manageDisconnectedPlayer();
+                break;
+            }
             case SEND_TABLES: {
                 showTables(msg);
                 break;
@@ -178,6 +182,12 @@ public class ConnectionController {
                 break;
             }
         }
+    }
+    
+    private void manageDisconnectedPlayer() {
+        gameView.displayErrorMessage("One of player disconnected. Game is over.");
+        disposeWindow(gameView);
+        tablesView.setVisible(true);
     }
     
     private void showTables(Message msg) {
@@ -259,6 +269,7 @@ public class ConnectionController {
             switch (gameWinner) {
                 case 0: gameView.displayErrorMessage("Declarers won game!"); break;
                 case 1: gameView.displayErrorMessage("Declarers lost game!"); break;
+                case 2: gameView.displayErrorMessage("Four passess. End of game."); break;
             }
             disposeWindow(gameView);
             tablesView.setVisible(true);

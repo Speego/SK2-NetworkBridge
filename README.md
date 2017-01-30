@@ -23,7 +23,8 @@ Pliki źródłowe po stronie klienta:
 -> GameView.java - widok gry; licytacja oraz sama gra  
 
 Poniżej opisane są komunikaty w następujący sposób: [nazwa] - [format_komunikatu] - [src]->[dst] - [opis].  
--> DISCONNECTED  
+-> DISCONNECTED - 00: - klient->serwer - tworzony, gdy klient wyśle nulla (proces klienta zakończy się)  
+-> DISCONNECTED - 00: - serwer->klient - wysyła informację, że jeden z graczy rozłaczył się podczas trwania gry  
 -> NICKNAME - 01:[nickname] - klient->serwer - wysyłany na początku nickname gracza  
 -> SEND_TABLES - 02:[id_stołu]-[liczba_graczy],... - serwer->klient - wysyłany po połączeniu (docelowo także w odpowiedzi na żądanie klienta po wciśnięciu przycisku)  
 -> CREATE_TABLE - 03: - klient->serwer - chęć utworzenia nowego stołu  
@@ -37,7 +38,7 @@ Poniżej opisane są komunikaty w następujący sposób: [nazwa] - [format_komun
 -> GIVEN_CARD - 11:[kolor][typ] - klient->serwer - zagrana karta  
 -> SEND_CARD - 12:[gracz][kolor][typ] - serwer->klient - informacja o zagranej karcie  
 -> ROUND_OVER - 13:[gracz] - serwer->klient - informacja o zwycięzcy rundy (0 - zwycięzca itd.)  
--> GAME_RESULT - 14:[nr_zwycięstwa] - serwer->klient - informacja o zwycięzcy gry (0 - wygrana rozgrywających, 1 - wygrana obrońców)  
+-> GAME_RESULT - 14:[nr_zwycięstwa] - serwer->klient - informacja o zwycięzcy gry (0 - wygrana rozgrywających, 1 - wygrana obrońców, 2 - 4 pasy)  
 -> ACCEPTANCE - 15:[nr_wiadomości]-[czy_zaakceptowano(T/F)] - klient->serwer - potwierdzenie poprawności otrzymanego komunikatu (na przykład zagranej karty, licytacji, możliwości dołączenia do stołu)  
 -> TABLES_REQUEST - 16: - klient->serwer - prośba o wysłanie SEND_TABLES
 
