@@ -6,7 +6,6 @@ import java.util.Enumeration;
 import java.util.List;
 import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;

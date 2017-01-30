@@ -294,7 +294,7 @@ void Table::endRound() {
 }
 
 bool Table::gameOver() {
-  return (roundCounter == 1);
+  return (roundCounter == 13);
 }
 
 GameResult Table::getGameResult() {

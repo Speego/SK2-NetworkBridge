@@ -37,7 +37,7 @@ Poniżej opisane są komunikaty w następujący sposób: [nazwa] - [format_komun
 -> GIVEN_CARD - 11:[kolor][typ] - klient->serwer - zagrana karta  
 -> SEND_CARD - 12:[gracz][kolor][typ] - serwer->klient - informacja o zagranej karcie  
 -> ROUND_OVER - 13:[gracz] - serwer->klient - informacja o zwycięzcy rundy (0 - zwycięzca itd.)  
--> GAME_RESULT - 14:[nr_zwycięstwa] - serwer->klient - informacja o zwycięzcy gry (0 - zwycięzca, 1 - przegrany)  
+-> GAME_RESULT - 14:[nr_zwycięstwa] - serwer->klient - informacja o zwycięzcy gry (0 - wygrana rozgrywających, 1 - wygrana obrońców)  
 -> ACCEPTANCE - 15:[nr_wiadomości]-[czy_zaakceptowano(T/F)] - klient->serwer - potwierdzenie poprawności otrzymanego komunikatu (na przykład zagranej karty, licytacji, możliwości dołączenia do stołu)  
 -> TABLES_REQUEST - 16: - klient->serwer - prośba o wysłanie SEND_TABLES
 

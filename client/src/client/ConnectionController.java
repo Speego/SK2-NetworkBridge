@@ -106,6 +106,10 @@ public class ConnectionController {
             public void run() {
                 while (true) {
                     msg = getMessage();
+                    if (msg == null) {
+                        System.out.println("Server connection lost.");
+                        System.exit(0);
+                    }
                     interpretMessage(msg);
                 }
             }
